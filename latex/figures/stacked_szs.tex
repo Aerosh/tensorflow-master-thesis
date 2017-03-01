@@ -1,0 +1,44 @@
+
+
+\def\maxsize{20}
+
+\begin{figure}[!t]  
+  % \vspace{-0.2cm}
+  \centering
+  \begin{tikzpicture}
+
+      \pgfplotsset{
+        colormap={blackwhite}{[5pt]
+          color=(\ColHigh);
+          color=(\ColLow)
+        },
+      }
+
+    \begin{axis}[
+      kszsszstack, ymax=33,
+      ]
+      \KszsSzStack{data/resnet4-20-size-adam-kernel_szs.dat}{-3.80}{tau_e-3}{20}      
+      \addplot[fill=none,draw=black,dashed, stack plots=false] coordinates {(0,32) (1,32) (2,32)}; 
+      % \pgfplotstableread{
+      %   Layer_num width
+      %   1 64
+      %   2 64
+      %   3 64
+      %   4 128
+      %   5 128
+      %   6 256
+      %   7 256
+      % }\basearch
+      %   table[x=Layer_num, y=width]{\basearch};
+      %   \addlegendentry{base}
+      
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Illustration of kernel sizes $s_{ij}$ and the layer widths $d_i=\sum_j s_{ij}$ when using square kernels. The \ColActiveConst areas denote kernels with active size constraints. The dashed line denotes with constraints. }
+  \label{fig:reg1_family}
+\end{figure}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End:

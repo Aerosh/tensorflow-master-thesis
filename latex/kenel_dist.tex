@@ -1,0 +1,240 @@
+\message{ !name(../main.tex)}\documentclass[10pt,twocolumn,letterpaper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% PREAMBLE MODIFS TO INCLUDE IN FINAL PAPER - MUST COME BEFORE CVPR PACKAGE!!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% TIKZ
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc,plotmarks}
+\usepackage{pgfplots,pgfplotstable}
+%\pgfplotsset{compat=1.11,plots/.style= {grid=major,font=\small, height=2.5in, width=\columnwidth}} 
+\pgfplotsset{compat=1.11, plots/.style={}} 
+\pgfplotsset{grid=major, legend style={font=\small}}
+\usetikzlibrary{positioning}
+\renewcommand{\axisdefaultwidth}{0.8\columnwidth}
+\renewcommand{\axisdefaultheight}{0.4\columnwidth}
+\pgfplotsset{yticklabel style={text width=3em,align=right}}
+
+% Highlighting
+\usepackage{soul}
+\usepackage{color}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\newcommand{\hlc}[2][yellow]{{\sethlcolor{#1}\hl{#2}}}
+\newcommand{\JZ}[1]{\hlc[pink]{JZ: #1}}
+\newcommand{\CS}[1]{\hlc[yellow]{CS: #1}}
+\newcommand{\PP}[1]{\hlc[cyan]{PP: #1}}
+\newcommand{\PPc}[1]{\hlc[cyan]{#1}}
+
+\input{macros}
+
+%% GENERAL
+\usepackage{booktabs}
+\usepackage{paralist}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{bm}
+\include{notation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+% \cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ifcvprfinal\pagestyle{empty}\fi
+
+\begin{document}
+
+\message{ !name(figures/reg2_familly.tex) !offset(-71) }
+
+%\pgfplotsset{axislast/.style={xticklabels={1,...,20}, xlabel={Layer index $i$}, ylabel={$| \{ s_{ij} = 7 \} |$}, ymax=100}}
+%\pgfplotsset{axisall/.style={
+%    ymax=12, ytick={0,4,...,8}, xlabel={},xtick={1,...,7},xticklabels={}, height=0.3*\columnwidth},
+%}
+%\pgfplotsset{axis0/.style={axisall,ignore legend}}
+%\pgfplotsset{axis1/.style={axisall,ignore legend}}
+%\pgfplotsset{axis2/.style={axisall,ignore legend}}
+%\pgfplotsset{axis3/.style={axisall,ignore legend}}
+%\pgfplotsset{axis4/.style={axisall,ignore legend}}
+%\pgfplotsset{axis5/.style={axisall,ignore legend}}
+%\pgfplotsset{axis6/.style={axisall,ignore legend}}
+%\pgfplotsset{axis7/.style={axislast,ymax=200, ytick={0,40,...,160}, height=0.4\columnwidth}} 
+%
+%\begin{figure}[!t]  
+%  % \vspace{-0.2cm}
+%
+%  \def\cola{orange}
+%  \def\colb{blue}
+%  \def\colc{green}
+%  \def\cold{yellow}  
+%  \def\sep{-.1cm}
+%
+%  \centering
+%  \begin{tikzpicture}
+%    [    
+%    ]
+%    \coordinate (origin) at (0,0);
+%    \foreach \sz/\axisstyle/\top in {
+%      %0/axis0/origin,
+%      1/axis1/origin,
+%      2/axis2/axis1,
+%      3/axis3/axis2,
+%      4/axis4/axis3,
+%      5/axis5/axis4,
+%      6/axis6/axis5,
+%      7/axis7/axis6}
+%    {
+%      \begin{axis}[
+%        font=\footnotesize,
+%        snakeplot, ylabel={$=\sz$}, \axisstyle,
+%        name=\axisstyle, anchor=north, at={($(\top.south)+(0,\sep)$)}
+%        ]
+%
+%        \foreach \curvecol/\alphaval/\alphastr in 
+%        {\cold/0/$0$,\colc/0.001/$10^{-3}$,\colb/0.01/$10^{-2}$,\cola/0.1/$10^{-1}$}
+%        {
+%          \edef\temp{
+%            \noexpand\addplot
+%            [fill=\curvecol, fill opacity=0.5, area style, draw=\curvecol, discard if not and not={alpha}{\alphaval}{sz}{\sz}] 
+%            table[x=Layer_num,y=tau_e-2]{data/hist_szs_vs_layer_vs_alpha.dat} \noexpand\closedcycle;
+%            \noexpand\addlegendentry{\alphastr}
+%          }
+%          \temp        
+%        }
+%      \end{axis}
+%    }
+%  \end{tikzpicture}  
+%  \caption{Resnet8-7 kernel sizes distribution}
+%  %}
+%  \label{fig:reg2_family}
+%\end{figure}
+\pgfplotsset{axislast/.style={xticklabels={1,...,20}, xlabel={Layer index $i$}, ylabel={$| \{ s_{ij} = 20 \} |$}, ymax=100}}
+\pgfplotsset{axisall/.style={
+    ymax=20, ytick={0,6,...,18}, xlabel={},xtick={1,...,20},xticklabels={}, height=0.3*\columnwidth},
+}
+\pgfplotsset{axis0/.style={axisall,ignore legend}}
+\pgfplotsset{axis1/.style={axisall,ignore legend}}
+\pgfplotsset{axis2/.style={axisall,ignore legend}}
+\pgfplotsset{axis3/.style={axisall,ignore legend}}
+\pgfplotsset{axis4/.style={axisall,ignore legend}}
+\pgfplotsset{axis5/.style={axisall,ignore legend}}
+\pgfplotsset{axis6/.style={axisall,ignore legend}}
+\pgfplotsset{axis7/.style={axisall,ignore legend}}
+\pgfplotsset{axis8/.style={axisall,ignore legend}}
+\pgfplotsset{axis9/.style={axisall,ignore legend}}
+\pgfplotsset{axis10/.style={axisall,ignore legend}}
+\pgfplotsset{axis11/.style={axisall,ignore legend}}
+\pgfplotsset{axis12/.style={axisall,ignore legend}}
+\pgfplotsset{axis13/.style={axisall,ignore legend}}
+\pgfplotsset{axis14/.style={axisall,ignore legend}}
+\pgfplotsset{axis15/.style={axisall,ignore legend}}
+\pgfplotsset{axis16/.style={axisall,ignore legend}}
+\pgfplotsset{axis17/.style={axisall,ignore legend}}
+\pgfplotsset{axis18/.style={axisall,ignore legend}}
+\pgfplotsset{axis19/.style={axisall,ignore legend}}
+\pgfplotsset{axis20/.style={axislast,ymax=32, ytick={0,8,...,24}, height=0.4\columnwidth}} 
+
+\begin{figure}[!t]  
+  % \vspace{-0.2cm}
+
+  \def\cola{red}
+  \def\colb{orange}
+  \def\colc{blue}
+  \def\cold{green}
+  \def\cole{yellow}  
+  \def\colf{cyan}
+  \def\colg{magenta}
+  \def\sep{-.1cm}
+
+  \centering
+  \begin{tikzpicture}
+    [    
+    ]
+    \coordinate (origin) at (0,0);
+    \foreach \sz/\axisstyle/\top in {
+      0/axis0/origin,
+      1/axis1/axis0,
+      2/axis2/axis1,
+      3/axis3/axis2,
+      4/axis4/axis3,
+      5/axis5/axis4,
+      6/axis6/axis5,
+      7/axis7/axis6,
+      8/axis8/axis7,
+      9/axis9/axis8,
+      10/axis10/axis9,
+      11/axis11/axis10,
+      12/axis12/axis11,
+      13/axis13/axis12,
+      14/axis14/axis13,
+      15/axis15/axis14,
+      16/axis16/axis15,
+      17/axis17/axis16,
+      18/axis18/axis17,
+      19/axis19/axis18,
+      20/axis20/axis19}
+    {
+      \begin{axis}[
+        font=\footnotesize,
+        snakeplot, ylabel={$=\sz$}, \axisstyle,
+        name=\axisstyle, anchor=north, at={($(\top.south)+(0,\sep)$)}
+        ]
+        
+       
+
+        \foreach \curvecol/\alphaval/\alphastr in 
+        {\colf/-3.50/$10^{-3.5}$,\cole/-3.60/$10^{-3.6}$,\cold/-3.70/$10^{-3.7}$,\colc/-3.80/$10^{-3.8}$,\colb/-3.90/$10^{-3.9}$,\cola/-4.00/$10^{-4.0}$}
+        {
+          \edef\temp{
+            \noexpand\addplot
+            [fill=\curvecol, fill opacity=0.5, area style, draw=\curvecol, discard if not and not={alpha}{\alphaval}{sz}{\sz}] 
+            table[x=Layer_num,y=tau_e-3]{data/resnet4-10-size-adam-kernel_szs.dat} \noexpand\closedcycle;
+            \noexpand\addlegendentry{\alphastr}
+          }
+          \temp        
+        }
+      \end{axis}
+    }
+  \end{tikzpicture}  
+  \caption{Resnet4-10 Kernel distribution}
+  %}
+  \label{fig:reg2_family}
+\end{figure}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End:
+
+\message{ !name(../main.tex) !offset(-47) }
+
+\end{document}
+
+
+%%% Local Variables:
+%%% TeX-master: "main"
+%%% End:

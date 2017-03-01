@@ -1,0 +1,21 @@
+\section{Architecture Selection Via Structural Sparsity}
+In this section we present our approach to structural sparsity selection. We present two variants of our approach. The first one penalizes the total number of kernels in each layer, where each kernel is assumed to have a fixed size and each layer a per-layer-fixed width. By zeroing out all kernels in a layer, this approach can succeed in removing layers completely, thus learning the architecture depth as a consequence. The second variant instead penalizes the size of each kernel independently and is accordingly able to remove complete kernels and eventually layers.
+
+\subsection{Convolutional architectures}
+We consider convolutional architectures with layers numbered $i=1,\ldots,D$. Layer $i$ takes as input a tensor $\mm M_{i-1}$ and produces a tensor $\mm M_i$, where
+\begin{equation}
+\mm M_{i} \in r_i \times c_i \times d_i.
+\end{equation}
+Each convolutional layer consists of a set of $m_i$ convolutional kernels 
+\begin{equation}
+\{\mv k_i \in \R^{s \times s \times d_{i-1}}\}_{i=1}^{d_i},
+\end{equation}
+and we note that this notation subsumes fully connected layers, where the input tensor $M_{i-1}$ is of size $1 \times 1 times d_{i-1}$ and the $d_i$ kernels are of size $1 \times 1$. Note further that we do not make any assumptions about the type of non-linearity used, and hence the approach we present applies to any architecture containing convolutional layers such as those 
+
+\subsection{Kernel-based regularization}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "approach"
+%%% End:

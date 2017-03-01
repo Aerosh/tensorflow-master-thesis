@@ -1,0 +1,62 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: main.aux
+The style file: ieee.bst
+Database file #1: egbib.bib
+Database file #2: jz.bib
+Warning--I didn't find a database entry for "feng2015learning"
+Warning--I didn't find a database entry for "scardapane2016group"
+Warning--I didn't find a database entry for "Jaderberg2014a"
+Warning--I didn't find a database entry for "?"
+Warning--I didn't find a database entry for "inception"
+Warning--I didn't find a database entry for "resnet"
+Warning--I didn't find a database entry for "resent"
+Warning--I didn't find a database entry for "CB2"
+Warning--I didn't find a database entry for "eq:assumption"
+Warning--empty journal in Bach
+Warning--empty year in Bach
+Warning--can't use both volume and number fields in He2015
+Warning--empty journal in Jenatton2010a
+Warning--empty journal in Szegedy2014a
+You've used 16 entries,
+            2120 wiz_defined-function locations,
+            600 strings with 6319 characters,
+and the built_in function-call counts, 5872 in all, are:
+= -- 540
+> -- 353
+< -- 8
++ -- 137
+- -- 121
+* -- 404
+:= -- 986
+add.period$ -- 48
+call.type$ -- 16
+change.case$ -- 108
+chr.to.int$ -- 0
+cite$ -- 21
+duplicate$ -- 226
+empty$ -- 417
+format.name$ -- 121
+if$ -- 1219
+int.to.chr$ -- 0
+int.to.str$ -- 16
+missing$ -- 15
+newline$ -- 82
+num.names$ -- 34
+pop$ -- 137
+preamble$ -- 1
+purify$ -- 91
+quote$ -- 0
+skip$ -- 163
+stack$ -- 0
+substring$ -- 233
+swap$ -- 59
+text.length$ -- 8
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 64
+warning$ -- 5
+while$ -- 54
+width$ -- 18
+write$ -- 167
+(There were 14 warnings)

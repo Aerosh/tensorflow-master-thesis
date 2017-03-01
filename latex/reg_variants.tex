@@ -1,0 +1,68 @@
+\subsection{Variants}
+
+\subsubsection{Alternative norms}
+
+The following norms can be used instead of the $\ell_2$ norm to define $\drlx_i$ and  $\srlx_i$ in \eqref{eq:drlx} and \eqref{eq:srlx}. 
+
+\paragraph{Group-normalized $\ell_2$ norm.} The group-normalized $\ell_2$ norm, where $|\ms G|$ denotes the cardinality of group $\ms G$ is given by
+\begin{equation}
+  \normg{\ms G}{\mv k} \triangleq \left( \frac{1}{|\ms G|}\sum_{\ms I \in \ms G} | k_{\ms I} |_2 \right )^{\frac{1}{2}}.
+\end{equation}
+It has the property that, assuming $\E |k_{\ms I}|_2^2 = C^2$ for active groups (otherwise $\mv k(\ms G) = \mv 0$ ) \footnote{Not valid?...}
+\begin{equation} \cite{eq:assumption}
+  \E \left [ \left (\normg{\ms G}{\mv k} \right )^2 \right ] =  C^2
+\end{equation}
+does not depend on the group size. Accordingly, from Cauchy-Schwartz, 
+\begin{equation}
+  \E \left [\normg{\ms G}{\mv k} \right ] \leq   \sqrt{  \E \left [ \left ( \normg{\ms G}{\mv k} \right )^2 \right ] } = C
+\end{equation}
+implies that the expected norm is bounded for any group size. 
+
+The potential benefit of using $\normg{\ms G}{\mv k}$ to define, for example $\drlx_i$ in \eqref{eq:drlx} is that each term corresponding to an active group in the summation will be bounded by $C$, and hence
+\begin{equation}
+\drlx_i \leq d_i \cdot C,
+\end{equation}
+where $d_i$ is the learned width for layer $i$.
+
+\paragraph{Group-scaled $\ell_2$ norm.}
+The work in \cite{} and \cite{} proposes the opposite approach 
+\begin{equation}
+  \normg{\ms G}{\mv k} \triangleq \left( {|\ms G|}\sum_{\ms I \in \ms G} | k_{\ms I} |_2 \right )^{\frac{1}{2}}.
+\end{equation}
+The motivation used in \cite{} is that, by using this normalization, the resulting problem produces the ANOVA solution.
+
+\paragraph{Other approaches.}
+It is also possible to use other norms instead of the $\ell_2$ norm, for example, the $\ell_\infty$ has been proposed elsewhere.
+
+\paragraph{Batch-normalization variant.}
+One potential problem with the above analysis is that the assumption in \eqref{eq:assumption} is not valid. A possible reason for this is that the dynamic range of the layer-input activations can vary widely from layer to layer. The batch normalization technique \cite{} addresses this problem by scaling and shifting the activation coefficients $\m M_i$ produced by a given layer before feeding them to the next layer. This normalization is done in two steps on a per-feature-map basis. Let $\mv m$ denote a feature map of $\mv M$ and $\mu$ and $\sigma$ denote an estimate of the mean and variance of the entries $\mv m$ derived from the current training batch, the first step 
+\begin{equation}
+\mv m^\prime = \frac{1}{\sigma}( \mv m - \mv 1 \mu )
+\end{equation}
+ensures that the resulting feature maps (over the batch) have unit variance and zero mean.
+
+The next step gives the system back the liberty to learn an adequate mean and variance by means of the learned parameters $a$ and $b$:
+\begin{equation}
+\mv m'' = a \mv m' - b
+\end{equation}
+
+\subsection{Complexity regularizers.}
+The complexity expression \eqref{eq:complexity} has a square depdendence on both the kernel size and the layer width that is not reflected in the regularizers in \eqref{eq:reg1} and \eqref{eq:reg2}. This suggests instead using
+\begin{equation}\label{eq:reg1 sq}
+\Omega_1(\mm \Theta) = \sum_{i=1}^D  {\drlx_i}^2 % \sum_{j=1}^{\dmax_i} |\mv k_{ij}|_2.
+\end{equation}
+ and 
+\begin{equation}\label{eq:reg2 sq}
+  \Omega_2(\mm \Theta) = \sum_{i=1}^D\sum_{j=1}^{\dmax_i} {{\srlx_{ij}}}^2.
+\end{equation}
+
+Alternatively, one can substitue $d_i$ and $s_{ij}$ in \eqref{eq:complexity} by their relaxed versions to obtain
+\begin{equation}
+  \Omega_3(\mm \Theta) = \sum_{i=1}^D \sum_{j=1}^{d_i} r_i \cdot c_i \cdot \drlx_{i-1} \cdot {\srlx_{ij}}^2.
+\end{equation}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

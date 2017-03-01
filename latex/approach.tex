@@ -1,0 +1,168 @@
+\section{CNN Architecture Selection}
+In this section we first review a general deep learning formulation and discuss the choice of architecture -- the depth, layer widths, and kernel sizes-- and how this choice affects the resulting network complexity. We then propose using structured sparsity methods to choose the architecture as part of the learning process. We present two variants of our approach. The first one penalizes the total number of kernels in each layer, where each kernel is assumed to have a fixed size and each layer a per-layer-fixed width. By zeroing out all kernels in a layer, this approach can succeed in removing layers completely \PP{Only with ResNet? }, thus learning the architecture depth as a consequence. The second variant instead penalizes the size of each kernel independently and is accordingly able to remove complete kernels and eventually layers.
+
+\subsection{Learning convolutional architectures}
+We consider convolutional architectures with layers numbered $i=1,\ldots,D$. Layer $i$ takes as input a tensor $\mm M_{i-1}$ and produces a tensor $\mm M_i$, where
+\begin{equation}
+\mm M_{i} \in \R ^ {r_i \times c_i \times d_i}.
+\end{equation}
+Each convolutional layer consists of a set of $d_i$ convolutional kernels 
+\begin{equation}
+  \ms K_i = \{\mv k_{ij} \in \R^{s_{ij} \times s_{ij} \times d_{i-1}}\}_{j=1}^{d_i},
+\end{equation}
+where $s_{ij}$ is the size of each kernel. We note that this notation subsumes fully connected layers, where the input tensor $\mv M_{i-1}$ is of dimensions $1 \times 1 \times d_{i-1}$ and the $d_i$ kernels are of dimensions $1 \times 1 \times d_i$. The kernels are all applied by means of spatial convolution to the input tensor $\mm M_{i-1}$ and the output subsequently fed through an activation function $a_i(\cdot)$  to produce the layer output
+\begin{equation}
+  f_i(\mm M_{i-1}; \ms K_i) = a_i (\{\mv k_{ij} * \mm M_{i-1}\}_j) \quad \textrm{  ( $\triangleq \mm M_i$) }.
+\end{equation}
+%\PP{there should be some $j=1\cdots d_j$ somewhere in previous eq.}
+The layer-dependent activation functions $a_i(\cdot)$ can operate element-wise, such as the ReLU  non-linearity, or across multiple elements, such as a spatial max-pooling operator, maxout operator \cite{Goodfellow2013}, local response normalization operator, downsampling operator, and softmax. The $a_i(\cdot)$  can even be a combination of multiple non-linearities.
+
+Acordingly, letting $\mm J$ be an input image and
+\begin{equation}
+\mv \Theta \triangleq \{\ms K_1, \ldots, \ms K_D\}
+\end{equation}
+contain the kernels for all layers, an entire CNN architecture can be written as
+\begin{equation}
+f(\mm J; \mm \Theta) \triangleq f_{D} \circ \ldots \circ f_1(\mm J; \mm \Theta).
+\end{equation}
+
+Given the above described network, the kernel parameters can be learned for a specific task by defining an adequate objective taking usually the form
+\begin{equation} \label{eq:obj}
+  \argmin_{\mm \Theta} \frac{1}{N} \sum_{n=1}^N \ell(f(\mm J_n; \mm \Theta), y_n) + \alpha \Omega(\mm \Theta),
+\end{equation}
+%\PP{I have replaced $i$ by $n$ for example index, $i$ is used for layers} \JZ{Great, thanks.}
+where $\ell(\cdot)$ is a task-dependent loss function, $\Omega(\cdot)$ is a regularizer, and $y_n$ is an annotation related to the $n$-th example $\mv J_n$. For example, for the image classification task with $C$ classes, $y \in \{1,\ldots, C\}$ is the ground-truth class label for a given image, $\mv x \in \R^C$ is the probability estimate produced by a soft-max layer at the end of the network, and $\ell(\cdot)$ is usually the cross-entropy loss
+\begin{equation}
+  \ell(\mv x, y) = - \log(\mv x[y]).
+\end{equation}
+A commonly used regularizer $\Omega(\cdot)$ that leads to \emph{weight decay} learning steps \cite{Krizhevsky2012} is the squared $\ell_2$ norm:
+\begin{equation}\label{eq:reg0}
+  \Omega(\mm \Theta) = \sum_{ij} |\mv k_{ij}|_2^2,
+\end{equation}
+where we define the $\ell_2$ norm of $\mv k$ as the sum of squares of all its coefficients.
+
+\subsection{Heuristic selection of the architecture}
+Choosing a CNN architecture amounts to selecting both $\mm \Theta$ and the activations $a_i(\cdot)$ of each layer. Concerning the activation function, the element-wise Rectfied Linear Unit (ReLU) activation $\max(0,x)$ has proven to be a very good choice that leads to increased learning speed over alternatives such as the sigmoid or hyperbolic tangent functions \cite{Krizhevsky2012,?}.
+
+Indeed, most of the focus of recent research efforts has been on selecting the set of kernels $\mm \Theta = \{\ms K_i\}_i$. This choice implies selecting
+\begin{itemize}
+\item the depth $D$ or number of layers $\ms K$,
+\item the number $d_i$ of kernels in each layer $\ms K_i$,
+\item and the size $s_{ij}$ of each kernel $\mv k_{ij}$.
+\end{itemize}
+We refer collectively to these parameters as the \emph{architecture} of the network.
+
+A vast research effort has been undertaken in the past several years that has drastically improved the state-of-the-art in several large scale datasets. Most of this effort has amounted to choosing a different architecture by means of a heuristic search. Indeed, the choice of architecture often has an underlying motivation, including a quest for sparsity together with low complexity \cite{inception}, or an empirical observation of deficiencies in learning algorithms for very large depths \cite{resnet}. 
+
+Yet the specific choice of the parameters of the architecture is hardly discussed in the literature. One important reason for this is the very large number of possible architectures which, coupled together with the long CNN training times (days or even weeks), makes it impossible to cross-validate the architecture. This difficulty is addressed by restricting the architecture search space using, for example a fixed kernel size $s_{ij}=s_i$ for a given layer $i$, or by using layer sizes that are the same for groups of layers and change only a few times, further increasing monotonically with the depth across the network. While based on different insights, such restrictions on the architecture's search space are clearly a matter of convenience for heuristic purposes and are not optimal.
+
+Indeed the choice of architecture has two important consequences that ideally need to be balanced against each other. The first is a consequence on the accuracy produced by the network: larger architectures have better accuracy, but only up to the point where generalization begins to suffer. The second consequence is on the networks computational complexity which is given in terms of feed-forward multiply-adds for a single image by
+\begin{equation} \label{eq:complexity}
+\sum_{i=1}^D \sum_{j=1}^{d_i} r_i \cdot c_i \cdot d_{i-1} \cdot s_{ij}^2.
+\end{equation}
+Note, for illustrative purposes, that this reduces to $D \cdot r \cdot c \cdot d^2 \cdot s^2 $ if we assume that all dimension values are the same for all layers and kernels. Hence the importance of choosing architectures that are very compact: the complexity grows as the square of the number of kernels and the square of the kernel sizes. 
+
+\subsection{Structured sparsity regularization} 
+Given that complexity has to be balanced against the accuracy of the network suggests penalizing the network by using \eqref{eq:complexity} as the regularizer $\Omega( \mm \Theta )$. Yet the problem here is that \eqref{eq:complexity} cannot be differentiated against $\mm \Theta$ -- the sub-gradients of \eqref{eq:complexity} are zero almost everywhere. Hence in this work we propose two alternate regularization schemes that penalize $d_i$ and $s_{ij}$ in \eqref{eq:complexity} and have nonethelesss non-zero sub-gradients that make them immediately compatible with standard stochastic gradient descent solvers. 
+
+\paragraph{Kernel-number-reducing regularizer.} The first regularization scheme that we propose aims to penalize the number of kernels $d_i$ in each layer. For ease of implementation, we assume that each layer $i$ is constrained to have at most $\dmax_i$ kernels, and refer to the architecture having exactly $\dmax_i$ kernels in layer $i$ as the \emph{base architecture}. 
+
+Noting that 
+\begin{equation} \label{eq:di_l0}
+d_i = \left | \big [\; |\mv k_{i1}|_2, \ldots, |\mv k_{i\dmax_i}|_2  \; \big ]^\Tr \right |_0,
+\end{equation}
+\PP{what is $\hat{d_i}$ here?} \JZ{Added text above.}
+suggests using the standard relaxation approach wherein the $\ell_0$ norm is substituted by the $\ell_1$ norm to derive a convex surrogate $\drlx_i$ for $d_i$. This yields:
+\begin{equation} \label{eq:drlx}
+\drlx_i \triangleq \left | \big [\; |\mv k_{i1}|_2, \ldots, |\mv k_{i\dmax_i}|_2  \; \big ]^\Tr \right |_1 = \sum_{j=1}^{\dmax_j} |\mv k_{ij}|_2
+\end{equation}
+that has a non-zero gradient almost everywhere. The resulting regularizer takes the form
+\begin{equation}\label{eq:reg1}
+\Omega_1(\mm \Theta) = \sum_{i=1}^D \drlx_i %\sum_{j=1}^{\dmax_i} |\mv k_{ij}|_2.
+\end{equation}
+
+We implement this approach by taking an architecture with a fixed number of kernels $\dmax_i$ in layer $i$, effectively imposing the constraints
+\begin{equation}\label{eq:dmax}
+d_{i} \leq \dmax_i
+\end{equation}
+on problem \eqref{eq:obj} while using \eqref{eq:reg1} as the regularizer. Given the resulting architecture with $\dmax_i$ kernels in each layer $i$, we apply a standard stochastic solver to the resulting problem. Following the learning process, none of the kernels will be exactly zero -- a consequence of the stochastic update process. Hence, after the learning process is finished, it will be necessary to apply a threshold $\tau$ such that all kernels satisfying
+\begin{equation}
+|\mv k_{ij}|_2 \leq \tau
+\end{equation}
+are removed from the learned CNN. \PP{Is that something classic in other uses of $\ell_1$ regularizer? If not, is it only because of the SGD ?} \JZ{Added the following} While the above approach in effect adds an extra hyper-parameter, we found this to be an advantageous approach given that it is very simple to implement. Alternatives for exact $\ell_1$ minimization within an SGD framework do exist \cite{Bottou2012,Kulkarnia}. However, they lead to extra computational and memory complexity during training due to their need to represent kernels as a difference of non-negative parts $\mv k_{ij} =\mv k_{ij}^+ - \mv k_{ij}^-$. 
+
+\input{tables/base_archs.tex}
+
+We note that, in practice, one can further make the constraint in \eqref{eq:dmax} layer-dependent using instead
+\begin{equation}\label{eq:dmaxi}
+\forall i,  d_{i} \leq \dmax_i.
+\end{equation}
+One advantage of using such layer-dependent constraints is that it allows us to more easily compare with existing architectures by letting the $\{\dmax_i\}_i$ (as well as $D$ and the $s_{ij}$) be given by a state-of-the-art \emph{base architecture}.  A second advantage of \eqref{eq:dmaxi} is that it allows us to reduce learning complexity by incorporating empirical findings about the architecture selection. In \tblref{tbl:base_archs} we present all the base architectures that we use in this work.
+
+While this first regularization scheme \eqref{eq:reg1} only penalizes the number of kernels $d_i$, it also succeeds in implicitly learning the number of layers $D$. In effect, by sufficiently increasing the regularization weight $\alpha$ in \eqref{eq:obj} entire layers can be made to dissapear. This will be possible only for residual architectures where shortcut connections will bypass layers where all kernels have been zeroed out. 
+
+\input{figures/reg1_family.tex}
+
+In \figref{fig:reg1_family} we illustrate this layer-selection effect for the family of architectures obtained by fixing the $\{\dmax_i\}_{i=1}^D$ constraints and varying the regularizer weight $\alpha$, where we define this to be one example in one such approach in \eqref{}%CB2 - What happens in plain architectures with this regularization scheme when the penalty weight is very high?
+
+It is also worth discussing that \eqref{eq:reg1} is very similar to \eqref{eq:reg0}. The difference is that our proposed regularizer is a sum of norms, while the original regularizer is a sum of squared norms. The regularizer we are proposing is in effect a group-sparsity regularizer \cite{CB2} where each group is taken to be one of the kernels, and group sparsity regularizers are known to zero out entire groups of variables. %CB2 - Some diagram?
+
+\input{figures/groups.tex}
+\paragraph{Kernel-size-reducing regularizer.} The second regularizer we propose reduces the size of each kernel $\mv k_{ij}$ independently. Similarly to the case of the $d_i$-reducing regularizer discussed above, the approach we follow assumes that all kernels $\mv k_{ij}$ have a size at most $\smax_i$, in effect imposing the following constraint on the learning problem in \eqref{eq:obj}:
+\begin{equation}
+  0 \leq s_{ij} \leq \smax_i.
+\end{equation}
+In order to define a regularizer for this task, we will use structured sparsity methods -- an extension of nested sparsity methods wherein the groups of variables that are zeroed together overlap or are nested. We use nested groups built using the \emph{nested half-ring} strategy illustrated on the left in \figref{fig:groups} for the case $\smax_i=5$. The \emph{nested half-ring} strategy forms groups by recursively appending one top-left or bottom-right half-ring alternatively: Group $\ms G_n, n=1,\ldots,\smax_i,$  is formed from $\ms G_{n-1}$ (with $\ms G_0 \triangleq \varnothing$) by appending, for all kernel channels, the outermost top-left or bottom-right column-row pair not contained in $\ms G_{n-1}$. This strategy will result in kernel sizes
+\begin{equation}
+s_{ij} \in \{0,1,2, \ldots, \smax_i\}
+\end{equation}
+that can be even-valued. For applications requiring precise spatial localization of CNN activations, odd-valued kernel sizes are advantageous. The \emph{nested-ring} strategy illustrated on the right in \figref{fig:groups} can be used in such situations as it results in kernels with sizes
+\begin{equation}
+s_{ij} \in \{0,1,3,\ldots,\smax_i\}
+\end{equation}
+that are zero or odd. But for conciseness, in this work we only use nested half-ring groups.
+
+Given a group $\ms G_n$ indicating a subset of the support of a kernel $\mv k_{ij}$, we let $\mv k_{ij}( \ms G_n)$ be the vector formed from all entries of $\mm k_{ij}$ indicated by $\ms G_n$. When using the nested-half ring groups $ \ms G_n $ on the left in \figref{fig:groups}, we will have that
+\begin{equation} 
+s_{ij} = \left | \big [ \; |\mv k_{ij}( \ms G_1)|_2, \ldots,  | \mv k_{ij}( \ms G_{\smax_i})|_2 \;  \big ]^\Tr \right |_0
+\end{equation}
+(this is also the case when using the nested-ring groups). Applying the same $\ell_1$ relaxation strategy used to obtain \eqref{eq:reg1} from \eqref{eq:di_l0} yields
+\begin{equation} \label{eq:srlx}
+\srlx_{ij} \triangleq \left | \big [ \; |\mv k_{ij}( \ms G_1)|_2, \ldots,  | \mv k_{ij}( \ms G_{\smax_i})|_2 \;  \big ]^\Tr \right |_1 = \sum_{n=1}^{\smax_i} | \mm k_{ij}(\ms G_n) |_2 . %\sum_{k} |\mv k_{ij}( \ms G_k)|_2.
+\end{equation}
+Subsequently summing over all layers and kernels produces the following $s_{ij}$-reducing regularization scheme:
+\begin{equation}\label{eq:reg2}
+  \Omega_2(\mm \Theta) = \sum_{i=1}^D\sum_{j=1}^{\dmax_i} \srlx_{ij}.
+\end{equation}
+
+Similarly to the $d_i$-reducing regularization scheme, the regularizer in \eqref{eq:reg2} will produce kernels with rings that are only approximately zero. Hence it will be necessary to apply a threshold so that, following the learning process, the entries in all rings satisfying
+\begin{equation}
+  |\mv k_{ij}(\ms G_n)|_2 \leq \tau
+\end{equation}
+are zeroed out. The resulting kernel will have a size $s_{ij}$ given by \eqref{eq:srlx}.
+
+\input{figures/reg2_family.tex}
+
+Given that the resulting kernel sizes $s_{ij}$ can be zero, for sufficiently high regularization weights $\alpha$, when using ResNet CNNs, entire layers can be made to dissapear. Note that these removed layers can occur in the middle of the network, a consequence of the ResNet shortcut connections. Contrary to the case of $d_{i}$-reducing regularization, the $s_{ij}$-reducing regularization can also remove entire layers from plain (non-ResNet) architectures not having shortcut connections, \PPc{where a removed kernel would correspond to an identity mapping} \PP{confusing. In effect, we say that, provided $\hat{d}_{j-1}\leq \hat{d}_j$, we have the possibility to learn an identity map, right ? But this is true for non-regularized CNNs, though it never happens in practice. So, does this happen with the help of our regularizer?}, as we illustrate in the top of \figref{fig:reg2_family.tex}. Letting $\mm I_{r^\prime}$ be a kernel with entries $I_{pqr}$, this identity mapping has the form
+\begin{equation}
+  I_{pqr} = 
+    \begin{cases}
+      1 & \textrm{ if } p,q,r = 0,0,r^\prime, \\
+      0 & \textrm{ otherwise. }
+    \end{cases}  
+\end{equation}
+\PP{Changed $p'$ and $q'$ in 0, to be checked}
+For dissapearing layers, if one assumes that $\dmax_i \geq \dmax_{i-1}$, one would expect $\dmax_{i-1}$ such kernels, one for each input channel $r^\prime = 1, \ldots, \dmax_{i-1}$,  with $p^\prime$ and $q^\prime$ approximately indicating the spatial center. The remaining $\dmax_i - \dmax_{i-1}$ kernels would be completely zero-valued. \JZ{To verify if this is the case...} \JZ{We illustrate this in the bottom} of \figref{fig:reg2_family} .
+
+Many other possible approaches exist to define groups that can result in supports with shapes other than square, including rectangular supports and even (convex) polygonal shapes \cite{Bach}. This is a direction that needs exploring in future work.
+
+%\paragraph{Products of $s_{ij}$ and $d_{ij}$} CB2: Product of group sparsity regularizers, visualization.
+
+\input{reg_variants}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

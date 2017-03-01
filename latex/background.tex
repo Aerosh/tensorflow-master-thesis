@@ -1,0 +1,43 @@
+\section{Background}
+
+\subsection{Recent CNN architectures} %Presumptuous!
+%AlexNet, very deep (VGG), inception, resnet, resnet 1000, fractalnet, wide resnet.
+\input{tables/historical_archs.tex}
+
+While Convolutional Neural Networks have existed for several decades, it was the 2012 ImageNet submission of \alex{} \etal{} \cite{Krizhevsky2012} that shifted vast amounts of academic and industrial research effort towards deep learning. \alex's architecture consists of several main operations and layer types: spatial convolutions, spatial (per-channel) max-pooling, fully-connected layers, activation by means of Rectified Linear Units (ReLUs), and local response normalization. The final layer of the network is a classifier taking the form a fully-connected layer with softmax activations. The network consisted of $60$ million parameters and was trained using dropout regularization. Measured in terms of the number of layers with trainable parameters (\ie the convolutional or fully connected \emph{weight layers}), this network consisted of $8$ layers. 
+
+Following the success of \alex's architecture, Simonyan and Zisserman proposed increasing the depth of \alex's architecture to $11$, $13$, $16$ and $19$ weight layers by increasing the number of convolutional layers. They also dispensed of local response normalization, which was found to increase the error rate of the $11$-layer network. A variant of their proposed $16$-layer network employed size-$1$ convolutional kernels, which were used together with size-$3$ kernels in a common layer. Using kernels of multiple sizes in the same layer relates to the work we present herein -- we learn the optimal size of each kernel in all layers independently by means of a kernel-size regularizer.
+
+The \gln{} architecture \cite{\chriskey} -- consisting of $21$ convolutional layers and a single fully-connected layer -- was a bigger change from the original architecture of \cite{\alexkey}. The motivation behind the model is to obtain weights that are sparse, while at the same time limiting the feed-forward computational complexity of the network. The authors implemented the desired sparsity by means of a Network-in-Network (NiN) mechanism \cite{Lin2013} that can be seen as employing non-linear convolutional kernels that, similarly to the models of Simonyan and Zisserman, used layers with multi-sized kernels. Their multi-sized kernels also included $1\times 1$ kernels, but designed as dimensionality reducing operators that keep the computational complexity of the network in check. Two other interesting characteristics of the \gln{} network are \textit{(i)} their use of untrained average pooling for dimenstionality reduction and \textit{(ii)}  their use of bypass connections that concatenate some feature maps to the output feature maps of the next layer instead of the current layer.
+
+An approach similar to bypass connections -- \emph{shortcut} connections -- is employed by the more recent \resnet{} model \cite{He2015}. Shortcut connections are applied across two contiguous convolutional layers (with ReLU activations) to form a \emph{residual unit}. Instead of concatenating feature maps, the shortcut connections add the feature maps at the input of the two-layer unit to the output feature maps. This approach was motivated by empirical evidence indicating that learning algorithms became too slow when the number of layers increased. Indeed, the experiments in \cite{He2015} established that overfitting was not at fault for receding performance gains when the network depth became too large. Extensions of this work explored increasing the depth to as much as $1000$ layers \cite{He2016}, or increasing the width of the layers to up to $640$ convolutional kernels \cite{\sergeykey}. The \resnet{} network is fully-convolutional, relying also on untrained average pooling layers as a dimensionality reduction mechanism.
+
+In \tblref{tbl:hist_archs} we list various characteristics of the main architectures discussed above. Note that the depth, widths and kernel sizes has varied greatly across the various network incarnations. Yet discussions concerning the selection of these parameters is lacking in the literature as most of these architectures have been found by trial and error. 
+
+More formal architecture selection methods exist in the literature, and we next provide an overview of several of these.
+%This  fully-connected to untrained average, LRN, multiple- regressors, kernels of different sizes in same layer
+
+\subsection{Architecture learning methods}
+
+
+\PP{Note:} A number of papers have explored greedy or ad-hoc ways to prune the set of convolutional filters on the fly, \eg trying to reduce the redundancy among filters, with the main goal to promote compact networks rather than really exploring different architectures. 
+
+\PP{Note:} In \cite{feng2015learning}, a specific CNN architecture is proposed, whose width can be jointly learned with a simple regularizer (simply penalizing the width!) that is claimed to derive from Indian Buffet Process (I though it was call the Chinese Buffet...). This approach is thus not amenable to other existing SoA CNNs. On ImageNet they use 5 of their convolutional leyers and 2 fully connected. Also the optimization is not embedded in the gradient descent, they must rely on a greedy mechanism to learn the width.
+
+\PP{Note:} In \cite{scardapane2016group}, group sparsity regularization is used in MLP, not CNN, in order to prune individual neurons. The means are strongly related to what we propose here, but the goal is very different and relates to our BMVC approach\cite{Kulkarnia} \JZ{They only do fully-connected layer size selection using group sparsity not structured sparsity}.
+
+Several authors have also explored learning factorizations of the convolutional layers in order to reduce computational complexity. Liu \etal \cite{Liu2015} propose representing the operations in a convolutional layer as a large matrix-matrix product, imposing sparsity and group sparsity constrains on one of the matrix factors while learning the factorization as a part of supervised fine-tuning stage. Jaderberg \etal \cite{Jaderberg2014a} follow a related approach wherein the convolutional kernels are constrained to be low-rank tensors \JZ{(Term correct? They're matrices or vectors but can be oriented depth-wise)} with only one or two dimensions. Sequential application of such low rank tensors is less computationally demanding than full-rank tensors, yet results in comparable accuracy.
+
+\subsection{Structured sparsity}
+The group sparsity penalty terms employed by several of the above referenced works are used to simultaneously activate or deactivate (zero) groups of variables \cite{Bach}. Given a vector of variables $\mv s = [s_i]_{i=1}^N$ and user selected groups $\ms G_j \subset \{1,\ldots,N\}$, the group sparsity penalty can be expressed as follows, where we let $\mv s(\ms G_j) \triangleq [s_i]_{i \in \ms G_n}$:
+\begin{equation}
+  \sum_n w_n |\mv s(\ms G_n)|_2
+\end{equation}
+When the $\ms G_n$ form a partition of the support $\{1, \ldots, N\}$ of $\mv s$, the above expression is called the $\ell_{21}$ norm. Otherwise, by judiciously selecting the groups (\eg to be overlapping or nested), one can enforce structure in the sparsity patterns induced in $\mv s$. Examples of this include the work of Jenatton \etal on structured sparse principal component analysis \cite{Jenatton2010a} or on hierarchical dictionaries for sparse coding \cite{Jenatton2010}. 
+
+The work we introduce in this paper employes a nested structured sparsity regularizer to individually restrict the spatial sizes of convolutional kernels.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

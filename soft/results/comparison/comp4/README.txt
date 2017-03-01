@@ -1,0 +1,3 @@
+Fanally, we observe a better stability for lower learning rate, Learning seems to give better results in term of accuracy. However, we also observe a significant difference concerning the complexity that end up being higher. By observing sparsity evolution, we see that kernel sizes decreases slowly, but not fast enough for similar time of training. We can conclude that a good tradeoff needs to be found between regularization penalization and learning rate.
+It has a significant influence in our final results and need to be chosen carefully.
+We also see that, despite our efforts, we are still unable to catch similar complexity of smaller networks and we still end up in local minima that cost more than a smaller architecture.

@@ -1,0 +1,11 @@
+
+\begin{abstract}
+The architectures of Convolutional Neural Network (CNN) are determined by a large number of hyper-parameters including \textit{(i)} the  number of layers (or architecture \textit{depth}), \textit{(ii)} the number of convolutional kernels in each layer (or layer \textit{width}), and \textit{(iii)} the spatial size of each convolutional kernel (or \textit{kernel size}). Nearly all of the recent advances in CNN methods have been a consequence of a worldwide heuristic search for the right mix of depth, width and size, with extreme examples producing architectures of more than $1000$ layers, widths of $2048$ kernels, and kernel sizes as small as $1\times 1$. The large number of possible architectures has further made it necessary to constrain the search to layers with kernels of the same size, and widths that vary in a regular manner across the depth of the architecture.
+
+In this work we show how structured sparsity techniques can be used to build a convex regularizer that independently chooses the size of each kernel in each layer. Increasing the weight of this penalty can force kernels (and eventually layers \PP{Only for ResNet} \JZ{We'll know hopefully tomorrow...}) to dissapear independently, hence providing an elegant solution to simultaneous selection of  architecture depth, layer widths and kernel sizes. We further show that, by varying the penalty weight, one can obtain an \PPc{efficient frontier} \PP{Not clear, what is ``efficient"} \JZ{I'll remove efficient...} of architectures each displaying an optimal tradeoff between performance and structural sparsity. As we discuss, the structural sparsity regularizer can be interpreted as a measure of complexity, in effect casting the problem of architecture selection as a tradeoff between complexity and performance where complexity is embodied by a regularizer perfectly compatible with stochastic gradient descent solvers.
+\end{abstract}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

@@ -1,0 +1,278 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+\usetikzlibrary{plotmarks}
+
+\begin{document}
+
+\pgfplotsset{
+    discard if not/.style 2 args={
+        x filter/.code={
+            \edef\tempa{\thisrow{#1}}
+            \edef\tempb{#2}
+            \ifx\tempa\tempb
+            \else
+                \def\pgfmathresult{inf}
+            \fi
+        }   
+    },
+    discard if not and not/.style n args={4}{
+        x filter/.code={
+            \edef\tempa{\thisrow{#1}}
+            \edef\tempb{#2}
+            \edef\tempc{\thisrow{#3}}
+            \edef\tempd{#4}
+            \ifx\tempa\tempb
+            		\ifx\tempc\tempd
+            \else
+                \def\pgfmathresult{inf}
+            \fi
+        }   
+    }
+}
+\pgfplotsset{compat=1.9}
+
+\tikzset{clear/.style={only marks}}
+\tikzset{t_0/.style={color=red}}
+\tikzset{t_1e-5/.style={color=orange}}
+\tikzset{t_1e-4/.style={color=blue}}
+\tikzset{t_1e-3/.style={color=black}}
+\tikzset{a_0/.style={mark=o}}
+\tikzset{a_1e-4/.style={mark=triangle}}
+\tikzset{a_1e-3/.style={mark=square}}
+\tikzset{a_1e-2/.style={mark=diamond}}
+\tikzset{a_1e-1/.style={mark=x}}
+
+
+
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= Complexity at convergence,
+	xlabel=$\alpha$,
+	ylabel=FLOPS,
+	enlarge x limits=false,
+	legend cell align=left,
+	legend style={ at={(1.03,0.5)}, anchor=west },
+	xmode=log]
+		\addplot+[discard if not={zeroing}{0},a_0,t_0] table[x=alpha,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{No zeroing}
+		\addplot+[discard if not={zeroing}{0.001},a_1e-4,t_1e-3] table[x=alpha,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.001$}
+		\addplot+[discard if not={zeroing}{0.0001},a_1e-3,t_1e-4] table[x=alpha,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.0001$}
+		\addplot+[discard if not={zeroing}{0.00001},a_1e-1,t_1e-5] table[x=alpha,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.00001$}
+	\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= Zeroing vs Complexity,
+	xlabel=$\tau$,
+	ylabel=Complexity,
+	xmode=log,
+	legend cell align=left,
+	legend style={at={(1.03,0.5)}, anchor=west }]
+		\addplot+[discard if not={alpha}{0},a_0] table[x=zeroing,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\alpha = 0$}
+		\addplot+[discard if not={alpha}{0.0001},a_1e-4] table[x=zeroing,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\alpha = 0.0001$}
+		\addplot+[discard if not={alpha}{0.001},a_1e-3] table[x=zeroing,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\alpha = 0.001$}
+		\addplot+[discard if not={alpha}{0.01},a_1e-2] table[x=zeroing,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\alpha = 0.01$}
+		\addplot+[discard if not={alpha}{0.1},a_1e-1] table[x=zeroing,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\alpha = 0.1$}
+	\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= Top-1 accuracy,
+	xlabel=$\alpha$,
+	ylabel=Performance,
+	xmode=log,
+	legend cell align=left,
+	legend style={at={(1.03,0.5)}, anchor=west }]
+		\addplot+[discard if not={zeroing}{0},a_0,t_0] table[x=alpha,y=top1,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0$}
+		\addplot+[discard if not={zeroing}{0.00001},a_1e-4,t_1e-5] table[x=alpha,y=top1,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.00001$}
+		\addplot+[discard if not={zeroing}{0.0001},a_1e-3,t_1e-4] table[x=alpha,y=top1,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.0001$}
+		\addplot+[discard if not={zeroing}{0.001},a_1e-2,t_1e-3] table[x=alpha,y=top1,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.001$}
+	\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= Top-5 accuracy,
+	xlabel=$\alpha$,
+	ylabel=Performance,
+	xmode=log,
+	legend cell align=left,
+	legend style={at={(1.03,0.5)}, anchor=west }]
+		\addplot+[discard if not={zeroing}{0},a_0,t_0] table[x=alpha,y=top5,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0$}
+		\addplot+[discard if not={zeroing}{0.00001},a_1e-4,t_1e-5] table[x=alpha,y=top5,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.00001$}
+		\addplot+[discard if not={zeroing}{0.0001},a_1e-3,t_1e-4] table[x=alpha,y=top5,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.0001$}
+		\addplot+[discard if not={zeroing}{0.001},a_1e-2,t_1e-3] table[x=alpha,y=top5,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.001$}
+	\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= Complexity vs top1,
+	xlabel=Complexity,
+	ylabel=Performance,
+	legend cell align=left,
+	legend style={ at={(1.03,0.5)}, anchor=west }]
+		\addlegendimage{only marks, t_0}; 
+		\addlegendentry{$\tau = 0$}
+		\addlegendimage{only marks, t_1e-5}; 
+		\addlegendentry{$\tau = 0.00001$}
+		\addlegendimage{only marks, t_1e-4}; 
+		\addlegendentry{$\tau = 0.0001$}
+		\addlegendimage{only marks, t_1e-3}; 
+		\addlegendentry{$\tau = 0.001$}		
+		\addlegendimage{only marks, a_0}; 
+		\addlegendentry{$\alpha = 0$}
+		\addlegendimage{only marks, a_1e-4}; 
+		\addlegendentry{$\alpha = 0.0001$}
+		\addlegendimage{only marks, a_1e-3}; 
+		\addlegendentry{$\alpha = 0.001$}
+		\addlegendimage{only marks, a_1e-2}; 
+		\addlegendentry{$\alpha = 0.01$}
+		\addlegendimage{only marks, a_1e-1}; 
+		\addlegendentry{$\alpha = 0.1$}
+		\addplot+[discard if not and not={alpha}{0}{zeroing}{0},t_0,a_0] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.0001}{zeroing}{0},t_0,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.001}{zeroing}{0},t_0,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.01}{zeroing}{0},t_0,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.1}{zeroing}{0},t_0,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0}{zeroing}{0.00001},t_1e-5,a_0] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.0001}{zeroing}{0.00001},t_1e-5,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.001}{zeroing}{0.00001},t_1e-5,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.01}{zeroing}{0.00001},t_1e-5,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.1}{zeroing}{0.00001},t_1e-5,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0}{zeroing}{0.0001},t_1e-4,a_0] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.0001}{zeroing}{0.0001},t_1e-4,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.001}{zeroing}{0.0001},t_1e-4,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.01}{zeroing}{0.0001},t_1e-4,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.1}{zeroing}{0.0001},t_1e-4,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0}{zeroing}{0.001},t_1e-3,a_0] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.0001}{zeroing}{0.001},t_1e-3,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.001}{zeroing}{0.001},t_1e-3,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.01}{zeroing}{0.001},t_1e-3,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.1}{zeroing}{0.001},t_1e-3,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+
+		
+	\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= Complexity vs top5,
+	xlabel=Complexity,
+	ylabel=Performance,
+	legend cell align=left,
+	legend style={ at={(1.03,0.5)}, anchor=west }]
+		\addlegendimage{only marks, t_0}; 
+		\addlegendentry{$\tau = 0$}
+		\addlegendimage{only marks, t_1e-5}; 
+		\addlegendentry{$\tau = 0.00001$}
+		\addlegendimage{only marks, t_1e-4}; 
+		\addlegendentry{$\tau = 0.0001$}
+		\addlegendimage{only marks, t_1e-3}; 
+		\addlegendentry{$\tau = 0.001$}		
+		\addlegendimage{only marks, a_0}; 
+		\addlegendentry{$\alpha = 0$}
+		\addlegendimage{only marks, a_1e-4}; 
+		\addlegendentry{$\alpha = 0.0001$}
+		\addlegendimage{only marks, a_1e-3}; 
+		\addlegendentry{$\alpha = 0.001$}
+		\addlegendimage{only marks, a_1e-2}; 
+		\addlegendentry{$\alpha = 0.01$}
+		\addlegendimage{only marks, a_1e-1}; 
+		\addlegendentry{$\alpha = 0.1$}
+		\addplot+[discard if not and not={alpha}{0}{zeroing}{0},t_0,a_0] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.0001}{zeroing}{0},t_0,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.001}{zeroing}{0},t_0,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.01}{zeroing}{0},t_0,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.1}{zeroing}{0},t_0,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0}{zeroing}{0.00001},t_1e-5,a_0] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.0001}{zeroing}{0.00001},t_1e-5,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.001}{zeroing}{0.00001},t_1e-5,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.01}{zeroing}{0.00001},t_1e-5,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.1}{zeroing}{0.00001},t_1e-5,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0}{zeroing}{0.0001},t_1e-4,a_0] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.0001}{zeroing}{0.0001},t_1e-4,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.001}{zeroing}{0.0001},t_1e-4,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.01}{zeroing}{0.0001},t_1e-4,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.1}{zeroing}{0.0001},t_1e-4,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0}{zeroing}{0.001},t_1e-3,a_0] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.0001}{zeroing}{0.001},t_1e-3,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.001}{zeroing}{0.001},t_1e-3,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.01}{zeroing}{0.001},t_1e-3,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.1}{zeroing}{0.001},t_1e-3,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+
+		
+	\end{axis}
+\end{tikzpicture}
+
+\end{document}

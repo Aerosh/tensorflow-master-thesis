@@ -1,0 +1,108 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% PREAMBLE MODIFS TO INCLUDE IN FINAL PAPER - MUST COME BEFORE CVPR PACKAGE!!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% TIKZ
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc,plotmarks}
+\usepackage{pgfplots,pgfplotstable}
+%\pgfplotsset{compat=1.11,plots/.style= {grid=major,font=\small, height=2.5in, width=\columnwidth}} 
+\pgfplotsset{compat=1.11, plots/.style={}} 
+\pgfplotsset{grid=major, legend style={font=\small}}
+\usetikzlibrary{positioning}
+\renewcommand{\axisdefaultwidth}{0.8\columnwidth}
+\renewcommand{\axisdefaultheight}{0.4\columnwidth}
+\pgfplotsset{yticklabel style={text width=3em,align=right}}
+\pgfplotsset{filter discard warning=false}
+
+% Highlighting
+\usepackage{soul}
+\usepackage{color}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\newcommand{\hlc}[2][yellow]{{\sethlcolor{#1}\hl{#2}}}
+\newcommand{\JZ}[1]{\hlc[pink]{JZ: #1}}
+\newcommand{\CS}[1]{\hlc[yellow]{CS: #1}}
+\newcommand{\PP}[1]{\hlc[cyan]{PP: #1}}
+\newcommand{\PPc}[1]{\hlc[cyan]{#1}}
+
+\input{macros}
+
+%% GENERAL
+\usepackage{booktabs}
+\usepackage{paralist}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{ifthen}
+\usepackage{etoolbox}
+\usepackage{cprotect}
+\usepackage{fp}
+\usepackage{float}
+\include{notation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+ \cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ifcvprfinal\pagestyle{empty}\fi
+
+\begin{document}
+
+\title{Optimal Convolutional Architectures Via Structured Sparsity Regularizers}
+
+\author{Christopher Salotti \and Joaquin Zepeda \and Patrick P\'erez\\
+Technicolor R\&D Rennes, France\\
+Institution1 address\\
+{\tt\small first.last@technicolor.com}
+}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\input{abstract}
+\input{introduction}
+\input{background}
+\input{approach}
+\input{results}
+%\input{templates} % These are just examples of tables and the likes.
+%%%%%%%%% BODY TEXT
+
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{egbib,jz}
+}
+
+\end{document}
+
+
+%%% Local Variables:
+%%% TeX-master: "main"
+%%% End:

@@ -1,0 +1,21 @@
+\begin{table}[!t]
+  \centering
+  %\begin{tabular}{c p{0.7\textwidth}}
+  \begin{tabular}{c c >{\centering\arraybackslash}m{0.6\columnwidth} }
+    \toprule
+    Dataset & $D$ & $(\dmax_1, \smax_1), \ldots, (\dmax_D, \smax_D)$  \\
+    \toprule   
+    ImageNet & $8$ & $(64,7)$, $(64,3) \times 2$, $(128,3) \times 2 $, $(256,3) \times 2$ \\
+    ImageNet & $18$ &$(64,7)$, $(64,3) \times 4$, $(128,3) \times 4 $, $(256,3) \times 4$, $(512,3) \times 4$ \\
+    CIFAR-10 & $20$ & $(16,3) \times 7$, $(32,3) \times 6$, $(64,3) \times 6$\\
+    CIFAR-10 & $20$ & $(64,5) \times 18$\\
+    \bottomrule\\
+  \end{tabular}
+  \caption{Summary of base architectures used in this work. As per \cite{resent}, ResNet variants of these base architectures use shortcut connections across pairs of layers starting with the second layer. The depth $D$ indicated includes the fully connected layer for the softmax, which is not regularized. \JZ{ CS: please add all missing base archs. Need to center m column, $>\{\backslash$centering$\}$}} %CB2
+  \label{tbl:base_archs}
+\end{table}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End:

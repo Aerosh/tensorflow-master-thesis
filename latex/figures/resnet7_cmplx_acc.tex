@@ -1,0 +1,41 @@
+%Custom power of ten variable
+% \def\one{1.00E-001}
+% \def\two{1.00E-002}
+% \def\three{1.00E-003}
+% \def\threedottwo{0.0006309573}
+% \def\threedotfour{0.0003981072}
+% \def\threedotsix{0.0002511886}
+% \def\threedoteight{0.0001584893}
+% \newcommand{\five}{1.00E-005}
+% \newcommand{\four}{1.00E-004}
+
+
+\begin{figure}[!t]
+  \begin{tikzpicture} 
+    \begin{axis}[      
+      width=\linewidth,
+      height=.9*\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+      legend pos=north west,
+      %legend style={legend columns=2, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+      
+      \cplxaccplot{
+        0.0001/a1/10^{-4.0},
+        0.001/a2/10^{-3},
+        0.01/a3/10^{-2},
+        0.1/a4/10^{-1},
+        0/a5/0}
+      {./data/accuracy_vs_complexity.dat}
+      
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Kernel num. regularization, base arch. \JZ{Description, more $\tau$ values...}}
+  \label{fig:cifar10_rsdl}
+\end{figure}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End:

@@ -1,0 +1,222 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+
+\begin{document}
+
+\pgfplotsset{
+    discard if not/.style 2 args={
+        x filter/.code={
+            \edef\tempa{\thisrow{#1}}
+            \edef\tempb{#2}
+            \ifx\tempa\tempb
+            \else
+                \def\pgfmathresult{inf}
+            \fi
+        }
+    }
+}
+
+\begin{tikzpicture} 
+	\begin{axis}[
+	title=Number of kernels at convergence - L2 losses $\leq 1\%$ mean L2 loss,
+	xlabel=$\alpha$,
+	ylabel=Number of kernels,
+	stack plots=y, 
+	area style,
+	enlarge x limits=false,
+	legend style={ at={(1.03,0.5)}, anchor=west },
+	xmode=log]
+		\addplot+[discard if not={Layer_num}{1}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 1}
+		\addplot+[discard if not={Layer_num}{2}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 2}
+		\addplot+[discard if not={Layer_num}{3}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 3}
+		\addplot+[discard if not={Layer_num}{4}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 4}
+		\addplot+[discard if not={Layer_num}{5}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 5}
+		\addplot+[discard if not={Layer_num}{6}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 6}
+		\addplot+[discard if not={Layer_num}{7}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 7}
+	\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture} 
+	\begin{axis}[
+	title=Number of kernels at convergence - L2 losses $\leq 5\%$ mean L2 loss,
+	xlabel=$\alpha$,
+	ylabel=Number of kernels,
+	stack plots=y, 
+	area style,
+	enlarge x limits=false,
+	legend style={ at={(1.03,0.5)}, anchor=west },
+	xmode=log]
+		\addplot+[discard if not={Layer_num}{1}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 1}
+		\addplot+[discard if not={Layer_num}{2}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 2}
+		\addplot+[discard if not={Layer_num}{3}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 3}
+		\addplot+[discard if not={Layer_num}{4}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 4}
+		\addplot+[discard if not={Layer_num}{5}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 5}
+		\addplot+[discard if not={Layer_num}{6}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 6}
+		\addplot+[discard if not={Layer_num}{7}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 7}
+	\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture} 
+	\begin{axis}[
+	title=Number of kernels at convergence - L2 losses $\leq 1e-3$,
+	xlabel=$\alpha$,
+	ylabel=Number of kernels,
+	stack plots=y, 
+	area style,
+	enlarge x limits=false,
+	legend style={ at={(1.03,0.5)}, anchor=west },
+	xmode=log]
+		\addplot+[discard if not={Layer_num}{1}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 1}
+		\addplot+[discard if not={Layer_num}{2}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 2}
+		\addplot+[discard if not={Layer_num}{3}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 3}
+		\addplot+[discard if not={Layer_num}{4}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 4}
+		\addplot+[discard if not={Layer_num}{5}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 5}
+		\addplot+[discard if not={Layer_num}{6}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 6}
+		\addplot+[discard if not={Layer_num}{7}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 7}
+	\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture} 
+	\begin{axis}[
+	title=Number of kernels at convergence -  L2 losses $\leq 1e-4$,
+	xlabel=$\alpha$,
+	ylabel=Number of kernels,
+	stack plots=y, 
+	area style,
+	enlarge x limits=false,
+	legend style={ at={(1.03,0.5)}, anchor=west },
+	xmode=log]
+		\addplot+[discard if not={Layer_num}{1}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 1}
+		\addplot+[discard if not={Layer_num}{2}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 2}
+		\addplot+[discard if not={Layer_num}{3}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 3}
+		\addplot+[discard if not={Layer_num}{4}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 4}
+		\addplot+[discard if not={Layer_num}{5}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 5}
+		\addplot+[discard if not={Layer_num}{6}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 6}
+		\addplot+[discard if not={Layer_num}{7}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 7}
+	\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture} 
+	\begin{axis}[
+	title=Number of kernels at convergence - L2 losses $\leq 1e-5$,
+	xlabel=$\alpha$,
+	ylabel=Number of kernels,
+	stack plots=y, 
+	area style,
+	enlarge x limits=false,
+	legend style={ at={(1.03,0.5)}, anchor=west },
+	xmode=log]
+		\addplot+[discard if not={Layer_num}{1}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 1}
+		\addplot+[discard if not={Layer_num}{2}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 2}
+		\addplot+[discard if not={Layer_num}{3}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 3}
+		\addplot+[discard if not={Layer_num}{4}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 4}
+		\addplot+[discard if not={Layer_num}{5}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 5}
+		\addplot+[discard if not={Layer_num}{6}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 6}
+		\addplot+[discard if not={Layer_num}{7}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 7}
+	\end{axis}
+\end{tikzpicture}
+\end{document}

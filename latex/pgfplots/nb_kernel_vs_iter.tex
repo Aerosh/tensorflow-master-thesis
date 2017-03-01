@@ -1,0 +1,57 @@
+\documentclass{standalone}
+\usepackage{pgfplots}
+
+\begin{document}
+
+\pgfplotsset{
+    discard if not and not/.style n args={4}{
+        x filter/.code={
+            \edef\tempa{\thisrow{#1}}
+            \edef\tempb{#2}
+            \edef\tempc{\thisrow{#3}}
+            \edef\tempd{#4}
+            \ifx\tempa\tempb
+            		\ifx\tempc\tempd
+            \else
+                \def\pgfmathresult{inf}
+            \fi
+        }
+    }
+}
+\begin{tikzpicture} 
+	\begin{axis}[
+	title=Evolution Number of Kernels - Layer 1,
+	xlabel=Iteration number,
+	ylabel=Number of kernels,
+	enlarge x limits=false,
+	stack plots=y,
+	area style,
+	xmin = 0,
+	ymin=0,
+	legend style={ at={(1.03,0.5)}, anchor=west }]
+		\addplot+[discard if not and not={layer}{1}{alpha}{0}] table[x=iter,y=nb_kernel,meta=alpha]
+			{../data/nb_layer_vs_iter_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{$\alpha =  0$}
+		\addplot+[discard if not and not={layer}{1}{alpha}{0.0001}] table[x=iter,y=nb_kernel,meta=alpha]
+			{../data/nb_layer_vs_iter_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{$\alpha =  0.0001$}
+		\addplot+[discard if not and not={layer}{1}{alpha}{0.001}] table[x=iter,y=nb_kernel,meta=alpha]
+			{../data/nb_layer_vs_iter_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{$\alpha =  0.001$}
+		\addplot+[discard if not and not={layer}{1}{alpha}{0.01}] table[x=iter,y=nb_kernel,meta=alpha]
+			{../data/nb_layer_vs_iter_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{$\alpha =  0.01$}
+		\addplot+[discard if not and not={layer}{1}{alpha}{0.1}] table[x=iter,y=nb_kernel,meta=alpha]
+			{../data/nb_layer_vs_iter_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{$\alpha =  0.1$}
+		
+
+	\end{axis}
+\end{tikzpicture}
+
+\end{document}

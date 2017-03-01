@@ -1,0 +1,67 @@
+%Custom power of ten variable
+% \def\one{1.00E-001}
+% \def\two{1.00E-002}
+% \def\three{1.00E-003}
+% \def\threedottwo{0.0006309573}
+% \def\threedotfour{0.0003981072}
+% \def\threedotsix{0.0002511886}
+% \def\threedoteight{0.0001584893}
+% \newcommand{\five}{1.00E-005}
+% \newcommand{\four}{1.00E-004}
+
+\begin{figure*}[!t]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=\linewidth,
+      height=.9*\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+      legend pos=south east,
+      %ymin=0.9,
+      ymax=1,
+      %restrict x to domain=1:7,
+      %log basis x=10
+      %legend style={legend columns=2, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+      \cplxaccplot[solid]{
+        -1/a1/10^{-1},
+        -2/a2/10^{-2},
+        -3.5/a3/10^{-3.5},
+        % -3.6/a2/10^{-3.6},
+        % -3.7/a3/10^{-3.7},
+        % -3.8/a4/10^{-3.8},
+        % -3.9/a5/10^{-3.9},
+        -4/a6/10^{-4}}
+      {./data/mnist/resnet4-20-size-adam-eval-train.dat}
+
+
+      \cplxaccplot[dashed]{
+        -3.4/a1/10^{-3.5},
+        % -3.5/a2/10^{-3.6},
+        % -3.6/a3/10^{-3.7},
+        % -3.7/a4/10^{-3.8},
+        % -3.8/a5/10^{-3.9},
+        % -3.9/a6/10^{-3.9},
+        -4/a6/10^{-4}}
+      {./data/mnist/resnet4-10-size-adam-eval-train.dat}
+
+      \cplxaccplot[dotted]{
+        -1/a1/10^{-1},
+        % -3.5/a2/10^{-3.6},
+        % -3.6/a3/10^{-3.7},
+        % -3.7/a4/10^{-3.8},
+        % -3.8/a5/10^{-3.9},
+        % -3.9/a6/10^{-3.9},
+        -4/a6/10^{-4}}
+      {./data/mnist/resnet10-size-adam-eval-train.dat}
+      
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Complexity vs. accuracy on MNIST.}
+  \label{fig:cifar10_rsdl}
+\end{figure*}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../main"
+%%% End:

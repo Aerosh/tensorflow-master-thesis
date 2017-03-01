@@ -1,0 +1,12 @@
+# Fdb version 3
+["pdflatex"] 1483440008 "plot_all_archs.tex" "plot_all_archs.pdf" "plot_all_archs" 1483440008
+  "/etc/texmf/web2c/texmf.cnf" 1466161666 475 c0e671620eb5563b2130f56340a5fde8 ""
+  "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1392645748 31083 1dfd8bf685ce0009c40532fedf8a7c53 ""
+  "/usr/share/texmf/web2c/texmf.cnf" 1392645748 31083 1dfd8bf685ce0009c40532fedf8a7c53 ""
+  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1479221753 1006173 a1aae087c4d39992a64a44c820d46d1c ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1466161692 856211 b3d4653271be9498a0d43d789a4619a3 ""
+  "plot_all_archs.aux" 1482500948 8 a94a2480d3289e625eea47cd1b285758 ""
+  "plot_all_archs.tex" 1483440007 3540 13e72e69b0d29738a4a28f3a1856da90 ""
+  (generated)
+  "plot_all_archs.pdf"
+  "plot_all_archs.log"

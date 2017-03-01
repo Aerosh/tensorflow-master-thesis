@@ -1,0 +1,178 @@
+\message{ !name(../../main.tex)}\documentclass[10pt,twocolumn,letterpaper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% PREAMBLE MODIFS TO INCLUDE IN FINAL PAPER - MUST COME BEFORE CVPR PACKAGE!!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% TIKZ
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc,plotmarks}
+\usepackage{pgfplots,pgfplotstable}
+%\pgfplotsset{compat=1.11,plots/.style= {grid=major,font=\small, height=2.5in, width=\columnwidth}} 
+\pgfplotsset{compat=1.11, plots/.style={}} 
+\pgfplotsset{grid=major, legend style={font=\small}}
+\usetikzlibrary{positioning}
+\renewcommand{\axisdefaultwidth}{0.8\columnwidth}
+\renewcommand{\axisdefaultheight}{0.4\columnwidth}
+\pgfplotsset{yticklabel style={text width=3em,align=right}}
+\pgfplotsset{filter discard warning=false}
+
+% Highlighting
+\usepackage{soul}
+\usepackage{color}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\newcommand{\hlc}[2][yellow]{{\sethlcolor{#1}\hl{#2}}}
+\newcommand{\JZ}[1]{\hlc[pink]{JZ: #1}}
+\newcommand{\CS}[1]{\hlc[yellow]{CS: #1}}
+\newcommand{\PP}[1]{\hlc[cyan]{PP: #1}}
+\newcommand{\PPc}[1]{\hlc[cyan]{#1}}
+
+\input{macros}
+
+%% GENERAL
+\usepackage{booktabs}
+\usepackage{paralist}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{ifthen}
+\usepackage{etoolbox}
+\usepackage{cprotect}
+\usepackage{fp}
+\usepackage{float}
+\include{notation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+% \cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ifcvprfinal\pagestyle{empty}\fi
+
+\begin{document}
+
+\message{ !name(figures/mnist/plot_all_archs.tex) !offset(-77) }
+% \foreach \filename/\alphacplx/\taucol/\allalphas/\maxsize/\basearch in {%
+%   resnet10-size-adam/-1.00/tau_e-4/{-4/a1/-4,-3/a2/-3,-2/a3/-2,-1/a4/-1}/5/{(1,16) (2,32) (5,32) (6,64) (9,64)}%
+% }
+% {
+%   \begin{figure*}[!h]
+%     % \vspace{-0.2cm}
+%     \centering
+%     \begin{tikzpicture}
+%       \begin{axis}[cplxaccplot]
+%         \edef\temp{\noexpand\cplxaccplot[dotted]{\allalphas}}
+%         \temp
+%         {./data/mnist/\filename-eval.dat}
+%       \end{axis}
+%     \end{tikzpicture}
+%   \end{figure*}
+%   \begin{figure}[!h]
+%     \begin{tikzpicture}
+%       \begin{axis}[kszsszstack]
+%         \KszsSzStack{data/mnist/\filename-kernel_szs.dat}{\alphacplx}{\taucol}{\maxsize}
+%         \addplot[fill=none,draw=black,dashed, stack plots=false] coordinates \basearch;
+%       \end{axis}
+%     \end{tikzpicture}
+%     \caption{Illustration of kernel sizes $s_{ij}$ and the layer widths $d_i=\sum_j s_{ij}$ when using square kernels. The \ColActiveConst{} areas denote kernels with active size constraints. The dashed line denotes with constraints $\alpha=\alphacplx$,  $\tau=\taucol$, $\filename$. }
+%     \label{fig:reg1_family}
+%   \end{figure}
+% }
+
+
+\onecolumn
+\foreach \filename/\accarglist/\maxsize/\basearch/\cplxarglist in {%  
+  % KERNEL SIZE COMPARISON
+  % resnet10-size-adam/%
+  % {-4/a1/-4,-3/a2/-3,-2/a3/-2,-1/a4/-1}/%
+  % 5/{(1,16) (2,32) (5,32) (6,64) (9,64)}/{-1.00/tau_0,-1.00/tau_e-1,-1.00/tau_e-2,-1.00/tau_e-3,-1.00/tau_e-4,-1.00/tau_e-5},%
+  % %
+  resnet10-square-20-size-adam/%
+  {-4/a1/-4,-3/a2/-3,-2/a3/-2,-1/a4/-1}/%
+  20/{(1,64) (9,64)}/{-2.00/tau_0,-2.00/tau_e-1,-2.00/tau_e-2,-2.00/tau_e-3,-2.00/tau_e-4,-2.00/tau_e-5},%
+  %
+  resnet10-square-5-size-adam/%
+  {-4/a1/-4,-3/a2/-3,-2/a3/-2,-1/a4/-1}/%
+  5/{(1,64) (9,64)}/{-2.00/tau_0,-2.00/tau_e-1,-2.00/tau_e-2,-2.00/tau_e-3,-2.00/tau_e-4,-2.00/tau_e-5},%
+  %
+  % resnet4-20-size-adam/%
+  % {-4/a1/-4,-3/a2/-3,-2/a3/-2,-1/a4/-1}/%
+  % 20/{(1,32) (4,32)}/{-2.00/tau_0,-2.00/tau_e-1,-2.00/tau_e-2,-2.00/tau_e-3,-2.00/tau_e-4,-2.00/tau_e-5},%
+  %
+  % % REGULARIZATION COMPARISON
+  % resnet10-square-5-n-complexity-adam/%
+  % {-4/a1/-4,-3/a2/-3,-2/a3/-2,-1/a4/-1}/%
+  % 5/{(1,64) (9,64)}/{-2.00/tau_e-0,-2.00/tau_e-1,-2.00/tau_e-2,-2.00/tau_e-3,-2.00/tau_e-4,-2.00/tau_e-5},%
+  % % resnet10-square-5-n-size-adam
+  % % resnet10-square-5-size-adam
+  % % resnet10-square-5-w-size-adam
+}
+{
+  \centering
+  \section{\filename}
+  %\begin{figure*}[h]
+    % \vspace{-0.2cm}    
+    \begin{tikzpicture}
+      \begin{axis}[cplxaccplot,height=0.4*\linewidth, xmode=log]
+        \edef\temp{\noexpand\cplxaccplot[dotted]{\accarglist}}
+        \temp
+        {./data/mnist/\filename-eval.dat}
+      \end{axis}
+    \end{tikzpicture}
+    % \begin{tikzpicture}
+    %   \begin{axis}[cplxaccplot,height=0.2*\linewidth,ymin=0.9]
+    %     \edef\temp{\noexpand\cplxaccplot[dotted]{\accarglist}}
+    %     \temp
+    %     {./data/mnist/\filename-eval.dat}
+    %   \end{axis}
+    % \end{tikzpicture}
+  %\end{figure*}
+  \foreach \alphacplx/\taucol in \cplxarglist{
+    %\begin{figure}[!h]    
+      \begin{tikzpicture}
+        \begin{axis}[kszsszstack,width=0.45*\linewidth,height=0.25*\linewidth, title={$\alpha=\alphacplx$, $\taucol$}]
+          \KszsSzStack{data/mnist/\filename-kernel_szs.dat}{\alphacplx}{\taucol}{\maxsize}
+          \addplot[base arch] coordinates \basearch;
+        \end{axis}
+      \end{tikzpicture}   
+    %\end{figure}
+  }
+  \newpage
+}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../main"
+%%% End:
+
+\message{ !name(../../main.tex) !offset(-70) }
+
+\end{document}
+
+
+%%% Local Variables:
+%%% TeX-master: "main"
+%%% End:

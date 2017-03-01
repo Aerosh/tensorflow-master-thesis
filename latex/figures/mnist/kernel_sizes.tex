@@ -1,0 +1,22 @@
+
+\begin{figure}[!t]
+  % \vspace{-0.2cm}
+  \centering
+  \begin{tikzpicture}[]
+    %\pgfplotsset{ksz axis 0/.style={ksz axis,ymax=300}}
+    \kszplots{data/resnet4-20-size-adam-kernel_szs.dat}{0/ksz
+    axis,1/ksz axis,2/ksz axis,3/ksz axis,4/ksz axis,5/ksz axis,6/ksz
+    axis,7/ksz axis,8/ksz axis,9/ksz axis,10/ksz axis,11/ksz
+    axis,12/ksz axis,13/ksz axis,14/ksz axis,15/ksz axis,16/ksz
+    axis,17/ksz axis,18/ksz axis,19/ksz axis,20/ksz last axis}
+    {\cola/-3.50/$10^{-3.5}$,\colb/-4.00/$10^{-4}$}
+  \end{tikzpicture}
+  \caption{Illustration of the family of $s_{ij}$-regularized architectures obtained for $\tau=??$ by varying $\alpha$ (value indicated in the legend) when using the seven layer base architecture in \tblref{tbl:base_archs} for the constraints $\smax_{ij}$ (denoted as the dashed envelopes). The number of kernels with a fixed size $s_{ij}$ (one fixed $s_{ij}$ per plot) is denoted by the vertical vertical length of the area plots. \JZ{Need to stretch curve to occupy all the column... Can add o markers to indicate active constraints. Need to specify all parameters. Add legend. Add correct/more data in file \texttt{data/hist\_szs\_vs\_layer\_vs\_alpha.dat}, modify for loop in picture code. Can replace the $s_{ij}=0$ plot by a $d_i$ snake plot. Add $\smax_{ij}$ dashed envelops}}
+  %}
+  \label{fig:reg2_family}
+\end{figure}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../main"
+%%% End:

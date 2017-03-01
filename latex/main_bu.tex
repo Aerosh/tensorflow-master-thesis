@@ -1,0 +1,63 @@
+\documentclass[a4paper,twoside]{article}
+\usepackage[margin=0.5in]{geometry}
+
+%% 
+
+%% TIKZ
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc,plotmarks}
+\usepackage{pgfplots}
+%\pgfplotsset{compat=1.11,plots/.style= {grid=major,font=\small, height=2.5in, width=\columnwidth}} 
+\pgfplotsset{compat=1.11, plots/.style={}} 
+\pgfplotsset{grid=major, legend style={font=\small}}
+\usetikzlibrary{positioning}
+\renewcommand{\axisdefaultwidth}{0.8\columnwidth}
+\renewcommand{\axisdefaultheight}{0.4\columnwidth}
+\pgfplotsset{yticklabel style={text width=3em,align=right}}
+
+% Highlighting
+\usepackage{soul}
+\usepackage{color}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\newcommand{\hlc}[2][yellow]{{\sethlcolor{#1}\hl{#2}}}
+\newcommand{\JZ}[1]{\hlc[pink]{JZ: #1}}
+\newcommand{\ER}[1]{\hlc{#1}{yellow}}
+
+
+%% GENERAL
+\usepackage{booktabs}
+\usepackage{paralist}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{bm}
+\include{notation}
+
+\title{Optimal Convolutional Architectures Via Structured Sparsity Regularizers}
+\author{Christopher Salotti, Joaquin Zepeda, Patrick P\'erez}
+
+\begin{document}
+
+\maketitle
+
+\input{abstract}
+\input{introduction}
+\input{background}
+\input{approach}
+\input{results}
+\input{templates} % These are just examples of tables and the likes.
+
+\bibliographystyle{plain}
+%{\small
+%\bibliography{main}}
+\bibliography{main}
+
+\end{document}
+
+
+ 	
+%%% Local Variables:
+%%% TeX-master: "main"
+%%% End:

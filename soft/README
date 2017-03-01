@@ -1,0 +1,103 @@
+Basic commands to train/eval/retrieve on MNIST dataset 
+
+!!!!DISCLAIMER : The following command have been run in the folde soft/
+
+Example for Resnet4-20:
+======================
+
+Training:
+---------
+  >   for i in 1.0 2.0 3.0 4.0
+  >   do
+  >   python resnet/resnet_main.py \
+  >   --data_path=/data/ext/MNIST 
+  >   --log_root  ../../../../../tmp/resnet4-20/test-convexity/alpha_1e-$i/ \
+  >   --alpha -$i \
+  >   --lrn_rate_thrs 0$t8000$t12000$t16000 \
+  >   --lrn_rate_vals 0.001$t0.0001$t0.00001  \
+  >   --model_type resnet4-10 \
+  >   --dataset mnist
+  done
+(Easy copy-paste :
+
+
+for i in 1.0 2.0 3.0 4.0; do python resnet/resnet_main.py  --data_path=/data/ext/MNIST  --log_root  ../../../../../tmp/resnet4-20/test-convexity/alpha_1e-$i/  --alpha -$i --lrn_rate_thrs 0$t8000$t12000$t16000  --lrn_rate_vals 0.001$t0.0001$t0.00001  --model_type resnet4-10  --dataset mnist ;done
+
+)
+
+
+Evaluation :
+-----------
+  *Train set:
+  ----------
+for i in 3.5 3.6 3.7; do for j in 0.00001 0.0001 0.001 0.01 0.1; do python resnet/resnet_main.py --mode eval-train --alpha -$i --log_root $WPCS/tmp/resnet4-20/seize-adam/alpha_1e-$i --data_path /data/ext/MNIST --eval_once --eval_batch_count 100 --eval_output_file resnet4-20-size-adam-eval-train.txt --model_type resnet4-20 --dataset mnist --zeroing $j --batch_size ;  done; done
+
+  *Evaluation set:
+  --------------
+for i in 3.5 3.6 3.7; do for j in 0.00001 0.0001 0.001 0.01 0.1; do python resnet/resnet_main.py --mode eval --alpha -$i --log_root $WPCS/tmp/resnet4-20/seize-adam/alpha_1e-$i --data_path /data/ext/MNIST --eval_once --eval_batch_count 100 --eval_output_file resnet4-20-size-adam-eval.txt --model_type resnet4-20 --dataset mnist --zeroing $j --batch_size 100;  done; done
+
+Complexity and Kernels distribution :
+-------------------------------------
+for i in 1.0 2.0 3.0 4.0; do python resnet/retrieve_network_infos.py --alpha -$i --log_root ../../../../../tmp/resnet4-20/size-adam/alpha_1e-$i --output_file resnet4-20-size-adam --output_file resnet4-20-size-adam --model_type resnet4-20 
+  
+Main Tips:
+=========
+
++ Training :
+  - Variable to change if work on new network:
+    - log_root
+    - model_type
+  - Learning parameters are the same used through the whole experiments
+  - If log_root already exist with a model file, thus the training will resume
+    to where it stopped
+  - Need more iterations ? Change the number at the end of lrn_rate_thrs
+
++ Evaluation :
+  - Main changes between train and eval dataset:
+    - mode (eval/eval-train)
+    - output_file
+    - eval_batch_count (600/100) depending on the batch size
+  - All parameters are the same
+  - Be careful about 
+    - eval_once option
+    - eval_batch_count and vatch_size
+    - Choose the right log_root folder
+    - Change file name for the output
+
++ Complexity and Kerel size
+  - The output_file name is the head of you file name. The script produce two
+    file with <name>-complexity.txt and <name>-kernel_szs.txt
+
+Additional Features:
+====================
+
+- Do you want to train a new network with MNIST ?
+  + Enter the hyper parameters needed in the file Mnist.py, give it a name and
+  add it to the available model_type list for the argparse. The network
+  description is an array of tuple with: 
+  
+      (kernel spatial size, layer width,kernel depth)
+
+  as format
+
+- Do you want to change the optimizer ?
+  + You have the choice between classical SGD, Momentum and Adam during the
+  hyper parameters definition at the end of resnet_main.py. By default :
+  adam.
+
+- Do you want to define a new regularization scheme and use it ?
+  
+  1. Make sure to define it in the file regulizers.py and define it as a
+  subclass of Regulizer
+
+  2. Define your regularization by adding the function build_reg()
+  (2 bis. Add a specific zeroing function if necessary. Otherwise inherit your
+  regularizer from an pre-existing one)
+
+  3. Change the way the class ModelClass is defined by changing the actual
+  regularizer by your own.
+
+
+
+
+

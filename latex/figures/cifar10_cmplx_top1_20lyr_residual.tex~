@@ -1,0 +1,65 @@
+%Custom power of ten variable
+\def\one{1.00E-001}
+\def\two{1.00E-002}
+\def\three{1.00E-003}
+\def\threedottwo{0.0006309573}
+\def\threedotfour{0.0003981072}
+\def\threedotsix{0.0002511886}
+\def\threedoteight{0.0001584893}
+\newcommand{\five}{1.00E-005}
+\newcommand{\four}{1.00E-004}
+
+
+\begin{figure}
+  \begin{tikzpicture} 
+    \begin{axis}[
+      %title= CIFAR10 - Complexity vs top1,
+      width=\linewidth,
+      height=.9*\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+      legend style={legend columns=2, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      xmode=log,
+      ]
+      
+      \foreach \alphaval/\alphastyle/\alphastr in {
+        \four/a1/10^{-4.0},
+        \threedoteight/a2/10^{-3.8},
+        \threedotsix/a3/10^{-3.6},
+        \threedotfour/a4/10^{-3.4},
+        \threedottwo/a5/10^{-3.2},
+        \three/a6/10^{-3.0}}{
+        \edef\temp{
+          \noexpand\addplot[discard if not={alpha}{\alphaval},tau_curve,\alphastyle] table[x=FLOPS,y=top1]
+          {./data/cifar10-accuracy.dat};
+          \noexpand\addlegendentry{$\alphastr$}
+        }
+        \temp
+      }
+
+      
+
+      %{ ,1-0.1168}/Goodfellow2013/west}
+      \foreach \coord/\citekey/\anchor in {
+        {4.06e+7,1-0.0875}/He2015/west,
+        {4.09e8, 1-0.0908}/Springenberg2015/west,
+         %{1.5e7, 0.8901}/Romero2014/west}
+	{1.7135e08, 0.9161}/Romero2015/west}{        
+        \edef\temp{
+          \noexpand\addplot[mark=otimes*, mark options={fill=white}, mark size=3, thick] coordinates{(\coord)};
+          \noexpand\node at (axis cs:\coord) [anchor=\anchor] {\noexpand\cite{\citekey}};%ResNet 20
+        }
+        \temp
+      }
+      % 
+      
+    \end{axis}
+  \end{tikzpicture}
+  \caption{ \JZ{Better order for the legend values. Add more $\tau$ values for $\alpha=10^{-3.8}, \ldots, 10^{-4.0}$}}
+  \label{fig:cifar10_rsdl}
+\end{figure}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End:

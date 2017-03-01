@@ -1,0 +1,19 @@
+
+\begin{figure}[!t]
+  % \vspace{-0.2cm}
+  \centering
+  \begin{tikzpicture}[]
+    %\pgfplotsset{ksz axis 0/.style={ksz axis,ymax=300}}
+    \kszplots{data/hist_szs_vs_layer_vs_alpha.dat}
+    {0/ksz axis,1/ksz axis,2/ksz last axis
+    }{\cola/0/$0$,\colb/0.001/$10^{-3}$,\colc/0.01/$10^{-2}$,\cold/0.1/$10^{-1}$}
+  \end{tikzpicture}
+  \caption{Illustration of the family of $s_{ij}$-regularized architectures obtained for $\tau=??$ by varying $\alpha$ (value indicated in the legend) when using the seven layer base architecture in \tblref{tbl:base_archs} for the constraints $\smax_{ij}$ (denoted as the dashed envelopes). The number of kernels with a fixed size $s_{ij}$ (one fixed $s_{ij}$ per plot) is denoted by the vertical vertical length of the area plots. \JZ{Need to stretch curve to occupy all the column... Can add o markers to indicate active constraints. Need to specify all parameters. Add legend. Add correct/more data in file \texttt{data/hist\_szs\_vs\_layer\_vs\_alpha.dat}, modify for loop in picture code. Can replace the $s_{ij}=0$ plot by a $d_i$ snake plot. Add $\smax_{ij}$ dashed envelopes}}
+  %}
+  \label{fig:reg2_family}
+\end{figure}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End:

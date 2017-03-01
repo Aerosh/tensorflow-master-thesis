@@ -1,0 +1,304 @@
+%% Definitions
+\def\smax{\hat{s}}
+\def\dmax{\hat{d}}
+%
+\def\srlx{s^\prime}
+\def\drlx{d^\prime}
+%
+\def\E{\ensuremath{\textrm{E}}}
+
+%% Krizhevsky
+\def\alex{Krizhevsky}
+\def\alexkey{Krizhevsky2012}
+
+\def\chriskey{Szegedy2014a} %GoogLeNet
+\def\sergeykey{Zagoruyko2016} % Wide Res Nets
+
+%% Arch names
+\def\alexnet{\texttt{AlexNet}}
+\newcommand\vgg[1]{\texttt{VGG-#1}}
+\def\gln{\texttt{GoogLeNet}}
+\def\resnet{\texttt{ResNet}}
+\def\wideresnet{\texttt{WideResNet}}
+\newcommand{\ilsvr}[1]{\texttt{ILSVR-#1}}
+
+%% Style overwrites
+\renewcommand{\geq}{\geqslant}
+\renewcommand{\leq}{\leqslant}
+
+%% ARCHITECTURES PLOTS (curve thickness denotes sizes).
+\newcommand{\errorband}[6][]{ 
+  % [optional argument for setting style of the area plot]{filename}{x column}{y value}{y error column}{arg for style of both curves, can be empty}
+  % E.g.:
+  % \errorband[fill=orange,fill opacity=0.5]{data/tmp.dat}{x}{1}{dy}{draw={orange}}
+
+  %\pgfplotstableread[columns={#3,#5}]{#2}\datatable
+  % Lower bound (invisible plot)
+  \addplot [draw=none, stack plots=y, forget plot, #6] table [
+  x={#3},
+  y expr=#4-0.5*\thisrow{#5}%y expr=\thisrow{#4}-\thisrow{#5}
+  ] {#2};%{\datatable};
+
+  % Stack twice the error, draw as area plot
+  \addplot [draw=none, fill=gray!40, stack plots=y, area legend, #6,#1] table [
+  x={#3},
+  y expr=\thisrow{#5}
+  ] {#2} \closedcycle;
+
+  % Reset stack using invisible plot
+  \addplot [forget plot, stack plots=y,#6,draw=none] table [x={#3}, y expr=-(#4+0.5*\thisrow{#5})] {#2};
+}
+
+%% GROUPS DIAGRAM
+\newcommand{\drawsquare}[4]{ %{dist from top}{dist from bot}{size}{color}
+  \addplot[const plot, fill=#4] 
+  coordinates
+  {
+    (#1, #2) (#1,#3-#1) (#3-#2,#3-#1) (#3-#2, #2)
+  };
+}
+
+%% PGFPLOTS utility
+\pgfplotsset{ignore legend/.style={every axis legend/.code={\renewcommand\addlegendentry[2][]{}}}}
+
+%% SNAKE DIAGRAMS
+% \pgfplotsset{snakeplot/.style={
+% %    compat=1.5.1,
+%     no markers,
+%     enlarge x limits=false,
+%     enlarge y limits=false,      
+%     ylabel={},
+%     width=\columnwidth,
+%     height=0.5\columnwidth,
+%     ylabel shift=-2em,
+%     xtick={1,2,...,20},
+%     ytick= {0,40,...,260},
+%     ymin=0,ymax=256,
+%     xlabel={Layer index $i$},      
+%     font=\footnotesize,
+%     legend pos=north west,
+%     legend columns=2,
+%     legend image post style={scale=0.5},
+%     legend style={font=\footnotesize},    
+%   }
+% }
+
+%% DATA FILE CONDITIONAL SELECTION
+\pgfplotsset{
+    discard if not/.style 2 args={
+        x filter/.code={
+            \edef\tempa{\thisrow{#1}}
+            \edef\tempb{#2}
+            \ifx\tempa\tempb
+            \else
+                \def\pgfmathresult{inf}
+            \fi
+        }   
+    },
+    discard if not and not/.style n args={4}{
+        x filter/.code={
+            \edef\tempa{\thisrow{#1}}
+            \edef\tempb{#2}
+            \edef\tempc{\thisrow{#3}}
+            \edef\tempd{#4}
+            \ifx\tempa\tempb
+              \ifx\tempc\tempd                        
+              \else
+                \def\pgfmathresult{}
+              \fi
+            \else
+              \def\pgfmathresult{}
+            \fi
+        }   
+    }
+}
+
+%% COMPLEXITY VS ACCURACY PLOTS
+\tikzset{clear/.style={only marks}}
+\tikzset{base marks/.style={solid,draw=black,opacity=0.8,mark size=3}}
+
+\tikzset{tau_curve/.style={dashed,gray}}
+\tikzset{stla/.style={mark=o, mark options={base marks}}}
+\tikzset{a1/.style={mark=*, mark options={base marks, fill=purple}}}
+\tikzset{a2/.style={mark=square*, mark options={base marks, fill=green}}}
+\tikzset{a3/.style={mark=triangle*, mark options={base marks, fill=cyan}}}
+\tikzset{a4/.style={mark=diamond*, mark options={base marks, fill=magenta}}}
+\tikzset{a5/.style={mark=pentagon*, mark options={base marks, fill=orange}}}
+\tikzset{a6/.style={mark=halfcircle*, mark options={base marks, fill=yellow}}}
+\tikzset{a7/.style={mark=*, mark options={base marks, fill=yellow}}}
+\pgfplotsset{refmark/.style={mark=otimes*, mark options={fill=white}, mark size=3, thick}}
+
+\pgfplotsset{ cplxaccplot/.style={
+    width=\linewidth,
+    height=.4*\linewidth,
+    xlabel=Complexity,
+    ylabel=Top-1 accuracy,
+    legend pos=south east,
+    % ymin=0.9,
+    ymax=1}
+}
+
+\newcommand{\cplxaccplot}[3][]{
+  {
+    \foreach \alphaval/\alphastyle/\alphastr in {#2}{
+      \edef\temp{
+        \noexpand\addplot[discard if not={alpha}{\alphaval},tau_curve,\alphastyle,#1] table[x=FLOPS,y=top1]
+        {#3};
+	\noexpand\ifthenelse{\noexpand\equal{\alphastr}{}}{}{\noexpand\addlegendentry{$10^{\alphastr}$}}
+      }
+      \temp
+    }
+  }
+}
+
+%% PLOT OF KERNEL SIZES
+\pgfplotsset{ksz axis/.style={
+    height=0.3*\columnwidth,
+    xlabel={}, xtick={1,2,3,...,100}, xticklabels={},
+    no markers,
+    enlarge x limits=false,
+    enlarge y limits=false,
+    width=\columnwidth,
+    ylabel shift=-2em,
+    % xtick={1,2,...,20},
+    % ytick= {0,40,...,260},
+    % ymin=0,ymax=256,
+    font=\footnotesize,
+    ignore legend,
+  }
+}
+\pgfplotsset{ksz last axis/.style={
+    %xticklabels={1,...,20}, 
+    height=0.4*\columnwidth,
+    xlabel={Layer index $i$}, 
+    ylabel={$| \{ s_{ij} = 7 \} |$}, 
+    %ymax=100
+  }
+}
+
+\def\cola{orange}
+\def\colb{blue}
+\def\colc{green}
+\def\cold{yellow}
+\def\sep{-.1cm}
+
+%\newcommand{\KszsAlphaStack}[4][]{
+\newcommand{\kszplots}[4][]{
+  \coordinate (origin) at (0,0);
+  \global\edef\topaxis{origin}
+  \foreach \sz/\axisstyle in {#3}
+  {
+    %\edef\axisstyle{axis\sz}
+    % \expandafter\def\tmpstyle\csname axis\sz\endcsname%
+    \edef\axisname{axis\sz}
+    \begin{axis}[
+      ksz axis,
+      font=\footnotesize,
+      ylabel={$=\sz$}, \axisstyle,
+      name=\axisname, anchor=north, at={($(\topaxis.south)+(0,\sep)$)}
+      ]        
+      % \errorband[fill=orange,fill opacity=0.5]{data/tmp.dat}{x}{1}{dy}{draw=orange,discard if not={y}{3}}
+
+      \foreach \curvecol/\alphaval/\alphastr in 
+      % {\colb/0.01/$10^{-2}$,\cola/0.1/$10^{-1}$}
+      {#4}
+      {
+        \edef\temp{
+          % \noexpand\errorband
+          % [fill=\curvecol,fill opacity=0.5]{data/hist_szs_vs_layer_vs_alpha.dat}{Layer_num}{0}{tau_e-2}{draw=\curvecol,
+          % discard if not and not={alpha}{\alphaval}{sz}{\sz}}
+          % % \noexpand\addlegendentry{\alphastr}
+
+          \noexpand\addplot
+          [fill=\curvecol, fill opacity=0.5, area style, draw=\curvecol, discard if not and not={alpha}{\alphaval}{sz}{\sz}]
+          table[x=Layer_num,y=tau_e-2]{#2} \noexpand\closedcycle;
+          \noexpand\addlegendentry{\alphastr}
+          % \noexpand\addlegendentry{\alphastr}
+          
+        }
+        \temp
+      }
+    \end{axis}
+    %\edef\axisstyle{axis\sz}
+    \global\edef\topaxis{\axisname}
+  }
+}
+
+%% Size plots
+%\KszsSzStack[]{filename}{alphaval}{taucol}{maxsize}
+\def\ColLow{yellow}
+\def\ColHigh{blue}
+\def\ColActiveConst{red}
+%
+
+\pgfplotsset{kszsszstack/.style={
+      ylabel={$d_{i}$},
+      enlarge x limits=false,
+      enlarge y limits=true,      
+      font=\footnotesize,
+      legend image post style={scale=0.5},
+      ylabel shift=-2em,
+      width=\linewidth,
+      height=0.5*\linewidth,
+      stack plots=y,
+      legend style={legend columns=21, 
+        %anchor=south west, at={(0.01,1.05)}, 
+        anchor=north west, at={(0.01,-.15)}, 
+        fill=none, draw=none, font=\footnotesize},
+      legend image code/.code={%
+        \draw[#1] (0cm,-0.1cm) rectangle (0.1cm,0.6cm);
+      },
+      xtick={1,2,...,40}, xmin=1, ymin=0,
+    }
+}
+% Active constrains implicit in the base arch
+\pgfplotsset{base arch/.style={fill=none,draw=black,dashed, stack plots=false, line width=1, \ColActiveConst}}
+%
+\newcommand{\KszsSzStack}[5][]{
+  \edef\infilename{#2}
+  \edef\alphaval{#3}
+  \edef\taucol{#4}
+  \edef\maxsize{#5}
+  
+  %Add first label
+  \addlegendimage{empty legend}
+  \addlegendentry{$s_{ij}=1$}
+
+  % 
+  \foreach \sz in {1,...,\maxsize}
+  {   
+    \FPeval\mixval{100 * \sz / \maxsize}   
+
+    % Legend text.
+    %\ifboolexpr{test{\ifnumequal{1}{\sz}} or test{\ifnumequal{\maxsize}{\sz}}}%
+    \ifboolexpr{test{\ifnumequal{\maxsize}{\sz}}}%
+    {\edef\legtext{$s_{ij}=\sz$}}%
+    {\edef\legtext{}}%
+
+    % Color
+    \ifboolexpr{test{\ifnumequal{\maxsize}{\sz}}}%
+    {\edef\curvecol{\ColActiveConst}}%
+    {\edef\curvecol{\ColLow!\mixval!\ColHigh}}%
+
+    \edef\temp{
+
+      % Curve
+      \noexpand\addplot
+      [fill=\curvecol, fill opacity=0.5, draw=\curvecol, discard if not and not={alpha}{\alphaval}{sz}{\sz}] %fill=\curvecol, draw=\curvecol, 
+      table[x expr=\noexpand\thisrow{Layer_num}+1, y=\taucol]{\infilename} \noexpand\closedcycle;
+      
+      % Legend
+      \noexpand\addlegendentry{\legtext}      
+    }
+    \temp
+  }
+}
+
+%% MATH SYMBOLS
+\newcommand{\normg}[2]{\eta_{#1}\left(#2\right)}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

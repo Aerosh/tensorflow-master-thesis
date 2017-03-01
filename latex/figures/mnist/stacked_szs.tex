@@ -1,0 +1,26 @@
+
+\foreach \filename/\alphaval/\taucol/\maxsize/\basearch in {%
+  resnet4-20-size-adam-kernel_szs.dat/-3.80/tau_e-3/20/{(1,32) (2,32) (3,32)},%
+  resnet4-10-size-kernel_szs.dat/-3.25/tau_e-3/10/{(1,32) (2,32) (3,32)},%
+  resnet4-20-size-adam-kernel_szs.dat/-3.50/tau_e-3/20/{(1,32) (2,32) (3,32)},%
+  resnet4-10-size-adam-kernel_szs.dat/-3.40/tau_e-2/10/{(1,32) (2,32) (3,32)}%
+}
+{
+  \begin{figure}[!t]
+    % \vspace{-0.2cm}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[kszsszstack, ymax=33]
+        \KszsSzStack{data/mnist/\filename}{\alphaval}{\taucol}{\maxsize}
+        \addplot[fill=none,draw=black,dashed, stack plots=false] coordinates \basearch;
+      \end{axis}
+    \end{tikzpicture}    
+    \caption{Illustration of kernel sizes $s_{ij}$ and the layer widths $d_i=\sum_j s_{ij}$ when using square kernels. The \ColActiveConst{} areas denote kernels with active size constraints. The dashed line denotes with constraints $\alpha=\alphaval$,  $\tau=\taucol$, $\filename$. }
+    \label{fig:reg1_family}
+  \end{figure}
+}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../main"
+%%% End:

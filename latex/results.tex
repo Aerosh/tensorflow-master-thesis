@@ -1,0 +1,32 @@
+\section{Results}
+
+\input{figures/cifar10_cmplx_top1_20lyr_residual.tex}
+\input{figures/resnet7_cmplx_acc.tex}
+
+\JZ{To do in relation to complexity/accuracy curves like } \figref{fig:cifar10_rsdl}  :
+\begin{itemize}
+\item Add baseline results for multiple SOTA archs *** VERY IMPORTANT *** . The more the better, this makes all the difference.
+\item Add similar curves for all other datasets and architectures
+  \begin{itemize}
+  \item ImageNet - \resnet{} 7 and plain equivalent
+  \item ImageNet - \resnet{} 18
+  \item CIFAR10 - squared constraints ($D=20$, $\smax_i=5$, $\dmax_i=64$) 
+  \item CIFAR10 - base arch ($D=20$, $\smax_i=3$, $\dmax_i$ varying).
+  \item MNIST - Square constraints ().
+  \end{itemize}
+\item Add envelope curve (copy-paste vals ok).
+\end{itemize}
+
+
+\JZ{Other results to add:}
+\begin{itemize}
+\item Review experiments.txt file for other possible curves.
+\item Visualizations of kernels when learning is finished.
+\item Visulaizations of average kernel pairwise correlation across learning iterations and/or across alphas.
+\end{itemize}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

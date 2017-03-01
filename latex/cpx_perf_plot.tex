@@ -1,0 +1,556 @@
+\documentclass[10pt, letterpaper]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% PREAMBLE MODIFS TO INCLUDE IN FINAL PAPER - MUST COME BEFORE CVPR PACKAGE!!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% TIKZ
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc,plotmarks}
+\usepackage{pgfplots,pgfplotstable}
+%\pgfplotsset{compat=1.11,plots/.style= {grid=major,font=\small, height=2.5in, width=\columnwidth}} 
+\pgfplotsset{compat=1.11, plots/.style={}} 
+\pgfplotsset{grid=major, legend style={font=\small}}
+\usetikzlibrary{positioning}
+\renewcommand{\axisdefaultwidth}{0.8\columnwidth}
+\renewcommand{\axisdefaultheight}{0.4\columnwidth}
+\pgfplotsset{yticklabel style={text width=3em,align=right}}
+
+% Highlighting
+\usepackage{soul}
+\usepackage{color}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\newcommand{\hlc}[2][yellow]{{\sethlcolor{#1}\hl{#2}}}
+\newcommand{\JZ}[1]{\hlc[pink]{JZ: #1}}
+\newcommand{\CS}[1]{\hlc[yellow]{CS: #1}}
+\newcommand{\PP}[1]{\hlc[cyan]{PP: #1}}
+\newcommand{\PPc}[1]{\hlc[cyan]{#1}}
+
+\input{macros}
+
+%% GENERAL
+\usepackage{booktabs}
+\usepackage{paralist}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{cvpr}
+\usepackage{ifthen}
+\include{notation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+% \cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ifcvprfinal\pagestyle{empty}\fi
+
+\begin{document}
+
+
+\begin{figure*}[!t]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=\linewidth,
+      height=\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+%      legend pos=south east,
+      ymin=0.97,
+      ymax=1,
+      %restrict x to domain=1:7,
+      %log basis x=10
+      legend style={legend columns=4, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+%      \cplxaccplot[solid]{
+%        -1/a1/10^{-1},
+%        -2/a3/10^{-2},
+%        -3/a5/10^{-3},
+%        -4/a7/10^{-4}}
+%      {./data/mnist/resnet4-20-size-adam-eval-train.dat}
+            
+      \cplxaccplot[dashed]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/mnist/resnet4-20-size-adam-eval.dat}
+      
+      \cplxaccplot[solid]{
+        -4/a1/10^{-4},       
+        -5/a2/10^{-5},
+        -6/a3/10^{-6},
+        -6/a4/10^{-7},
+%        -7/a5/10^{-8}
+        }
+      {./data/mnist/resnet4-20-w-size-adam-eval.dat}
+      
+     \cplxaccplot[dotted]{
+        -0.2/a1/10^{-0.2},
+%        -0.4/a2/10^{-0.4},
+        -0.6/a3/10^{-0.6},
+%        -0.8/a4/10^{-0.8},
+        -1/a5/10^{-1},
+        -2/a6/10^{-2},
+%        -3/a5/10^{-3},
+%        -4/a7/10^{-4}
+        }
+      {./data/mnist/resnet4-20-n-size-adam-eval.dat}
+      
+%      \cplxaccplot[dashdotted]{
+%        -2/a1/10^{-2},
+%%        -4/a3/10^{-4},
+%%        -6/a5/10^{-6},
+%%        -8/a7/10^{-8}}
+%		}
+%      {./data/mnist/resnet4-20-sq-size-adam-eval.dat}
+      
+      \cplxaccplot[dashdotted]{
+        -2/a1/10^{-2},
+        -4/a3/10^{-4},
+        -6/a5/10^{-6},
+        -8/a7/10^{-8}}
+      {./data/mnist/resnet4-20-complexity-adam-eval.dat}
+
+
+      
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Complexity vs. accuracy on MNIST. Resnet - 3 layers - $20 \times 20$ kernels - square width}
+\end{figure*}
+
+\newpage
+
+\begin{figure*}[!t]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=\linewidth,
+      height=\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+      legend pos=south east,
+      ymin=0.9,
+      ymax=1,
+      %restrict x to domain=1:7,
+      %log basis x=10
+      legend style={legend columns=2, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+%      \cplxaccplot[solid]{
+%        -1/a1/10^{-1},
+%        -2/a3/10^{-2},
+%        -3/a5/10^{-3},
+%        -4/a7/10^{-4}}
+%      {./data/mnist/resnet10-size-adam-eval-train.dat}
+      
+       \cplxaccplot[dashed]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/mnist/resnet10-size-adam-eval.dat}
+            
+
+      
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Complexity vs. accuracy on MNIST. Resnet - 10 layers - $5 \times 5$ kernels}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=\linewidth,
+      height=\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+      legend pos=south east,
+      %ymin=0.97,
+      ymax=1,
+      %restrict x to domain=1:7,
+      %log basis x=10
+      legend style={legend columns=4, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+     
+       \cplxaccplot[dashed]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/mnist/resnet10-square-5-size-eval.dat}
+      
+      \cplxaccplot[solid]{
+        -4/a1/10^{-4},
+        -5/a3/10^{-5},
+        -6/a5/10^{-6},
+        -7/a7/10^{-4}}
+      {./data/mnist/resnet10-square-5-w-size-eval.dat}
+      
+      \cplxaccplot[dotted]{
+        -0.2/a1/10^{-0.2},
+        -0.5/a3/10^{-0.5},
+        -1/a5/10^{-1},
+        -1.5/a7/10^{-1.5}
+        }
+      {./data/mnist/resnet10-square-5-n-size-eval.dat}
+      
+      \cplxaccplot[dashdotted]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/mnist/resnet10-square-5-complexity-adam-eval.dat}
+            
+
+      
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Complexity vs. accuracy on MNIST. Resnet - 10 layers - $5 \times 5$ kernels - square width}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=\linewidth,
+      height=\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+      legend pos=south east,
+      ymin=0.9,
+      ymax=1,
+      %restrict x to domain=1:7,
+      %log basis x=10
+      legend style={legend columns=2, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+%      \cplxaccplot[solid]{
+%        -1/a1/10^{-1},
+%        -2/a3/10^{-2},
+%        -3/a5/10^{-3},
+%        -4/a7/10^{-4}}
+%      {./data/mnist/resnet10-square-20-size-adam-eval-train.dat}
+      
+       \cplxaccplot[dashed]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/mnist/resnet10-square-20-size-adam-eval.dat}
+            
+
+      
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Complexity vs. accuracy on MNIST. Resnet - 10 layers - $20 \times 20$ kernels - square width}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=\linewidth,
+      height=\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+      legend pos=south east,
+%      ymin=0.9,
+%      ymax=1,
+      %restrict x to domain=1:7,
+      %log basis x=10
+      legend style={legend columns=2, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+%      \cplxaccplot[solid]{
+%        -3.8-0/a1/10^{-3.8},
+%         -3.8-1/a3/10^{-3.8},
+%         -3.8-2/a5/10^{-3.8},
+%         -3.8-3/a7/10^{-3.8}}
+%      {./data/mnist/resnet4-10-test-convexity-eval-train.dat}
+      
+       \cplxaccplot[dashed]{
+%        -3.8-0/a1/10^{-3.8},
+         -3.8-1/a3/10^{-3.8},
+%         -3.8-2/a5/10^{-3.8},
+         -3.8-3/a7/10^{-3.8}
+		}
+      {./data/mnist/resnet4-10-test-convexity-eval.dat}
+      
+%       \cplxaccplot[solid]{
+%        -3.8-0/a1/10^{-3.8},
+%         -3.8-1/a3/10^{-3.8},
+%         -3.8-2/a5/10^{-3.8},
+%         -3.8-3/a7/10^{-3.8}
+%		}
+%      {./data/mnist/resnet4-10-test-convexity-ext-eval.dat}
+            
+      
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Complexity vs. accuracy on MNIST. Resnet - 4 layers - $20 \times 20$ kernels - square width - Convexity testing}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=\linewidth,
+      height=\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+      legend pos=south east,
+%      ymin=0.9,
+%      ymax=1,
+      %restrict x to domain=1:7,
+      %log basis x=10
+      legend style={legend columns=2, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+%      \cplxaccplot[solid]{
+%        -3-0/a1/10^{-3.0},
+%         -3-1/a3/10^{-3.0},
+%         -3-2/a5/10^{-3.0},
+%         -3-3/a7/10^{-3.0}}
+%      {./data/mnist/resnet10-test-convexity-eval-train.dat}
+      
+       \cplxaccplot[dashed]{
+%        -3-0/a1/10^{-3.0},
+         -3-1/a3/10^{-3.0},
+         -3-2/a5/10^{-3.0},
+%         -3-3/a7/10^{-3.0}
+		}
+      {./data/mnist/resnet10-test-convexity-eval.dat}
+      
+          
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Complexity vs. accuracy on MNIST. Resnet - 10 layers - $5 \times 5$ kernels - Convexity testing}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=\linewidth,
+      height=\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+      legend pos=south east,
+      ymin=0.8,
+%      ymax=1,
+      %restrict x to domain=1:7,
+      %log basis x=10
+      legend style={legend columns=5, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+           
+       \cplxaccplot[dashed]{
+        -1/a1/10^{-1.0},
+        -2/a3/10^{-2.0},
+        -3/a5/10^{-3.0},
+        -3/a5/10^{-4.0},
+        -4/a7/10^{-5.0}
+		}
+      {./data/cifar-10/resnet20-size-adam-eval.dat}
+      
+      \cplxaccplot[solid]{
+        -3/a1/10^{-3.0},
+        -3.2/a3/10^{-3.2},
+        -3.4/a5/10^{-3.4},
+        -3.6/a5/10^{-3.6},
+        -3.8/a7/10^{-3.8},
+        -4/a7/10^{-4.0}
+		}
+      {./data/cifar-10/resnet20-size-mom-eval.dat}
+      
+      \foreach \coord/\citekey/\anchor in {
+        {4.06e+7,1-0.0875}/He2015/north,
+%        {4.09e8, 1-0.0908}/Springenberg2015/north,
+        {1.5e7, 0.8901}/Romero2014/west, % Fitnet 1
+        {5.3823e+07, 0.9106}/Romero2014/west        % Fitnet 2
+%        {5.05e8, 0.9110}/Romero2014/west
+        }{ % Fitnet 3
+      
+        \edef\temp{
+          \noexpand\addplot[refmark] coordinates{(\coord)};
+          \noexpand\node at (axis cs:\coord) [anchor=\anchor] {\noexpand\cite{\citekey}};%ResNet 20
+        }
+        \temp
+      }
+
+      
+          
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Complexity vs. accuracy on CIFAR10. Resnet - 20 layers - $3 \times 3$ kernels}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=\linewidth,
+      height=\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+%      legend pos=south east,
+      ymin=0.97,
+      ymax=1,
+      %restrict x to domain=1:7,
+      %log basis x=10
+      legend style={legend columns=4, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+%      \cplxaccplot[solid]{
+%        -1/a1/10^{-1},
+%        -2/a3/10^{-2},
+%        -3/a5/10^{-3},
+%        -4/a7/10^{-4}}
+%      {./data/mnist/resnet4-20-size-adam-eval-train.dat}
+            
+      \cplxaccplot[dashed]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/mnist/resnet4-20-size-adam-eval.dat}
+      
+      \cplxaccplot[solid]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/mnist/resnet4-20-shape-adam-eval.dat}
+      
+
+
+      
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Complexity vs. accuracy on MNIST. Resnet - 3 layers - $20 \times 20$ kernels - square width. Shape and Size regularization comparison}
+\end{figure*}
+\begin{figure*}[!t]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=\linewidth,
+      height=\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+      legend pos=south east,
+      ymin=0.97,
+      ymax=1,
+      %restrict x to domain=1:7,
+      %log basis x=10
+      legend style={legend columns=4, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+     
+       \cplxaccplot[dashed]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/mnist/resnet10-square-5-size-eval.dat}
+      
+      \cplxaccplot[solid]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/mnist/resnet10-square-5-shape-adam-eval.dat}
+      
+
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Complexity vs. accuracy on MNIST. Resnet - 10 layers - $5 \times 5$ kernels - square width. Size and Shape regularization comparison}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=\linewidth,
+      height=\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+      legend pos=south east,
+%      ymin=0.97,
+      ymax=1,
+      %restrict x to domain=1:7,
+      %log basis x=10
+      legend style={legend columns=4, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+     
+       \cplxaccplot[solid]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/cifar-10/resnet4-20-complexity-adam-eval.dat}
+      
+       \cplxaccplot[dashed]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/cifar-10/resnet4-20-n-complexity-adam-eval.dat}
+      
+
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Complexity vs. accuracy on MNIST. Resnet - 4 layers - $20 \times 20$ kernels - square width. Complexity and Normalized complexity comparison}
+\end{figure*}
+
+\begin{figure*}[!t]
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=\linewidth,
+      height=\linewidth,
+      xlabel=Complexity,
+      ylabel=Top-1 accuracy,
+      legend pos=south east,
+%      ymin=0.97,
+      ymax=1,
+      %restrict x to domain=1:7,
+      %log basis x=10
+      legend style={legend columns=4, anchor=south east, at={(0.97,.03)}}, %, fill=none, draw=none
+      ]
+     
+       \cplxaccplot[solid]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/mnist/resnet10-square-5-complexity-adam-eval.dat}
+      
+       \cplxaccplot[dashed]{
+        -1/a1/10^{-1},
+        -2/a3/10^{-2},
+        -3/a5/10^{-3},
+        -4/a7/10^{-4}}
+      {./data/mnist/resnet10-square-5-n-complexity-adam-eval.dat}
+      
+
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Complexity vs. accuracy on MNIST. Resnet - 10 layers - $5 \times 5$ kernels - square width. Complexity and Normalized complexity comparison}
+\end{figure*}
+
+
+\end{document}
+
+
+
+%%% Local Variables:
+%%% TeX-master: "cpx_perf_plot"
+%%% End:

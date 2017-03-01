@@ -1,0 +1,54 @@
+\begin{figure}[!t]  
+  % \vspace{-0.2cm}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      snakeplot,
+      ylabel={$d_{i}$},
+      %snakeplot,
+      %font=\footnotesize,
+      %legend style={legend columns=2, anchor=north west, at={(0.01,1.05)}, fill=none, draw=none},
+      ]
+      %\errorband[fill=orange,fill opacity=0.5]{data/tmp.dat}{x}{1}{dy}{draw=orange,discard if not={y}{3}}
+      \def\cola{orange}
+      \def\colb{blue}
+      \def\colc{green}
+      \def\cold{yellow}
+
+      \foreach \curvecol/\alphaval/\alphastr in {\cold/0.0001/$10^{-4}$,\colc/0.001/$10^{-3}$,\colb/0.01/$10^{-2}$,\cola/0.1/$10^{-1}$}
+      {
+        \edef\temp{
+          %\noexpand\errorband[fill=\curvecol,fill opacity=0.5]{data/nb_layer_vs_layer_nb_vs_alpha.dat}{Layer_num}{0}{tau_e-3}{draw=\curvecol,
+          %  discard if not={alpha}{\alphaval}}
+          \noexpand\addplot
+          [fill=\curvecol, fill opacity=0.5, area style, draw=\curvecol, discard if not={alpha}{\alphaval}] 
+          table[x=Layer_num,y=tau_e-3]{data/nb_layer_vs_layer_nb_vs_alpha.dat} \noexpand\closedcycle;
+          \noexpand\addlegendentry{\alphastr}
+        }
+        \temp
+      }
+      
+      \pgfplotstableread{
+        Layer_num width
+        1 64
+        2 64
+        3 64
+        4 128
+        5 128
+        6 256
+        7 256
+      }\basearch
+      \addplot[fill=none,draw=black,dashed] table[x=Layer_num, y=width]{\basearch};
+      %\addlegendentry{base}
+      
+    \end{axis}
+  \end{tikzpicture}
+  % \includegraphics[height=6cm]{images/alpha_vec/testing.png}
+  \caption{Illustration of the $d_i$-regularized family of architectures obtained for $\tau=10^{-3}$ by varying $\alpha$ (value indicated in the legend) when using the seven-layer base architecture in \tblref{tbl:base_archs} for the constraints $\dmax_i$ (denoted as the dashed envelope). The learned width $d_i$ of each layer is denoted by the vertical length of the area plots.  \JZ{Need to stretch curve to occupy all the columns... Can add o markers to indicate active constraints. Need to specify all parameters. Why is this shifted right??}\PP{I don't understand the vertical symmetry}.}
+  \label{fig:reg1_family}
+\end{figure}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End:

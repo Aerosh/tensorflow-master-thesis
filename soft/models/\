@@ -1,0 +1,250 @@
+"""ResNet Train/Eval module.
+"""
+
+import time
+import cifar_input
+import imagenet_input
+import numpy as np
+import resnet_model
+import tensorflow as tf
+import argparse
+import sys
+from Imagenet import Imagenet
+from Cifar import Cifar
+from Mnist import Mnist
+from os import path
+from utility import sanitize_lrn_rates, read_lrn_rates
+from resnet_model import ResNet
+from regulizers import WeightDecay, LayerDepth, KernelSize, Complexity
+parser = argparse.ArgumentParser()
+parser.add_argument('--dataset', dest='dataset', type=str, default='cifar10', help='Choose dataset',
+                    choices=['cifar10', 'cifar100', 'imagenet', 'mnist'])
+parser.add_argument('--mode', dest='mode', type=str, default='train', help='train or eval')
+parser.add_argument('--data_path', dest='train_data_path', type=str, default='',
+                    help='Filename(s) for data.')
+parser.add_argument('--image_size', dest='image_size', type=int, default=32, help='Image side length')
+parser.add_argument('--train_dir', dest='train_dir', type=str, default='', help='Directory to keep training outputs')
+parser.add_argument('--eval_batch_count', dest='eval_batch_count', type=int, default=500, help='Number of batch to eval')
+parser.add_argument('--eval_once', dest='eval_once', action='store_true', help='Whether evaluate the model only once')
+parser.add_argument('--log_root', dest='log_root', type=str, default='',
+                    help='Directory to keep the checkpoints. Should be a parent directory of eval_dir')
+parser.add_argument('--num_gpus', dest='num_gpus', type=int, default=1, choices=[0, 1],
+                    help='Number of GPUs used for training (0 or 1)')
+parser.add_argument('--extended', dest='extended', action='store_true',
+                    help='Use either Classic or extended regularization')
+parser.add_argument('--alpha', dest='alpha', type=float, default=0.0,
+                    help='Penalization for the sparsity regularization as power of 10')
+parser.add_argument('--batch_size', dest='batch_size', type=int, default=256, help='Number of images per batch')
+parser.add_argument('--gpu_id', dest='gpu_id', type=str, default='0', help='GPU id for the training/eval')
+parser.add_argument('--reg', dest='reg', action='append', choices=['nb_kernel', 'size', 'shape', 'fmap'],
+                    help='Choose wanted regularization')
+parser.add_argument('--res_mod', dest='res_mod', type=str, default='residual', choices=['residual', 'plain'],
+                    help='Type of network')
+parser.add_argument('--zeroing', dest='zeroing', action='store', type=float, default=-1.0,
+                    help='Zeroing empty kernel with L2-norm below a threshold')
+parser.add_argument('--model_type', dest='model_type', type=str, default='resnet20',
+                   help='Choose model depth and kernel size (model_depth-kernel_size)',
+                    choices=['resnet8', 'resnet18', 'resnet8-5', 'resnet18-5', 'resnet8-7', 'resnet18-7', 'resnet20',
+                             'resnet20-5', 'resnet20-square', 'resnet20-square-5','resnet5-square-7'])
+parser.add_argument('--lrn_rate_thrs',type=str, help="learning rate threshold. String format : 0\tthr1\thr3\tstop")
+parser.add_argument('--lrn_rate_vals',type=str, help="learning rate values. String format : val1\tval2\tval3")
+parser.add_argument('--eval_output_file', type=str, help='File output for evaluation final resut')
+args = parser.parse_args()
+
+ST_MSG = "\t [STATE MESSAGE] "
+
+class ModelClass(ResNet, WeightDecay): pass
+
+def build_model(hps):
+    """ Build model given the dataset""" 
+    lrn_rate_thrs, lrn_rate_vals, stop =  load_config_file()
+    # Build dataset Object
+    if args.dataset == 'cifar10' or args.dataset == 'cifar100':
+        dataset = Cifar(args.model_type, args.dataset, args.log_root, lrn_rate_thrs,
+            lrn_rate_vals, stop)
+    elif args.dataset == 'imagenet':
+        ## TODO : Adapt Imagenet to new code structure 
+        dataset = Imagenet(resnet_model.ResNet, resnet_model, args.mode, 
+            imagenet_input, args.model_type, args.log_root, lrn_rate_thrs,
+            lrn_rate_vals, stop)
+    elif args.dataset == 'mnist':
+        ## TODO : Adapt Mnist to new Dataset object architecture
+        dataset = Mnist(resnet_model.ResNet, resnet_model, args.mode, args.model_type)
+
+    # Build model given a specific dataset
+    dataset.build_hps(args.data_path, hps.batch_size, args.mode)
+    model = ModelClass(hps, dataset.images, dataset.labelsm, args.mode,
+            alpha=10**args.alpha)
+    model.build_graph()
+
+    if args.mode == "train":
+        train(model)
+    elif args.mode == "eval":
+        eval(model)
+
+
+def load_config_file():
+    if((args.lrn_rate_thrs is None) or (args.lrn_rate_vals is None)):
+        print( ST_MSG + ' Learning rate not specified. Take default values')
+        return read_lrn_rates(args.log_root + "lrn_rate.txt")
+    else :
+        return sanitize_lrn_rates(args.lrn_rate_thrs, args.lrn_rate_vals)
+
+
+def train(model):
+    """Training loop."""
+    print(ST_MSG + 'Start training')
+    check_op = tf.add_check_numerics_ops()
+
+
+    ## Root folders to store model/events
+    if args.extended:
+        summary_writer = tf.train.SummaryWriter(args.train_dir + '_alpha_' + str(hps.penalization))
+    else:
+        summary_writer = tf.train.SummaryWriter(args.train_dir + '_weight_decay')
+    
+    config = tf.ConfigProto(allow_soft_placement=True)
+    sv = tf.train.Supervisor(logdir=args.log_root,
+                             is_chief=True,
+                             summary_op=None,
+                             save_summaries_secs=60,
+                             save_model_secs=300,
+                             global_step=model.global_step)
+
+    sess = sv.prepare_or_wait_for_session(config=config)
+
+    # Setup of the learning rate and the starting step number
+    step = sess.run(sv.global_step)
+    
+    lrn_rate = dataset.learning_rate(step)
+    print("Start at step : " + str(step))
+    print(ST_MSG + 'Start iterations')
+    try:
+        while not sv.should_stop():
+            (_, summaries, loss, predictions, truth, train_step, _) = sess.run(
+                [model.train_op, model.summaries, model.cost, model.predictions,
+                 model.labels, model.global_step, check_op ], 
+                feed_dict={model.lrn_rate: lrn_rate})
+
+            lrn_rate = dataset.learning_rate(step)
+
+            truth = np.argmax(truth, axis=1)
+            predictions = np.argmax(predictions, axis=1)
+            precision = np.mean(truth == predictions)
+
+            step += 1
+            if step % 100 == 0:
+
+                precision_summ = tf.Summary()
+                precision_summ.value.add(
+                    tag='Precision', simple_value=precision)
+                summary_writer.add_summary(precision_summ, train_step)
+                summary_writer.add_summary(summaries, train_step)
+                tf.logging.info('loss: %.3f, precision: %.3f\n' % (loss, precision))
+                summary_writer.flush()
+
+            if dataset.stop(step):
+                sv.stop()
+                print(ST_MSG + "Training stopped")
+                sv.saver.save(sess,sv.save_path + 'model.ckpt-' + str(step)) 
+  
+    except KeyboardInterrupt:
+        sv.saver.save(sess,sv.save_path + 'model.ckpt-' + str(step)) 
+        print(ST_MSG + "Interrupted at iteration " + str(step))
+
+def evaluate(model):
+    """Eval loop."""
+
+    print(ST_MSG + " Start Evaluation")
+
+    saver = tf.train.Saver()
+    sess = tf.Session(config=tf.ConfigProto(allow_soft_placement=True))
+    tf.train.start_queue_runners(sess)
+
+    if args.zeroing >= 0.0:
+        if "kernel" in args.reg:
+            zeroing = model.zeroing_empty_kernel(args.zeroing)
+        elif "size" in args.reg:
+            zeroing = model.zeroing_nested_ring(args.zeroing)
+
+        sess.run(tf.initialize_all_variables())
+
+    top1_total = 0.0
+    top5_total = 0.0
+
+    while True:
+        try:
+            ckpt_state = tf.train.get_checkpoint_state(args.log_root)
+        except tf.errors.OutOfRangeError as e:
+            exit('Cannot restore checkpoint: %s'% e)
+        if not (ckpt_state and ckpt_state.model_checkpoint_path):
+            exit('No model to eval yet at %s'% args.log_root)
+        print('Loading checkpoint %s', ckpt_state.model_checkpoint_path)
+        saver.restore(sess, ckpt_state.model_checkpoint_path)
+        print(ST_MSG + "Model Restored")
+
+        if args.zeroing >= 0.0:
+            sess.run(zeroing)
+
+        step = 1
+        start_time = time.time()
+        for it in range(args.eval_batch_count):
+            (summaries, loss, predictions, truth, train_step, top1, top5, images) = sess.run(
+                [model.summaries, model.cost, model.predictions,
+                 model.labels, model.global_step, model.top1, model.top5, model._images])
+
+            top1_total += np.sum(top1)
+            top5_total += np.sum(top5)
+
+            if it % 10 == 0:
+                print("Step " + str(step - 1) + ": Top-1 : " + str(top1_total/float(step*args.batch_size)) +
+                      " - Top-5 : " + str(top5_total/float(step*args.batch_size)))
+
+            step += 1
+
+        top1_acc = top1_total/float(args.eval_batch_count*args.batch_size)
+        top5_acc = top5_total/float(args.eval_batch_count*args.batch_size)
+
+        elapsed_time = time.time() - start_time
+
+        print("Top-1 : " + str(top1_acc))
+        print("Top-5 : " + str(top5_acc))
+        print("Evaluation time : " + str(elapsed_time))
+        
+        with open(args.eval_output_file, 'a') as file:
+            file.write("alpha : %f - tau : %f - top1 : :%f - top5 : %f\n" % (hps.penalization, args.zeroing,  top1_acc, top5_acc))
+            file.flush()
+            file.close()
+        if args.eval_once:
+            break
+
+
+def main(_):
+    if args.num_gpus == 0:
+        dev = '/cpu:0'
+    elif args.num_gpus == 1:
+        dev = '/gpu:' + args.gpu_id
+    else:
+        raise ValueError('Only support 0 or 1 gpu.')
+
+    if args.train_dir == '':
+        args.train_dir = args.log_root
+
+    if args.dataset == 'cifar10' or args.dataset == 'mnist':
+        num_classes = 10
+    elif args.dataset == 'cifar100':
+        num_classes = 100
+    elif args.dataset == 'imagenet':
+        num_classes = 1001
+
+    hps = resnet_model.HParams(batch_size=args.batch_size,
+                               num_classes=num_classes,
+                               lrn_rate=0.1,
+                               res_mod=args.res_mod,
+                               optimizer='mom',
+                               dataset=args.dataset)
+
+    with tf.device(dev):
+        build_model(hps)
+if __name__ == '__main__':
+    tf.app.run()

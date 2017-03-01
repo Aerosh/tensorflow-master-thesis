@@ -1,0 +1,86 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{Bach}
+F.~Bach and I.~W. Project-team.
+\newblock {Convex Optimization with Sparsity-Inducing Norms}.
+\newblock pages 1--35.
+
+\bibitem{Bottou2012}
+L.~Bottou.
+\newblock {Stochastic gradient descent tricks}.
+\newblock In G.~Montavon, G.~Orr, and K.-R. M{\"{u}}ller, editors, {\em Neural
+  Networks: Tricks of the Trade}. Springer, 2nd edition, 2012.
+
+\bibitem{Goodfellow2013}
+I.~J. Goodfellow, D.~Warde-farley, and A.~Courville.
+\newblock {Maxout Networks}.
+\newblock {\em Journal of Machine Learning Research}, 2013.
+
+\bibitem{He2015}
+K.~He, X.~Zhang, S.~Ren, and J.~Sun.
+\newblock {Deep Residual Learning for Image Recognition}.
+\newblock In {\em Arxiv.Org}, volume~7, pages 171--180, 2015.
+
+\bibitem{He2016}
+K.~He, X.~Zhang, S.~Ren, and J.~Sun.
+\newblock {Identity Mappings in Deep Residual Networks}.
+\newblock {\em arXiv preprint}, pages 1--15, 2016.
+
+\bibitem{Jenatton2010}
+R.~Jenatton, I.~Fr, and F.~Bach.
+\newblock {Proximal Methods for Sparse Hierarchical Dictionary Learning}.
+\newblock {\em Bach}, 2010.
+
+\bibitem{Jenatton2010a}
+R.~Jenatton, G.~Obozinski, and F.~Bach.
+\newblock {Structured Sparse Principal Component Analysis}.
+\newblock 9:366--373, 2010.
+
+\bibitem{Krizhevsky2012}
+A.~Krizhevsky, I.~Sutskever, and G.~Hinton.
+\newblock {ImageNet Classification with Deep Convolutional Neural Networks}.
+\newblock In {\em Neural Information Processing Systems}, pages 1--9, 2012.
+
+\bibitem{Kulkarnia}
+P.~Kulkarni, J.~Zepeda, F.~Jurie, P.~P{\'{e}}rez, and L.~Chevallier.
+\newblock {Learning the Structure of Deep Architectures via L1 Penalization}.
+\newblock In {\em British Machine Vision Conference}, 2015.
+
+\bibitem{Lin2013}
+M.~Lin, Q.~Chen, and S.~Yan.
+\newblock {Network In Network}.
+\newblock {\em arXiv preprint}, page~10, 2013.
+
+\bibitem{Liu2015}
+W.~Liu, D.~Anguelov, D.~Erhan, C.~Szegedy, and S.~Reed.
+\newblock {SSD: Single Shot MultiBox Detector}.
+\newblock {\em Arxiv}, pages 1--15, 2015.
+
+\bibitem{Romero2014}
+A.~Romero, N.~Ballas, S.~E. Kahou, A.~Chassang, C.~Gatta, and Y.~Bengio.
+\newblock {FitNets: Hints for Thin Deep Nets}.
+\newblock In {\em International Conference on Learning Representations}, 2014.
+
+\bibitem{Simonyan2014}
+K.~Simonyan and A.~Zisserman.
+\newblock {Very Deep Convolutional Networks for Large-Scale Image Recognition},
+  sep 2015.
+
+\bibitem{Springenberg2015}
+J.~T. Springenberg, A.~Dosovitskiy, T.~Brox, and M.~Riedmiller.
+\newblock {Striving for Simplicity: The All Convolutional Net}.
+\newblock In {\em International Conference on Learning and Recognition}, pages
+  1--14, 2015.
+
+\bibitem{Szegedy2014a}
+C.~Szegedy, W.~Liu, Y.~Jia, P.~Sermanet, S.~Reed, D.~Anguelov, D.~Erhan,
+  V.~Vanhoucke, and A.~Rabinovich.
+\newblock {Going Deeper with Convolutions}.
+\newblock 2014.
+
+\bibitem{Zagoruyko2016}
+S.~Zagoruyko and N.~Komodakis.
+\newblock {Wide Residual Networks}.
+\newblock {\em Arxiv}, 2016.
+
+\end{thebibliography}

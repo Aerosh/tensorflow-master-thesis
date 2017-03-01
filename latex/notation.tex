@@ -1,0 +1,60 @@
+%\usepackage{paralist}
+\usepackage{amsmath}
+%\usepackage{url}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{bm}
+%\usepackage{stmaryrd}
+
+%% LATIN
+%\newcommand{\ie}[0]{\textit{i.e.},~}
+%\newcommand{\eg}[0]{\textit{e.g.},~}
+%\newcommand{\cf}[0]{\textit{cf.},~}
+%\newcommand{\etal}[0]{\textit{et al.}~}
+
+%% MATH
+%    Algebra
+\newcommand{\Tr}[0]{{\ensuremath{\top}}}
+%\newcommand{\Tr}[0]{{\ensuremath{\textrm{T}}}}
+\newcommand{\ms}[1]{\ensuremath{\mathcal{#1}}} %Matrix (upper case)
+\newcommand{\mv}[1]{\ensuremath{\bm{#1}}} %Vector (lower case)
+\newcommand{\mm}[1]{\ensuremath{\bm{#1}}} %Matrix (upper case)
+\newcommand{\norm}[1]{\ensuremath{\lVert{#1}\rVert}} %Matrix (upper
+                                %case)
+
+%   Special vectors
+\newcommand{\mvbar}[1]{\bar{\mv #1}}
+\newcommand{\mvhat}[1]{\hat{\mv #1}}
+\newcommand{\mvcirc}[1]{{\mv #1^{\circ}}}
+
+%    Derived notations
+\newcommand{\vhat}[1]{\hat{\v{#1}}}
+
+%    Derivatives
+\newcommand{\der}[0]{\ensuremath{\boldsymbol{d}}} %Derivative
+\newcommand{\pder}[0]{\ensuremath{\boldsymbol{\partial}}} %Partial derivative
+\newcommand{\Jac}[2]{\ensuremath{\frac{\partial #1}{\partial #2}} }
+\newcommand{\JacE}[3]{\left . \ensuremath{\frac{\partial #1}{\partial #2}} \right |_{#3} }
+
+%    Operators
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\diag}{diag}
+
+%    General
+\newcommand{\overbar}[1]{\mkern 2mu\overline{\mkern-2mu#1\mkern-2mu}\mkern 2mu}
+\newcommand{\bigO}[1]{\mathcal{O} \left ( #1 \right ) }
+\newcommand{\parfrac}[2]{\left ( \frac{#1}{#2} \right )}
+\newcommand{\R}[0]{\mathbb R}
+\newcommand{\pars}[1]{\left ( #1 \right )}
+\newcommand{\curlys}[1]{\left \{ #1 \right \}}
+
+%% REFERENCES
+\newcommand{\figref}[1]{Fig. \ref{#1}}
+\newcommand{\sxnref}[1]{Section \ref{#1}}
+\newcommand{\tblref}[1]{Table \ref{#1}}
+\newcommand{\algoref}[1]{Algorithm \ref{#1}}
+
+%% PGFPLOTS FOR-LOOP ENABLER
+\newcommand{\pgfexpand}[1]{\edef\temp{\noexpand#1}\temp} % !!! NO WHITE SPACES AT THE BEGINNING OF THE INPUT PARAMETER OR THE LATEX COMPILATION WILL HANG !!!

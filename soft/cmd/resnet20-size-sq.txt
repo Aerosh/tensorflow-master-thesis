@@ -1,0 +1,1 @@
+for i in -3.0; do  python resnet/resnet_main.py --train_data_path=/data/ext/cifar-10/data_batch_* --log_root ../../../../../tmp/test-grad/size-square/alpha_1e-3.0/ --dataset cifar10 --num_gpus 1 --extended --alpha -3.0 --lrn_rate_thrs 0$'\t'20000$'\t'30000$'\t'40000 --lrn_rate_vals 0.1$'\t'0.01$'\t'0.001 --model_type resnet20 --reg size; done

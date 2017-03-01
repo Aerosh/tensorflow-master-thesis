@@ -1,0 +1,1045 @@
+\documentclass{article}
+\usepackage[a5paper, margin=0.1in]{geometry}
+\usepackage{pgfplots}
+\usetikzlibrary{plotmarks}
+
+%Custom power of ten variable
+\def\one{1.00E-001}
+\def\two{1.00E-002}
+\def\three{1.00E-003}
+\def\threedottwo{0.0006309573}
+\def\threedotfour{0.0003981072}
+\def\threedotsix{0.0002511886}
+\def\threedoteight{0.0001584893}
+\newcommand{\five}{1.00E-005}
+\newcommand{\four}{1.00E-004}
+
+\begin{document}
+\centering
+\pgfplotsset{
+    discard if not/.style 2 args={
+        x filter/.code={
+            \edef\tempa{\thisrow{#1}}
+            \edef\tempb{#2}
+            \ifx\tempa\tempb
+            \else
+                \def\pgfmathresult{inf}
+            \fi
+        }   
+    },
+    discard if not and not/.style n args={4}{
+        x filter/.code={
+            \edef\tempa{\thisrow{#1}}
+            \edef\tempb{#2}
+            \edef\tempc{\thisrow{#3}}
+            \edef\tempd{#4}
+            \ifx\tempa\tempb
+            		\ifx\tempc\tempd
+            \else
+                \def\pgfmathresult{inf}
+            \fi
+        }   
+    }
+}
+\pgfplotsset{compat=1.9}
+
+% \tikzset{clear/.style={only marks}}
+% \tikzset{marksonly/.style={mark size=5}}
+% \tikzset{t_0/.style={color=red!40!white}}
+% \tikzset{t_1e-5/.style={color=red!60!white}}
+% \tikzset{t_1e-4/.style={color=red!90!white}}
+% \tikzset{t_1e-3/.style={color=red!90!black}}
+% \tikzset{t_1e-2/.style={color=red!60!black}}
+% \tikzset{t_1e-1/.style={color=red!40!black}}
+% \tikzset{a_0/.style={mark=o}}
+% \tikzset{a_1e-4/.style={mark=star}}
+% \tikzset{a_1e-3/.style={mark=Mercedes star}}
+% \tikzset{a_1e-2/.style={mark=+}}
+% \tikzset{a_1e-1/.style={mark=|}}
+% \tikzset{a_sp/.style={mark=square}}
+
+\tikzset{clear/.style={only marks}}
+\tikzset{marksonly/.style={mark size=5}}
+\tikzset{t_0/.style={color=red!40!white}}
+\tikzset{t_1e-5/.style={color=red!60!white}}
+\tikzset{t_1e-4/.style={color=red!90!white}}
+\tikzset{t_1e-3/.style={color=red!90!black}}
+\tikzset{t_1e-2/.style={color=red!60!black}}
+\tikzset{t_1e-1/.style={color=red!40!black}}
+\tikzset{a_0/.style={mark=o}}
+\tikzset{a_1e-4/.style={mark=star}}
+\tikzset{a_1e-3/.style={mark=Mercedes star}}
+\tikzset{a_1e-2/.style={mark=+}}
+\tikzset{a_1e-1/.style={mark=|}}
+\tikzset{a_sp/.style={mark=square}}
+
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= Complexity at convergence,
+	xlabel=$\alpha$,
+	ylabel=FLOPS,
+	enlarge x limits=false,
+	legend cell align=left,
+	legend style={ at={(1.03,0.5)}, anchor=west },
+	xmode=log]
+		\addplot+[discard if not={zeroing}{0},a_0,t_0] table[x=alpha,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{No zeroing}
+		\addplot+[discard if not={zeroing}{0.001},a_1e-4,t_1e-3] table[x=alpha,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.001$}
+		\addplot+[discard if not={zeroing}{0.0001},a_1e-3,t_1e-4] table[x=alpha,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.0001$}
+		\addplot+[discard if not={zeroing}{0.00001},a_1e-1,t_1e-5] table[x=alpha,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.00001$}
+	\end{axis}
+\end{tikzpicture}
+\\
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= Zeroing vs Complexity,
+	xlabel=$\tau$,
+	ylabel=Complexity,
+	xmode=log,
+	legend cell align=left,
+	legend style={at={(1.03,0.5)}, anchor=west }]
+		\addplot+[discard if not={alpha}{0},a_0] table[x=zeroing,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\alpha = 0$}
+		\addplot+[discard if not={alpha}{0.0001},a_1e-4] table[x=zeroing,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\alpha = 0.0001$}
+		\addplot+[discard if not={alpha}{0.001},a_1e-3] table[x=zeroing,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\alpha = 0.001$}
+		\addplot+[discard if not={alpha}{0.01},a_1e-2] table[x=zeroing,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\alpha = 0.01$}
+		\addplot+[discard if not={alpha}{0.1},a_1e-1] table[x=zeroing,y=FLOPS,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\alpha = 0.1$}
+	\end{axis}
+\end{tikzpicture}
+\\
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= Top-1 accuracy,
+	xlabel=$\alpha$,
+	ylabel=Performance,
+	xmode=log,
+	legend cell align=left,
+	legend style={at={(1.03,0.5)}, anchor=west }]
+		\addplot+[discard if not={zeroing}{0},a_0,t_0] table[x=alpha,y=top1,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0$}
+		\addplot+[discard if not={zeroing}{0.00001},a_1e-4,t_1e-5] table[x=alpha,y=top1,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.00001$}
+		\addplot+[discard if not={zeroing}{0.0001},a_1e-3,t_1e-4] table[x=alpha,y=top1,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.0001$}
+		\addplot+[discard if not={zeroing}{0.001},a_1e-2,t_1e-3] table[x=alpha,y=top1,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.001$}
+	\end{axis}
+\end{tikzpicture}
+\\
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= Top-5 accuracy,
+	xlabel=$\alpha$,
+	ylabel=Performance,
+	xmode=log,
+	legend cell align=left,
+	legend style={at={(1.03,0.5)}, anchor=west }]
+		\addplot+[discard if not={zeroing}{0},a_0,t_0] table[x=alpha,y=top5,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0$}
+		\addplot+[discard if not={zeroing}{0.00001},a_1e-4,t_1e-5] table[x=alpha,y=top5,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.00001$}
+		\addplot+[discard if not={zeroing}{0.0001},a_1e-3,t_1e-4] table[x=alpha,y=top5,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.0001$}
+		\addplot+[discard if not={zeroing}{0.001},a_1e-2,t_1e-3] table[x=alpha,y=top5,meta=alpha]
+			{../data/accuracy_vs_complexity.dat};	
+		\addlegendentry{$\tau = 0.001$}
+	\end{axis}
+\end{tikzpicture}
+\\
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= Complexity vs top1,
+	xlabel=Complexity,
+	ylabel=Performance,
+	legend cell align=left,
+	legend style={ at={(1.03,0.5)}, anchor=west }]
+		\addlegendimage{only marks, t_0}; 
+		\addlegendentry{$\tau = 0$}
+		\addlegendimage{only marks, t_1e-5}; 
+		\addlegendentry{$\tau = 0.00001$}
+		\addlegendimage{only marks, t_1e-4}; 
+		\addlegendentry{$\tau = 0.0001$}
+		\addlegendimage{only marks, t_1e-3}; 
+		\addlegendentry{$\tau = 0.001$}		
+		\addlegendimage{only marks, a_0}; 
+		\addlegendentry{$\alpha = 0$}
+		\addlegendimage{only marks, a_1e-4}; 
+		\addlegendentry{$\alpha = 0.0001$}
+		\addlegendimage{only marks, a_1e-3}; 
+		\addlegendentry{$\alpha = 0.001$}
+		\addlegendimage{only marks, a_1e-2}; 
+		\addlegendentry{$\alpha = 0.01$}
+		\addlegendimage{only marks, a_1e-1}; 
+		\addlegendentry{$\alpha = 0.1$}
+		\addplot+[marksonly,discard if not and not={alpha}{0}{zeroing}{0},t_0,a_0] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.0001}{zeroing}{0},t_0,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.001}{zeroing}{0},t_0,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.01}{zeroing}{0},t_0,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.1}{zeroing}{0},t_0,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0}{zeroing}{0.00001},t_1e-5,a_0] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.0001}{zeroing}{0.00001},t_1e-5,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.001}{zeroing}{0.00001},t_1e-5,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.01}{zeroing}{0.00001},t_1e-5,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.1}{zeroing}{0.00001},t_1e-5,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0}{zeroing}{0.0001},t_1e-4,a_0] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.0001}{zeroing}{0.0001},t_1e-4,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.001}{zeroing}{0.0001},t_1e-4,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.01}{zeroing}{0.0001},t_1e-4,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.1}{zeroing}{0.0001},t_1e-4,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0}{zeroing}{0.001},t_1e-3,a_0] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.0001}{zeroing}{0.001},t_1e-3,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.001}{zeroing}{0.001},t_1e-3,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.01}{zeroing}{0.001},t_1e-3,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.1}{zeroing}{0.001},t_1e-3,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/accuracy_vs_complexity.dat};
+
+		
+	\end{axis}
+\end{tikzpicture}
+\\
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= Complexity vs top5,
+	xlabel=Complexity,
+	ylabel=Performance,
+	legend cell align=left,
+	legend style={ at={(1.03,0.5)}, anchor=west }]
+		\addlegendimage{only marks, t_0}; 
+		\addlegendentry{$\tau = 0$}
+		\addlegendimage{only marks, t_1e-5}; 
+		\addlegendentry{$\tau = 0.00001$}
+		\addlegendimage{only marks, t_1e-4}; 
+		\addlegendentry{$\tau = 0.0001$}
+		\addlegendimage{only marks, t_1e-3}; 
+		\addlegendentry{$\tau = 0.001$}		
+		\addlegendimage{only marks, a_0}; 
+		\addlegendentry{$\alpha = 0$}
+		\addlegendimage{only marks, a_1e-4}; 
+		\addlegendentry{$\alpha = 0.0001$}
+		\addlegendimage{only marks, a_1e-3}; 
+		\addlegendentry{$\alpha = 0.001$}
+		\addlegendimage{only marks, a_1e-2}; 
+		\addlegendentry{$\alpha = 0.01$}
+		\addlegendimage{only marks, a_1e-1}; 
+		\addlegendentry{$\alpha = 0.1$}
+		\addplot+[marksonly,discard if not and not={alpha}{0}{zeroing}{0},t_0,a_0] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.0001}{zeroing}{0},t_0,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[discard if not and not={alpha}{0.001}{zeroing}{0},t_0,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.01}{zeroing}{0},t_0,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.1}{zeroing}{0},t_0,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0}{zeroing}{0.00001},t_1e-5,a_0] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.0001}{zeroing}{0.00001},t_1e-5,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.001}{zeroing}{0.00001},t_1e-5,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.01}{zeroing}{0.00001},t_1e-5,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.1}{zeroing}{0.00001},t_1e-5,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0}{zeroing}{0.0001},t_1e-4,a_0] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.0001}{zeroing}{0.0001},t_1e-4,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.001}{zeroing}{0.0001},t_1e-4,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.01}{zeroing}{0.0001},t_1e-4,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.1}{zeroing}{0.0001},t_1e-4,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0}{zeroing}{0.001},t_1e-3,a_0] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.0001}{zeroing}{0.001},t_1e-3,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.001}{zeroing}{0.001},t_1e-3,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.01}{zeroing}{0.001},t_1e-3,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{0.1}{zeroing}{0.001},t_1e-3,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/accuracy_vs_complexity.dat};
+
+		
+	\end{axis}
+\end{tikzpicture}
+
+\newpage
+
+\begin{tikzpicture} 
+	\begin{axis}[
+	title=Number of kernels at convergence - L2 losses $\leq 1\%$ mean L2 loss,
+	xlabel=$\alpha$,
+	ylabel=Number of kernels,
+	stack plots=y, 
+	area style,
+	enlarge x limits=false,
+	legend style={ at={(1.03,0.5)}, anchor=west },
+	xmode=log]
+		\addplot+[discard if not={Layer_num}{1}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 1}
+		\addplot+[discard if not={Layer_num}{2}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 2}
+		\addplot+[discard if not={Layer_num}{3}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 3}
+		\addplot+[discard if not={Layer_num}{4}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 4}
+		\addplot+[discard if not={Layer_num}{5}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 5}
+		\addplot+[discard if not={Layer_num}{6}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 6}
+		\addplot+[discard if not={Layer_num}{7}] table[x=alpha,y=1p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 7}
+	\end{axis}
+\end{tikzpicture}
+\\
+\begin{tikzpicture} 
+	\begin{axis}[
+	title=Number of kernels at convergence - L2 losses $\leq 5\%$ mean L2 loss,
+	xlabel=$\alpha$,
+	ylabel=Number of kernels,
+	stack plots=y, 
+	area style,
+	enlarge x limits=false,
+	legend style={ at={(1.03,0.5)}, anchor=west },
+	xmode=log]
+		\addplot+[discard if not={Layer_num}{1}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 1}
+		\addplot+[discard if not={Layer_num}{2}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 2}
+		\addplot+[discard if not={Layer_num}{3}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 3}
+		\addplot+[discard if not={Layer_num}{4}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 4}
+		\addplot+[discard if not={Layer_num}{5}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 5}
+		\addplot+[discard if not={Layer_num}{6}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 6}
+		\addplot+[discard if not={Layer_num}{7}] table[x=alpha,y=5p_app_spars,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 7}
+	\end{axis}
+\end{tikzpicture}
+\\
+\begin{tikzpicture} 
+	\begin{axis}[
+	title=Number of kernels at convergence - L2 losses $\leq 1e-3$,
+	xlabel=$\alpha$,
+	ylabel=Number of kernels,
+	stack plots=y, 
+	area style,
+	enlarge x limits=false,
+	legend style={ at={(1.03,0.5)}, anchor=west },
+	xmode=log]
+		\addplot+[discard if not={Layer_num}{1}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 1}
+		\addplot+[discard if not={Layer_num}{2}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 2}
+		\addplot+[discard if not={Layer_num}{3}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 3}
+		\addplot+[discard if not={Layer_num}{4}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 4}
+		\addplot+[discard if not={Layer_num}{5}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 5}
+		\addplot+[discard if not={Layer_num}{6}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 6}
+		\addplot+[discard if not={Layer_num}{7}] table[x=alpha,y=tau_e-3,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 7}
+	\end{axis}
+\end{tikzpicture}
+\\
+\begin{tikzpicture} 
+	\begin{axis}[
+	title=Number of kernels at convergence -  L2 losses $\leq 1e-4$,
+	xlabel=$\alpha$,
+	ylabel=Number of kernels,
+	stack plots=y, 
+	area style,
+	enlarge x limits=false,
+	legend style={ at={(1.03,0.5)}, anchor=west },
+	xmode=log]
+		\addplot+[discard if not={Layer_num}{1}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 1}
+		\addplot+[discard if not={Layer_num}{2}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 2}
+		\addplot+[discard if not={Layer_num}{3}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 3}
+		\addplot+[discard if not={Layer_num}{4}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 4}
+		\addplot+[discard if not={Layer_num}{5}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 5}
+		\addplot+[discard if not={Layer_num}{6}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 6}
+		\addplot+[discard if not={Layer_num}{7}] table[x=alpha,y=tau_e-4,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 7}
+	\end{axis}
+\end{tikzpicture}
+\\
+\begin{tikzpicture} 
+	\begin{axis}[
+	title=Number of kernels at convergence - L2 losses $\leq 1e-5$,
+	xlabel=$\alpha$,
+	ylabel=Number of kernels,
+	stack plots=y, 
+	area style,
+	enlarge x limits=false,
+	legend style={ at={(1.03,0.5)}, anchor=west },
+	xmode=log]
+		\addplot+[discard if not={Layer_num}{1}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 1}
+		\addplot+[discard if not={Layer_num}{2}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 2}
+		\addplot+[discard if not={Layer_num}{3}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 3}
+		\addplot+[discard if not={Layer_num}{4}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 4}
+		\addplot+[discard if not={Layer_num}{5}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 5}
+		\addplot+[discard if not={Layer_num}{6}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 6}
+		\addplot+[discard if not={Layer_num}{7}] table[x=alpha,y=tau_e-5,meta=Layer_num]
+			{../data/nb_layer_vs_layer_nb_vs_alpha.dat}
+		\closedcycle;
+		\addlegendentry{Layer 7}
+	\end{axis}
+\end{tikzpicture}
+\newpage
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= CIFAR-10 - Top-1 accuracy,
+	xlabel=$\alpha$,
+	ylabel=Performance,
+	xmode=log,
+	legend cell align=left,
+	legend style={at={(1.03,0.5)}, anchor=west }]
+		\addplot+[discard if not={zeroing}{0},a_0,t_0] table[x=alpha,y=top1,meta=alpha]
+			{../data/cifar10-accuracy.dat};	
+		\addlegendentry{$\tau = 0$}
+		\addplot+[discard if not={zeroing}{\five},a_1e-4,t_1e-5] table[x=alpha,y=top1,meta=alpha]
+			{../data/cifar10-accuracy.dat};	
+		\addlegendentry{$\tau = 0.00001$}
+		\addplot+[discard if not={zeroing}{\four},a_1e-3,t_1e-4] table[x=alpha,y=top1,meta=alpha]
+			{../data/cifar10-accuracy.dat};	
+		\addlegendentry{$\tau = 0.0001$}
+		\addplot+[discard if not={zeroing}{\three},a_1e-2,t_1e-3] table[x=alpha,y=top1,meta=alpha]
+			{../data/cifar10-accuracy.dat};	
+		\addlegendentry{$\tau = 0.001$}
+		\addplot+[discard if not={zeroing}{\two},a_1e-2,t_1e-3] table[x=alpha,y=top1,meta=alpha]
+			{../data/cifar10-accuracy.dat};	
+		\addlegendentry{$\tau = 0.01$}
+		\addplot+[discard if not={zeroing}{\one},a_1e-2,t_1e-3] table[x=alpha,y=top1,meta=alpha]
+			{../data/cifar10-accuracy.dat};	
+		\addlegendentry{$\tau = 0.1$}
+		
+	\end{axis}
+\end{tikzpicture}
+\\
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= CIFAR10 - Top-5 accuracy,
+	xlabel=$\alpha$,
+	ylabel=Performance,
+	xmode=log,
+	legend cell align=left,
+	legend style={at={(1.03,0.5)}, anchor=west }]
+		\addplot+[discard if not={zeroing}{0},a_0,t_0] table[x=alpha,y=top5,meta=alpha]
+			{../data/cifar10-accuracy.dat};	
+		\addlegendentry{$\tau = 0$}
+		\addplot+[discard if not={zeroing}{\five},a_1e-4,t_1e-5] table[x=alpha,y=top5,meta=alpha]
+			{../data/cifar10-accuracy.dat};	
+		\addlegendentry{$\tau = 0.00001$}
+		\addplot+[discard if not={zeroing}{\four},a_1e-3,t_1e-4] table[x=alpha,y=top5,meta=alpha]
+			{../data/cifar10-accuracy.dat};	
+		\addlegendentry{$\tau = 0.0001$}
+		\addplot+[discard if not={zeroing}{\three},a_1e-2,t_1e-3] table[x=alpha,y=top5,meta=alpha]
+			{../data/cifar10-accuracy.dat};	
+		\addlegendentry{$\tau = 0.001$}
+		\addplot+[discard if not={zeroing}{\two},a_1e-2,t_1e-3] table[x=alpha,y=top5,meta=alpha]
+			{../data/cifar10-accuracy.dat};	
+		\addlegendentry{$\tau = 0.01$}
+		\addplot+[discard if not={zeroing}{\one},a_1e-2,t_1e-3] table[x=alpha,y=top5,meta=alpha]
+			{../data/cifar10-accuracy.dat};	
+		\addlegendentry{$\tau = 0.1$}
+	\end{axis}
+\end{tikzpicture}
+\newpage
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= CIFAR10 - Complexity vs top1,
+	xlabel=Complexity,
+	ylabel=Performance,
+	legend cell align=left,
+	legend style={ at={(1.03,0.5)}, anchor=west }]
+		\addlegendimage{only marks, t_0}; 
+		\addlegendentry{$\tau = 0$}
+		\addlegendimage{only marks, t_1e-5}; 
+		\addlegendentry{$\tau = 1e-5$}
+		\addlegendimage{only marks, t_1e-4}; 
+		\addlegendentry{$\tau = 1e-4$}
+		\addlegendimage{only marks, t_1e-3}; 
+		\addlegendentry{$\tau = 1e-3$}
+		\addlegendimage{only marks, t_1e-2}; 
+		\addlegendentry{$\tau = 1e-2$}
+		\addlegendimage{only marks, t_1e-1}; 
+		\addlegendentry{$\tau = 1e-1$}		
+		\addlegendimage{only marks, a_0}; 
+		\addlegendentry{$\alpha = 1e-4$}
+		\addlegendimage{only marks, a_1e-4}; 
+		\addlegendentry{$\alpha = 1e-3.8$}
+		\addlegendimage{only marks, a_1e-3}; 
+		\addlegendentry{$\alpha = 1e-3.6$}
+		\addlegendimage{only marks, a_1e-2}; 
+		\addlegendentry{$\alpha = 1e-3.4$}
+		\addlegendimage{only marks, a_1e-1}; 
+		\addlegendentry{$\alpha = 1e-3.2$}
+		\addlegendimage{only marks, a_sp}; 
+		\addlegendentry{$\alpha = 1e-3$}
+		\addplot+[marksonly,discard if not and not={alpha}{\four}{zeroing}{0},t_0,a_0] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedoteight}{zeroing}{0},t_0,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotsix}{zeroing}{0},t_0,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotfour}{zeroing}{0},t_0,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedottwo}{zeroing}{0},t_0,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\three}{zeroing}{0},t_0,a_sp] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\four}{zeroing}{\five},t_1e-5,a_0] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedoteight}{zeroing}{\five},t_1e-5,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotsix}{zeroing}{\five},t_1e-5,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotfour}{zeroing}{\five},t_1e-5,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedottwo}{zeroing}{\five},t_1e-5,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\three}{zeroing}{\five},t_1e-5,a_sp] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\four}{zeroing}{\four},t_1e-4,a_0] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedoteight}{zeroing}{\four},t_1e-4,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotsix}{zeroing}{\four},t_1e-4,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotfour}{zeroing}{\four},t_1e-4,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedottwo}{zeroing}{\four},t_1e-4,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\three}{zeroing}{\four},t_1e-4,a_sp] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\four}{zeroing}{\three},t_1e-3,a_0] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedoteight}{zeroing}{\three},t_1e-3,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotsix}{zeroing}{\three},t_1e-3,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotfour}{zeroing}{\three},t_1e-3,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedottwo}{zeroing}{\three},t_1e-3,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\three}{zeroing}{\three},t_1e-3,a_sp] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\four}{zeroing}{\two},t_1e-2,a_0] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedoteight}{zeroing}{\two},t_1e-2,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotsix}{zeroing}{\two},t_1e-2,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotfour}{zeroing}{\two},t_1e-2,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedottwo}{zeroing}{\two},t_1e-2,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\three}{zeroing}{\two},t_1e-2,a_sp] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\four}{zeroing}{\one},t_1e-1,a_0] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedoteight}{zeroing}{\one},t_1e-1,a_1e-4] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotsix}{zeroing}{\one},t_1e-1,a_1e-3] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotfour}{zeroing}{\one},t_1e-1,a_1e-2] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedottwo}{zeroing}{\one},t_1e-1,a_1e-1] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\three}{zeroing}{\one},t_1e-1,a_sp] table[x=FLOPS,y=top1]
+			{../data/cifar10-accuracy.dat};
+	\end{axis}
+\end{tikzpicture}
+\\
+\begin{tikzpicture} 
+	\begin{axis}[
+	title= CIFAR10 - Complexity vs top5,
+	xlabel=Complexity,
+	ylabel=Performance,
+	legend cell align=left,
+	legend style={ at={(1.03,0.5)}, anchor=west }]
+		\addlegendimage{only marks, t_0}; 
+		\addlegendentry{$\tau = 0$}
+		\addlegendimage{only marks, t_1e-5}; 
+		\addlegendentry{$\tau = 1e-5$}
+		\addlegendimage{only marks, t_1e-4}; 
+		\addlegendentry{$\tau = 1e-4$}
+		\addlegendimage{only marks, t_1e-3}; 
+		\addlegendentry{$\tau = 1e-3$}
+		\addlegendimage{only marks, t_1e-2}; 
+		\addlegendentry{$\tau = 1e-2$}
+		\addlegendimage{only marks, t_1e-1}; 
+		\addlegendentry{$\tau = 1e-1$}		
+		\addlegendimage{only marks, a_0}; 
+		\addlegendentry{$\alpha = 1e-4$}
+		\addlegendimage{only marks, a_1e-4}; 
+		\addlegendentry{$\alpha = 1e-3.8$}
+		\addlegendimage{only marks, a_1e-3}; 
+		\addlegendentry{$\alpha = 1e-3.6$}
+		\addlegendimage{only marks, a_1e-2}; 
+		\addlegendentry{$\alpha = 1e-3.4$}
+		\addlegendimage{only marks, a_1e-1}; 
+		\addlegendentry{$\alpha = 1e-3.2$}
+		\addlegendimage{only marks, a_sp}; 
+		\addlegendentry{$\alpha = 1e-3$}
+		\addplot+[marksonly,discard if not and not={alpha}{\four}{zeroing}{0},t_0,a_0] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedoteight}{zeroing}{0},t_0,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotsix}{zeroing}{0},t_0,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotfour}{zeroing}{0},t_0,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedottwo}{zeroing}{0},t_0,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\three}{zeroing}{0},t_0,a_sp] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\four}{zeroing}{\five},t_1e-5,a_0] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedoteight}{zeroing}{\five},t_1e-5,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotsix}{zeroing}{\five},t_1e-5,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotfour}{zeroing}{\five},t_1e-5,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedottwo}{zeroing}{\five},t_1e-5,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\three}{zeroing}{\five},t_1e-5,a_sp] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\four}{zeroing}{\four},t_1e-4,a_0] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedoteight}{zeroing}{\four},t_1e-4,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotsix}{zeroing}{\four},t_1e-4,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotfour}{zeroing}{\four},t_1e-4,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedottwo}{zeroing}{\four},t_1e-4,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\three}{zeroing}{\four},t_1e-4,a_sp] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\four}{zeroing}{\three},t_1e-3,a_0] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedoteight}{zeroing}{\three},t_1e-3,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotsix}{zeroing}{\three},t_1e-3,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotfour}{zeroing}{\three},t_1e-3,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedottwo}{zeroing}{\three},t_1e-3,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\three}{zeroing}{\three},t_1e-3,a_sp] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\four}{zeroing}{\two},t_1e-2,a_0] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedoteight}{zeroing}{\two},t_1e-2,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotsix}{zeroing}{\two},t_1e-2,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotfour}{zeroing}{\two},t_1e-2,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedottwo}{zeroing}{\two},t_1e-2,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\three}{zeroing}{\two},t_1e-2,a_sp] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\four}{zeroing}{\one},t_1e-1,a_0] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedoteight}{zeroing}{\one},t_1e-1,a_1e-4] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotsix}{zeroing}{\one},t_1e-1,a_1e-3] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedotfour}{zeroing}{\one},t_1e-1,a_1e-2] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\threedottwo}{zeroing}{\one},t_1e-1,a_1e-1] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+		\addplot+[marksonly,discard if not and not={alpha}{\three}{zeroing}{\one},t_1e-1,a_sp] table[x=FLOPS,y=top5]
+			{../data/cifar10-accuracy.dat};
+	\end{axis}
+\end{tikzpicture}
+%\begin{tikzpicture} 
+%	\begin{axis}[
+%	title=Evolution Number of Kernels - Layer 1,
+%	xlabel=Iteration number,
+%	ylabel=Number of kernels,
+%	enlarge x limits=false,
+%	stack plots=y,
+%	area style,
+%	xmin = 0,
+%	ymin=0,
+%	legend style={ at={(1.03,0.5)}, anchor=west }]
+%		\addplot+[discard if not and not={layer}{1}{alpha}{0}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0$}
+%		\addplot+[discard if not and not={layer}{1}{alpha}{0.0001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.0001$}
+%		\addplot+[discard if not and not={layer}{1}{alpha}{0.001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.001$}
+%		\addplot+[discard if not and not={layer}{1}{alpha}{0.01}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.01$}
+%		\addplot+[discard if not and not={layer}{1}{alpha}{0.1}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.1$}
+%		
+%
+%	\end{axis}
+%\end{tikzpicture}
+%\\
+%\begin{tikzpicture} 
+%	\begin{axis}[
+%	title=Evolution Number of Kernels - Layer 2,
+%	xlabel=Iteration number,
+%	ylabel=Number of kernels,
+%	enlarge x limits=false,
+%	stack plots=y,
+%	area style,
+%	xmin = 0,
+%	ymin=0,
+%	legend style={ at={(1.03,0.5)}, anchor=west }]
+%		\addplot+[discard if not and not={layer}{2}{alpha}{0}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0$}
+%		\addplot+[discard if not and not={layer}{2}{alpha}{0.0001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.0001$}
+%		\addplot+[discard if not and not={layer}{2}{alpha}{0.001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.001$}
+%		\addplot+[discard if not and not={layer}{2}{alpha}{0.01}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.01$}
+%		\addplot+[discard if not and not={layer}{2}{alpha}{0.1}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.1$}
+%		
+%
+%	\end{axis}
+%\end{tikzpicture}
+%\\
+%\begin{tikzpicture} 
+%	\begin{axis}[
+%	title=Evolution Number of Kernels - Layer 3,
+%	xlabel=Iteration number,
+%	ylabel=Number of kernels,
+%	enlarge x limits=false,
+%	stack plots=y,
+%	area style,
+%	xmin = 0,
+%	ymin=0,
+%	legend style={ at={(1.03,0.5)}, anchor=west }]
+%		\addplot+[discard if not and not={layer}{3}{alpha}{0}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0$}
+%		\addplot+[discard if not and not={layer}{3}{alpha}{0.0001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.0001$}
+%		\addplot+[discard if not and not={layer}{3}{alpha}{0.001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.001$}
+%		\addplot+[discard if not and not={layer}{3}{alpha}{0.01}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.01$}
+%		\addplot+[discard if not and not={layer}{3}{alpha}{0.1}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.1$}
+%		
+%
+%	\end{axis}
+%\end{tikzpicture}
+%\\
+%\begin{tikzpicture} 
+%	\begin{axis}[
+%	title=Evolution Number of Kernels - Layer 4,
+%	xlabel=Iteration number,
+%	ylabel=Number of kernels,
+%	enlarge x limits=false,
+%	stack plots=y,
+%	area style,
+%	xmin = 0,
+%	ymin=0,
+%	legend style={ at={(1.03,0.5)}, anchor=west }]
+%		\addplot+[discard if not and not={layer}{4}{alpha}{0}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0$}
+%		\addplot+[discard if not and not={layer}{4}{alpha}{0.0001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.0001$}
+%		\addplot+[discard if not and not={layer}{4}{alpha}{0.001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.001$}
+%		\addplot+[discard if not and not={layer}{4}{alpha}{0.01}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.01$}
+%		\addplot+[discard if not and not={layer}{4}{alpha}{0.1}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.1$}
+%		
+%
+%	\end{axis}
+%\end{tikzpicture}
+%\\
+%\begin{tikzpicture} 
+%	\begin{axis}[
+%	title=Evolution Number of Kernels - Layer 5,
+%	xlabel=Iteration number,
+%	ylabel=Number of kernels,
+%	enlarge x limits=false,
+%	stack plots=y,
+%	area style,
+%	xmin = 0,
+%	ymin=0,
+%	legend style={ at={(1.03,0.5)}, anchor=west }]
+%		\addplot+[discard if not and not={layer}{5}{alpha}{0}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0$}
+%		\addplot+[discard if not and not={layer}{5}{alpha}{0.0001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.0001$}
+%		\addplot+[discard if not and not={layer}{5}{alpha}{0.001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.001$}
+%		\addplot+[discard if not and not={layer}{5}{alpha}{0.01}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.01$}
+%		\addplot+[discard if not and not={layer}{5}{alpha}{0.1}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.1$}
+%		
+%
+%	\end{axis}
+%\end{tikzpicture}
+%\\
+%\begin{tikzpicture} 
+%	\begin{axis}[
+%	title=Evolution Number of Kernels - Layer 6,
+%	xlabel=Iteration number,
+%	ylabel=Number of kernels,
+%	enlarge x limits=false,
+%	stack plots=y,
+%	area style,
+%	xmin = 0,
+%	ymin=0,
+%	legend style={ at={(1.03,0.5)}, anchor=west }]
+%		\addplot+[discard if not and not={layer}{6}{alpha}{0}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0$}
+%		\addplot+[discard if not and not={layer}{6}{alpha}{0.0001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.0001$}
+%		\addplot+[discard if not and not={layer}{6}{alpha}{0.001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.001$}
+%		\addplot+[discard if not and not={layer}{6}{alpha}{0.01}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.01$}
+%		\addplot+[discard if not and not={layer}{6}{alpha}{0.1}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.1$}
+%		
+%
+%	\end{axis}
+%\end{tikzpicture}
+%\\
+%\begin{tikzpicture} 
+%	\begin{axis}[
+%	title=Evolution Number of Kernels - Layer 7,
+%	xlabel=Iteration number,
+%	ylabel=Number of kernels,
+%	enlarge x limits=false,
+%	stack plots=y,
+%	area style,
+%	xmin = 0,
+%	ymin=0,
+%	legend style={ at={(1.03,0.5)}, anchor=west }]
+%		\addplot+[discard if not and not={layer}{7}{alpha}{0}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0$}
+%		\addplot+[discard if not and not={layer}{7}{alpha}{0.0001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.0001$}
+%		\addplot+[discard if not and not={layer}{7}{alpha}{0.001}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.001$}
+%		\addplot+[discard if not and not={layer}{7}{alpha}{0.01}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.01$}
+%		\addplot+[discard if not and not={layer}{7}{alpha}{0.1}] table[x=iter,y=nb_kernel,meta=alpha]
+%			{../data/nb_layer_vs_iter_vs_alpha.dat}
+%		\closedcycle;
+%		\addlegendentry{$\alpha =  0.1$}
+%		
+%
+%	\end{axis}
+%\end{tikzpicture}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: all_plots
+%%% End:

@@ -1,0 +1,61 @@
+http://pgfplots.sourceforge.net/gallery.html
+
+Datasets
+---------
+1. ImageNet
+2. CIFAR
+3. MNIST
+
+Evaluations
+--------------
+*1. Top-1 and top-5 accuracy on the validation set versus alpha.
+*2. Number of kernels versus layer number at convergence for various alphas.
+*3. Layer sparsity versus iteration number for sample alpha, and multiple layers, using a stacked area plot.
+*4. Complexity (theoretical, i.e., num. of FLOPS) vs. top-X accuracy.
+*5. Alpha vs. top-X accuracy.
+*6. Alpha vs. complexity (number of multiply-adds).
+7. Visualize filters vs. alpha (first layer is easy to do).
+8. Visualize square filters versus iteration number.
+9. Visualize filter "confusion matrix" based on correlations vs. alpha, for various layers.
+
+Architectures
+--------------
+1. Resnet, 7-layer.
+2. CNN (w/o residual units), 7-layer.
+3. A bigger architeture to attempt to achieve SOTA.
+
+Regularization schemes
+-----------------------
+1. Kernel-based.
+2. Ring-based (How do we visualize sparsity vs. iters???).
+3. Rectangular-kernel-based
+4. Rectangular-kernel-based + feature-map based.
+**5. Comparison against l2-regularized case (weight decay).
+
+Questions to answer experimentally
+-------------------------------------------------
+(Need futher experiments)- Does zeroing the 1% kernels affect the performance?
+*- Histogram of kernel norms for a given layer (is it bi-modal?).
+- State-of-the-art results: Can we achieve them or outperform them?
+
+Other things
+------------
+- Increased learning speed by dropping near-zero kernels
+*- New measure of approx sparsity (for case when all kernels are zero).
+*- Accessing weights?
+- MNIST
+- Visualization - which weights disappear versus alpha?
+
+
+Current
+------
+- New regularization schemes - change l_1(s_ij) regularizer by l_1(s_ij)^2
+	- Learn on cifar 10 resnet-20.
+- Is convexity an issue? Multiple runs for same alpha, does complexity change a lot?
+
+- ImageNet complexity-accuracy plots.
+
+- Fixing complexity code - I should have a look!
+- Validation on ImageNet (ResNet 18) + complexity.
+ 
+- Feature size vs. performance on transfer learning (e.g., Pascal VOC).

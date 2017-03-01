@@ -1,0 +1,1058 @@
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0/ --num_gpus=1 --extended --alpha=0 --reg size --zeroing=0.1 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0/model.ckpt-49945')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.00390625
+Step 10: Top-1 : 0.0 - Top-5 : 0.00568181818182
+Step 20: Top-1 : 0.0 - Top-5 : 0.00502232142857
+Step 30: Top-1 : 0.000882056451613 - Top-5 : 0.00516633064516
+Step 40: Top-1 : 0.00104801829268 - Top-5 : 0.00533536585366
+Step 50: Top-1 : 0.00107230392157 - Top-5 : 0.0054381127451
+Step 60: Top-1 : 0.00108862704918 - Top-5 : 0.00550717213115
+Step 70: Top-1 : 0.00121038732394 - Top-5 : 0.00566681338028
+Step 80: Top-1 : 0.00130208333333 - Top-5 : 0.00588348765432
+Step 90: Top-1 : 0.00133070054945 - Top-5 : 0.00596668956044
+Step 100: Top-1 : 0.00127629950495 - Top-5 : 0.00603341584158
+Step 110: Top-1 : 0.00119650900901 - Top-5 : 0.0057713963964
+Step 120: Top-1 : 0.00116219008264 - Top-5 : 0.00581095041322
+Step 130: Top-1 : 0.00110329198473 - Top-5 : 0.00575500954198
+Step 140: Top-1 : 0.00113585992908 - Top-5 : 0.00573470744681
+Step 150: Top-1 : 0.00111237582781 - Top-5 : 0.00561361754967
+Step 160: Top-1 : 0.00114033385093 - Top-5 : 0.00558035714286
+Step 170: Top-1 : 0.00111933479532 - Top-5 : 0.00557383040936
+Step 180: Top-1 : 0.00107907458564 - Top-5 : 0.00552486187845
+Step 190: Top-1 : 0.00106348167539 - Top-5 : 0.00541966623037
+Step 200: Top-1 : 0.0010105721393 - Top-5 : 0.00542210820896
+Step 210: Top-1 : 0.000962677725118 - Top-5 : 0.00538729265403
+Step 220: Top-1 : 0.000989819004525 - Top-5 : 0.00535562782805
+Step 230: Top-1 : 0.00103152056277 - Top-5 : 0.00541125541126
+Step 240: Top-1 : 0.00106976141079 - Top-5 : 0.00538122406639
+Step 250: Top-1 : 0.00105826693227 - Top-5 : 0.00540027390438
+Step 260: Top-1 : 0.0010476532567 - Top-5 : 0.00549269636015
+Step 270: Top-1 : 0.00110989391144 - Top-5 : 0.0055494695572
+Step 280: Top-1 : 0.00113990213523 - Top-5 : 0.00561610320285
+Step 290: Top-1 : 0.00111415378007 - Top-5 : 0.00559761597938
+Step 300: Top-1 : 0.00111607142857 - Top-5 : 0.00561928986711
+Step 310: Top-1 : 0.00109274517685 - Top-5 : 0.0055139670418
+Step 320: Top-1 : 0.00107087227414 - Top-5 : 0.00552472741433
+Step 330: Top-1 : 0.00108572507553 - Top-5 : 0.00554663897281
+Step 340: Top-1 : 0.00108825146628 - Top-5 : 0.00553289956012
+Step 350: Top-1 : 0.00109063390313 - Top-5 : 0.00550881410256
+Step 360: Top-1 : 0.00107124307479 - Top-5 : 0.00549688365651
+Step 370: Top-1 : 0.00107395552561 - Top-5 : 0.00548559636119
+Step 380: Top-1 : 0.00105602034121 - Top-5 : 0.00543389107612
+Step 390: Top-1 : 0.00103900255754 - Top-5 : 0.00541480179028
+Step 400: Top-1 : 0.00101309226933 - Top-5 : 0.00541614713217
+Step 410: Top-1 : 0.000988442822384 - Top-5 : 0.00538891423358
+Step 420: Top-1 : 0.00102991389549 - Top-5 : 0.00539081057007
+Step 430: Top-1 : 0.00104227088167 - Top-5 : 0.00541074535963
+Step 440: Top-1 : 0.00104520975057 - Top-5 : 0.00542091836735
+Step 450: Top-1 : 0.00104801829268 - Top-5 : 0.0054306402439
+Step 460: Top-1 : 0.00105917841649 - Top-5 : 0.00545688720174
+Step 470: Top-1 : 0.00108645169851 - Top-5 : 0.0054986066879
+Step 480: Top-1 : 0.0010963487526 - Top-5 : 0.00551422817048
+Step 490: Top-1 : 0.00108993126273 - Top-5 : 0.00554512474542
+Top-1 : 0.01078125
+Top-5 : 0.055078125
+Evaluation time : 1270.80689406
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0/ --num_gpus=1 --extended --alpha=0 --reg size --zeroing=0.01 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0/model.ckpt-49945')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.00390625
+Step 10: Top-1 : 0.0 - Top-5 : 0.00568181818182
+Step 20: Top-1 : 0.0 - Top-5 : 0.00483630952381
+Step 30: Top-1 : 0.000882056451613 - Top-5 : 0.00516633064516
+Step 40: Top-1 : 0.00104801829268 - Top-5 : 0.00533536585366
+Step 50: Top-1 : 0.00107230392157 - Top-5 : 0.0054381127451
+Step 60: Top-1 : 0.00108862704918 - Top-5 : 0.00550717213115
+Step 70: Top-1 : 0.00121038732394 - Top-5 : 0.00566681338028
+Step 80: Top-1 : 0.00130208333333 - Top-5 : 0.00588348765432
+Step 90: Top-1 : 0.00133070054945 - Top-5 : 0.00596668956044
+Step 100: Top-1 : 0.00127629950495 - Top-5 : 0.00603341584158
+Step 110: Top-1 : 0.00119650900901 - Top-5 : 0.0057713963964
+Step 120: Top-1 : 0.00116219008264 - Top-5 : 0.00581095041322
+Step 130: Top-1 : 0.00110329198473 - Top-5 : 0.00575500954198
+Step 140: Top-1 : 0.00113585992908 - Top-5 : 0.00573470744681
+Step 150: Top-1 : 0.00111237582781 - Top-5 : 0.00561361754967
+Step 160: Top-1 : 0.00114033385093 - Top-5 : 0.00558035714286
+Step 170: Top-1 : 0.00111933479532 - Top-5 : 0.00557383040936
+Step 180: Top-1 : 0.00107907458564 - Top-5 : 0.00552486187845
+Step 190: Top-1 : 0.00106348167539 - Top-5 : 0.00541966623037
+Step 200: Top-1 : 0.0010105721393 - Top-5 : 0.00542210820896
+Step 210: Top-1 : 0.000962677725118 - Top-5 : 0.00538729265403
+Step 220: Top-1 : 0.000989819004525 - Top-5 : 0.00535562782805
+Step 230: Top-1 : 0.00103152056277 - Top-5 : 0.00541125541126
+Step 240: Top-1 : 0.00106976141079 - Top-5 : 0.00538122406639
+Step 250: Top-1 : 0.00105826693227 - Top-5 : 0.00540027390438
+Step 260: Top-1 : 0.0010476532567 - Top-5 : 0.00549269636015
+Step 270: Top-1 : 0.00110989391144 - Top-5 : 0.0055494695572
+Step 280: Top-1 : 0.00113990213523 - Top-5 : 0.00561610320285
+Step 290: Top-1 : 0.00111415378007 - Top-5 : 0.00559761597938
+Step 300: Top-1 : 0.00111607142857 - Top-5 : 0.00561928986711
+Step 310: Top-1 : 0.00109274517685 - Top-5 : 0.0055139670418
+Step 320: Top-1 : 0.00107087227414 - Top-5 : 0.00552472741433
+Step 330: Top-1 : 0.00108572507553 - Top-5 : 0.00554663897281
+Step 340: Top-1 : 0.00108825146628 - Top-5 : 0.00553289956012
+Step 350: Top-1 : 0.00109063390313 - Top-5 : 0.00550881410256
+Step 360: Top-1 : 0.00107124307479 - Top-5 : 0.00549688365651
+Step 370: Top-1 : 0.00107395552561 - Top-5 : 0.00548559636119
+Step 380: Top-1 : 0.00105602034121 - Top-5 : 0.00543389107612
+Step 390: Top-1 : 0.00103900255754 - Top-5 : 0.00541480179028
+Step 400: Top-1 : 0.00101309226933 - Top-5 : 0.00541614713217
+Step 410: Top-1 : 0.000988442822384 - Top-5 : 0.00538891423358
+Step 420: Top-1 : 0.00102991389549 - Top-5 : 0.00539081057007
+Step 430: Top-1 : 0.00104227088167 - Top-5 : 0.00541074535963
+Step 440: Top-1 : 0.00104520975057 - Top-5 : 0.00542091836735
+Step 450: Top-1 : 0.00104801829268 - Top-5 : 0.0054306402439
+Step 460: Top-1 : 0.00105917841649 - Top-5 : 0.00545688720174
+Step 470: Top-1 : 0.00108645169851 - Top-5 : 0.00550690021231
+Step 480: Top-1 : 0.0010963487526 - Top-5 : 0.00551422817048
+Step 490: Top-1 : 0.00108993126273 - Top-5 : 0.00554512474542
+Top-1 : 0.01078125
+Top-5 : 0.055078125
+Evaluation time : 1269.6784811
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0/ --num_gpus=1 --extended --alpha=0 --reg size --zeroing=0.001 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0/model.ckpt-49945')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.00390625
+Step 10: Top-1 : 0.0 - Top-5 : 0.00568181818182
+Step 20: Top-1 : 0.0 - Top-5 : 0.00483630952381
+Step 30: Top-1 : 0.000882056451613 - Top-5 : 0.00516633064516
+Step 40: Top-1 : 0.00104801829268 - Top-5 : 0.00533536585366
+Step 50: Top-1 : 0.00107230392157 - Top-5 : 0.0054381127451
+Step 60: Top-1 : 0.00108862704918 - Top-5 : 0.00550717213115
+Step 70: Top-1 : 0.00121038732394 - Top-5 : 0.00566681338028
+Step 80: Top-1 : 0.00130208333333 - Top-5 : 0.00588348765432
+Step 90: Top-1 : 0.00133070054945 - Top-5 : 0.00596668956044
+Step 100: Top-1 : 0.00127629950495 - Top-5 : 0.00603341584158
+Step 110: Top-1 : 0.00119650900901 - Top-5 : 0.0057713963964
+Step 120: Top-1 : 0.00116219008264 - Top-5 : 0.00581095041322
+Step 130: Top-1 : 0.00110329198473 - Top-5 : 0.00575500954198
+Step 140: Top-1 : 0.00113585992908 - Top-5 : 0.00573470744681
+Step 150: Top-1 : 0.00111237582781 - Top-5 : 0.00561361754967
+Step 160: Top-1 : 0.00114033385093 - Top-5 : 0.00558035714286
+Step 170: Top-1 : 0.00111933479532 - Top-5 : 0.00557383040936
+Step 180: Top-1 : 0.00107907458564 - Top-5 : 0.00552486187845
+Step 190: Top-1 : 0.00106348167539 - Top-5 : 0.00541966623037
+Step 200: Top-1 : 0.0010105721393 - Top-5 : 0.00542210820896
+Step 210: Top-1 : 0.000962677725118 - Top-5 : 0.00538729265403
+Step 220: Top-1 : 0.000989819004525 - Top-5 : 0.00535562782805
+Step 230: Top-1 : 0.00103152056277 - Top-5 : 0.00541125541126
+Step 240: Top-1 : 0.00106976141079 - Top-5 : 0.00538122406639
+Step 250: Top-1 : 0.00105826693227 - Top-5 : 0.00540027390438
+Step 260: Top-1 : 0.0010476532567 - Top-5 : 0.00549269636015
+Step 270: Top-1 : 0.00110989391144 - Top-5 : 0.0055494695572
+Step 280: Top-1 : 0.00113990213523 - Top-5 : 0.00561610320285
+Step 290: Top-1 : 0.00111415378007 - Top-5 : 0.00559761597938
+Step 300: Top-1 : 0.00111607142857 - Top-5 : 0.00561928986711
+Step 310: Top-1 : 0.00109274517685 - Top-5 : 0.0055139670418
+Step 320: Top-1 : 0.00107087227414 - Top-5 : 0.00552472741433
+Step 330: Top-1 : 0.00108572507553 - Top-5 : 0.00554663897281
+Step 340: Top-1 : 0.00108825146628 - Top-5 : 0.00553289956012
+Step 350: Top-1 : 0.00109063390313 - Top-5 : 0.00550881410256
+Step 360: Top-1 : 0.00107124307479 - Top-5 : 0.00549688365651
+Step 370: Top-1 : 0.00107395552561 - Top-5 : 0.00548559636119
+Step 380: Top-1 : 0.00105602034121 - Top-5 : 0.00543389107612
+Step 390: Top-1 : 0.00103900255754 - Top-5 : 0.00541480179028
+Step 400: Top-1 : 0.00101309226933 - Top-5 : 0.00541614713217
+Step 410: Top-1 : 0.000988442822384 - Top-5 : 0.00538891423358
+Step 420: Top-1 : 0.00102991389549 - Top-5 : 0.00539081057007
+Step 430: Top-1 : 0.00104227088167 - Top-5 : 0.00541074535963
+Step 440: Top-1 : 0.00104520975057 - Top-5 : 0.00542091836735
+Step 450: Top-1 : 0.00104801829268 - Top-5 : 0.0054306402439
+Step 460: Top-1 : 0.00105917841649 - Top-5 : 0.00545688720174
+Step 470: Top-1 : 0.00108645169851 - Top-5 : 0.00550690021231
+Step 480: Top-1 : 0.0010963487526 - Top-5 : 0.00551422817048
+Step 490: Top-1 : 0.00108993126273 - Top-5 : 0.00554512474542
+Top-1 : 0.01078125
+Top-5 : 0.055078125
+Evaluation time : 1262.76982903
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0/ --num_gpus=1 --extended --alpha=0 --reg size --zeroing=0.0001 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0/model.ckpt-49945')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.00390625
+Step 10: Top-1 : 0.0 - Top-5 : 0.00568181818182
+Step 20: Top-1 : 0.0 - Top-5 : 0.00483630952381
+Step 30: Top-1 : 0.000882056451613 - Top-5 : 0.00516633064516
+Step 40: Top-1 : 0.00104801829268 - Top-5 : 0.00533536585366
+Step 50: Top-1 : 0.00107230392157 - Top-5 : 0.0054381127451
+Step 60: Top-1 : 0.00108862704918 - Top-5 : 0.00550717213115
+Step 70: Top-1 : 0.00121038732394 - Top-5 : 0.00566681338028
+Step 80: Top-1 : 0.00130208333333 - Top-5 : 0.00588348765432
+Step 90: Top-1 : 0.00133070054945 - Top-5 : 0.00596668956044
+Step 100: Top-1 : 0.00127629950495 - Top-5 : 0.00603341584158
+Step 110: Top-1 : 0.00119650900901 - Top-5 : 0.0057713963964
+Step 120: Top-1 : 0.00116219008264 - Top-5 : 0.00581095041322
+Step 130: Top-1 : 0.00110329198473 - Top-5 : 0.00575500954198
+Step 140: Top-1 : 0.00113585992908 - Top-5 : 0.00573470744681
+Step 150: Top-1 : 0.00111237582781 - Top-5 : 0.00561361754967
+Step 160: Top-1 : 0.00114033385093 - Top-5 : 0.00558035714286
+Step 170: Top-1 : 0.00111933479532 - Top-5 : 0.00557383040936
+Step 180: Top-1 : 0.00107907458564 - Top-5 : 0.00552486187845
+Step 190: Top-1 : 0.00106348167539 - Top-5 : 0.00541966623037
+Step 200: Top-1 : 0.0010105721393 - Top-5 : 0.00542210820896
+Step 210: Top-1 : 0.000962677725118 - Top-5 : 0.00538729265403
+Step 220: Top-1 : 0.000989819004525 - Top-5 : 0.00535562782805
+Step 230: Top-1 : 0.00103152056277 - Top-5 : 0.00541125541126
+Step 240: Top-1 : 0.00106976141079 - Top-5 : 0.00538122406639
+Step 250: Top-1 : 0.00105826693227 - Top-5 : 0.00540027390438
+Step 260: Top-1 : 0.0010476532567 - Top-5 : 0.00549269636015
+Step 270: Top-1 : 0.00110989391144 - Top-5 : 0.0055494695572
+Step 280: Top-1 : 0.00113990213523 - Top-5 : 0.00561610320285
+Step 290: Top-1 : 0.00111415378007 - Top-5 : 0.00559761597938
+Step 300: Top-1 : 0.00111607142857 - Top-5 : 0.00561928986711
+Step 310: Top-1 : 0.00109274517685 - Top-5 : 0.0055139670418
+Step 320: Top-1 : 0.00107087227414 - Top-5 : 0.00552472741433
+Step 330: Top-1 : 0.00108572507553 - Top-5 : 0.00554663897281
+Step 340: Top-1 : 0.00108825146628 - Top-5 : 0.00553289956012
+Step 350: Top-1 : 0.00109063390313 - Top-5 : 0.00550881410256
+Step 360: Top-1 : 0.00107124307479 - Top-5 : 0.00549688365651
+Step 370: Top-1 : 0.00107395552561 - Top-5 : 0.00548559636119
+Step 380: Top-1 : 0.00105602034121 - Top-5 : 0.00543389107612
+Step 390: Top-1 : 0.00103900255754 - Top-5 : 0.00541480179028
+Step 400: Top-1 : 0.00101309226933 - Top-5 : 0.00541614713217
+Step 410: Top-1 : 0.000988442822384 - Top-5 : 0.00538891423358
+Step 420: Top-1 : 0.00102991389549 - Top-5 : 0.00539081057007
+Step 430: Top-1 : 0.00104227088167 - Top-5 : 0.00541074535963
+Step 440: Top-1 : 0.00104520975057 - Top-5 : 0.00542091836735
+Step 450: Top-1 : 0.00104801829268 - Top-5 : 0.0054306402439
+Step 460: Top-1 : 0.00105917841649 - Top-5 : 0.00545688720174
+Step 470: Top-1 : 0.00108645169851 - Top-5 : 0.00550690021231
+Step 480: Top-1 : 0.0010963487526 - Top-5 : 0.00551422817048
+Step 490: Top-1 : 0.00108993126273 - Top-5 : 0.00554512474542
+Top-1 : 0.01078125
+Top-5 : 0.055078125
+Evaluation time : 1268.250916
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0/ --num_gpus=1 --extended --alpha=0 --reg size --zeroing=1e-05 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0/model.ckpt-49945')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.00390625
+Step 10: Top-1 : 0.0 - Top-5 : 0.00568181818182
+Step 20: Top-1 : 0.0 - Top-5 : 0.00483630952381
+Step 30: Top-1 : 0.000882056451613 - Top-5 : 0.00516633064516
+Step 40: Top-1 : 0.00104801829268 - Top-5 : 0.00533536585366
+Step 50: Top-1 : 0.00107230392157 - Top-5 : 0.0054381127451
+Step 60: Top-1 : 0.00108862704918 - Top-5 : 0.00550717213115
+Step 70: Top-1 : 0.00121038732394 - Top-5 : 0.00566681338028
+Step 80: Top-1 : 0.00130208333333 - Top-5 : 0.00588348765432
+Step 90: Top-1 : 0.00133070054945 - Top-5 : 0.00596668956044
+Step 100: Top-1 : 0.00127629950495 - Top-5 : 0.00603341584158
+Step 110: Top-1 : 0.00119650900901 - Top-5 : 0.0057713963964
+Step 120: Top-1 : 0.00116219008264 - Top-5 : 0.00581095041322
+Step 130: Top-1 : 0.00110329198473 - Top-5 : 0.00575500954198
+Step 140: Top-1 : 0.00113585992908 - Top-5 : 0.00573470744681
+Step 150: Top-1 : 0.00111237582781 - Top-5 : 0.00561361754967
+Step 160: Top-1 : 0.00114033385093 - Top-5 : 0.00558035714286
+Step 170: Top-1 : 0.00111933479532 - Top-5 : 0.00557383040936
+Step 180: Top-1 : 0.00107907458564 - Top-5 : 0.00552486187845
+Step 190: Top-1 : 0.00106348167539 - Top-5 : 0.00541966623037
+Step 200: Top-1 : 0.0010105721393 - Top-5 : 0.00542210820896
+Step 210: Top-1 : 0.000962677725118 - Top-5 : 0.00538729265403
+Step 220: Top-1 : 0.000989819004525 - Top-5 : 0.00535562782805
+Step 230: Top-1 : 0.00103152056277 - Top-5 : 0.00541125541126
+Step 240: Top-1 : 0.00106976141079 - Top-5 : 0.00538122406639
+Step 250: Top-1 : 0.00105826693227 - Top-5 : 0.00540027390438
+Step 260: Top-1 : 0.0010476532567 - Top-5 : 0.00549269636015
+Step 270: Top-1 : 0.00110989391144 - Top-5 : 0.0055494695572
+Step 280: Top-1 : 0.00113990213523 - Top-5 : 0.00561610320285
+Step 290: Top-1 : 0.00111415378007 - Top-5 : 0.00559761597938
+Step 300: Top-1 : 0.00111607142857 - Top-5 : 0.00561928986711
+Step 310: Top-1 : 0.00109274517685 - Top-5 : 0.0055139670418
+Step 320: Top-1 : 0.00107087227414 - Top-5 : 0.00552472741433
+Step 330: Top-1 : 0.00108572507553 - Top-5 : 0.00554663897281
+Step 340: Top-1 : 0.00108825146628 - Top-5 : 0.00553289956012
+Step 350: Top-1 : 0.00109063390313 - Top-5 : 0.00550881410256
+Step 360: Top-1 : 0.00107124307479 - Top-5 : 0.00549688365651
+Step 370: Top-1 : 0.00107395552561 - Top-5 : 0.00548559636119
+Step 380: Top-1 : 0.00105602034121 - Top-5 : 0.00543389107612
+Step 390: Top-1 : 0.00103900255754 - Top-5 : 0.00541480179028
+Step 400: Top-1 : 0.00101309226933 - Top-5 : 0.00541614713217
+Step 410: Top-1 : 0.000988442822384 - Top-5 : 0.00538891423358
+Step 420: Top-1 : 0.00102991389549 - Top-5 : 0.00539081057007
+Step 430: Top-1 : 0.00104227088167 - Top-5 : 0.00541074535963
+Step 440: Top-1 : 0.00104520975057 - Top-5 : 0.00542091836735
+Step 450: Top-1 : 0.00104801829268 - Top-5 : 0.0054306402439
+Step 460: Top-1 : 0.00105917841649 - Top-5 : 0.00545688720174
+Step 470: Top-1 : 0.00108645169851 - Top-5 : 0.0054986066879
+Step 480: Top-1 : 0.0010963487526 - Top-5 : 0.00551422817048
+Step 490: Top-1 : 0.00108993126273 - Top-5 : 0.00554512474542
+Top-1 : 0.01078125
+Top-5 : 0.055078125
+Evaluation time : 1267.01834583
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.1/ --num_gpus=1 --extended --alpha=0.1 --reg size --zeroing=0.1 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.1/model.ckpt-50243')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.00390625
+Step 10: Top-1 : 0.00142045454545 - Top-5 : 0.00603693181818
+Step 20: Top-1 : 0.00111607142857 - Top-5 : 0.0053943452381
+Step 30: Top-1 : 0.00138608870968 - Top-5 : 0.00554435483871
+Step 40: Top-1 : 0.00114329268293 - Top-5 : 0.00466844512195
+Step 50: Top-1 : 0.00107230392157 - Top-5 : 0.0047487745098
+Step 60: Top-1 : 0.000960553278689 - Top-5 : 0.00480276639344
+Step 70: Top-1 : 0.000825264084507 - Top-5 : 0.00484154929577
+Step 80: Top-1 : 0.000868055555556 - Top-5 : 0.00491898148148
+Step 90: Top-1 : 0.000815590659341 - Top-5 : 0.00485061813187
+Step 100: Top-1 : 0.000966893564356 - Top-5 : 0.00475711633663
+Step 110: Top-1 : 0.0010205518018 - Top-5 : 0.00475084459459
+Step 120: Top-1 : 0.000968491735537 - Top-5 : 0.00468104338843
+Step 130: Top-1 : 0.000924379770992 - Top-5 : 0.00468153625954
+Step 140: Top-1 : 0.000969636524823 - Top-5 : 0.00473736702128
+Step 150: Top-1 : 0.000983029801325 - Top-5 : 0.00468232615894
+Step 160: Top-1 : 0.00094623447205 - Top-5 : 0.00468264751553
+Step 170: Top-1 : 0.000982273391813 - Top-5 : 0.0047514619883
+Step 180: Top-1 : 0.000971167127072 - Top-5 : 0.00483425414365
+Step 190: Top-1 : 0.00100212696335 - Top-5 : 0.00484702225131
+Step 200: Top-1 : 0.0010105721393 - Top-5 : 0.00493625621891
+Step 210: Top-1 : 0.00103672985782 - Top-5 : 0.00492446682464
+Step 220: Top-1 : 0.00104284502262 - Top-5 : 0.00494909502262
+Step 230: Top-1 : 0.00106534090909 - Top-5 : 0.00493777056277
+Step 240: Top-1 : 0.00102113589212 - Top-5 : 0.00487876037344
+Step 250: Top-1 : 0.00101157868526 - Top-5 : 0.00480888944223
+Step 260: Top-1 : 0.000987787356322 - Top-5 : 0.00484913793103
+Step 270: Top-1 : 0.000965751845018 - Top-5 : 0.00487200184502
+Step 280: Top-1 : 0.00095918594306 - Top-5 : 0.00485153469751
+Step 290: Top-1 : 0.00097991838488 - Top-5 : 0.00488616838488
+Step 300: Top-1 : 0.00101225083056 - Top-5 : 0.00485361295681
+Step 310: Top-1 : 0.00101738344051 - Top-5 : 0.00484827170418
+Step 320: Top-1 : 0.000985689252336 - Top-5 : 0.00484326323988
+Step 330: Top-1 : 0.000979512839879 - Top-5 : 0.0048267560423
+Step 340: Top-1 : 0.000985153958944 - Top-5 : 0.00479976173021
+Step 350: Top-1 : 0.0010016025641 - Top-5 : 0.00481882122507
+Step 360: Top-1 : 0.000995498614958 - Top-5 : 0.00480436288089
+Step 370: Top-1 : 0.000989723719677 - Top-5 : 0.00485385781671
+Step 380: Top-1 : 0.000994504593176 - Top-5 : 0.00486999671916
+Step 390: Top-1 : 0.00101902173913 - Top-5 : 0.00489530051151
+Step 400: Top-1 : 0.00102283354115 - Top-5 : 0.00492908354115
+Step 410: Top-1 : 0.00102645985401 - Top-5 : 0.00492320559611
+Step 420: Top-1 : 0.00104847090261 - Top-5 : 0.00495472090261
+Step 430: Top-1 : 0.00103320765661 - Top-5 : 0.00486695185615
+Step 440: Top-1 : 0.00101863662132 - Top-5 : 0.00487174036281
+Step 450: Top-1 : 0.00101337305987 - Top-5 : 0.00487631651885
+Step 460: Top-1 : 0.000991390997831 - Top-5 : 0.00489764099783
+Step 470: Top-1 : 0.000995222929936 - Top-5 : 0.00489317940552
+Step 480: Top-1 : 0.000982653326403 - Top-5 : 0.00489702442827
+Step 490: Top-1 : 0.00101037423625 - Top-5 : 0.00487684572301
+Top-1 : 0.010078125
+Top-5 : 0.048671875
+Evaluation time : 1267.10019898
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.1/ --num_gpus=1 --extended --alpha=0.1 --reg size --zeroing=0.01 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.1/model.ckpt-50243')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.00390625
+Step 10: Top-1 : 0.00142045454545 - Top-5 : 0.00603693181818
+Step 20: Top-1 : 0.00111607142857 - Top-5 : 0.0053943452381
+Step 30: Top-1 : 0.00138608870968 - Top-5 : 0.00554435483871
+Step 40: Top-1 : 0.00114329268293 - Top-5 : 0.00466844512195
+Step 50: Top-1 : 0.00107230392157 - Top-5 : 0.0047487745098
+Step 60: Top-1 : 0.000960553278689 - Top-5 : 0.00480276639344
+Step 70: Top-1 : 0.000825264084507 - Top-5 : 0.00484154929577
+Step 80: Top-1 : 0.000868055555556 - Top-5 : 0.00491898148148
+Step 90: Top-1 : 0.000815590659341 - Top-5 : 0.00485061813187
+Step 100: Top-1 : 0.000966893564356 - Top-5 : 0.00475711633663
+Step 110: Top-1 : 0.0010205518018 - Top-5 : 0.00475084459459
+Step 120: Top-1 : 0.000968491735537 - Top-5 : 0.00468104338843
+Step 130: Top-1 : 0.000924379770992 - Top-5 : 0.00468153625954
+Step 140: Top-1 : 0.000969636524823 - Top-5 : 0.00473736702128
+Step 150: Top-1 : 0.000983029801325 - Top-5 : 0.00468232615894
+Step 160: Top-1 : 0.00094623447205 - Top-5 : 0.00468264751553
+Step 170: Top-1 : 0.000982273391813 - Top-5 : 0.0047514619883
+Step 180: Top-1 : 0.000971167127072 - Top-5 : 0.00483425414365
+Step 190: Top-1 : 0.00100212696335 - Top-5 : 0.00484702225131
+Step 200: Top-1 : 0.0010105721393 - Top-5 : 0.00493625621891
+Step 210: Top-1 : 0.00103672985782 - Top-5 : 0.00492446682464
+Step 220: Top-1 : 0.00104284502262 - Top-5 : 0.00494909502262
+Step 230: Top-1 : 0.00106534090909 - Top-5 : 0.00492086038961
+Step 240: Top-1 : 0.00102113589212 - Top-5 : 0.00487876037344
+Step 250: Top-1 : 0.00101157868526 - Top-5 : 0.00480888944223
+Step 260: Top-1 : 0.000987787356322 - Top-5 : 0.00484913793103
+Step 270: Top-1 : 0.000965751845018 - Top-5 : 0.00487200184502
+Step 280: Top-1 : 0.00095918594306 - Top-5 : 0.00485153469751
+Step 290: Top-1 : 0.00097991838488 - Top-5 : 0.00488616838488
+Step 300: Top-1 : 0.00101225083056 - Top-5 : 0.00485361295681
+Step 310: Top-1 : 0.00101738344051 - Top-5 : 0.00484827170418
+Step 320: Top-1 : 0.000985689252336 - Top-5 : 0.00484326323988
+Step 330: Top-1 : 0.000979512839879 - Top-5 : 0.0048267560423
+Step 340: Top-1 : 0.000985153958944 - Top-5 : 0.00479976173021
+Step 350: Top-1 : 0.0010016025641 - Top-5 : 0.00481882122507
+Step 360: Top-1 : 0.000995498614958 - Top-5 : 0.00480436288089
+Step 370: Top-1 : 0.000989723719677 - Top-5 : 0.00485385781671
+Step 380: Top-1 : 0.000994504593176 - Top-5 : 0.00486999671916
+Step 390: Top-1 : 0.00101902173913 - Top-5 : 0.00489530051151
+Step 400: Top-1 : 0.00102283354115 - Top-5 : 0.00492908354115
+Step 410: Top-1 : 0.00102645985401 - Top-5 : 0.00492320559611
+Step 420: Top-1 : 0.00104847090261 - Top-5 : 0.00495472090261
+Step 430: Top-1 : 0.00103320765661 - Top-5 : 0.00487601508121
+Step 440: Top-1 : 0.00101863662132 - Top-5 : 0.00487174036281
+Step 450: Top-1 : 0.00101337305987 - Top-5 : 0.00487631651885
+Step 460: Top-1 : 0.000991390997831 - Top-5 : 0.00489764099783
+Step 470: Top-1 : 0.000995222929936 - Top-5 : 0.00489317940552
+Step 480: Top-1 : 0.000982653326403 - Top-5 : 0.00489702442827
+Step 490: Top-1 : 0.00101037423625 - Top-5 : 0.00487684572301
+Top-1 : 0.010078125
+Top-5 : 0.048671875
+Evaluation time : 1266.41516399
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.1/ --num_gpus=1 --extended --alpha=0.1 --reg size --zeroing=0.001 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.1/model.ckpt-50243')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.00390625
+Step 10: Top-1 : 0.00142045454545 - Top-5 : 0.00603693181818
+Step 20: Top-1 : 0.00111607142857 - Top-5 : 0.0053943452381
+Step 30: Top-1 : 0.00138608870968 - Top-5 : 0.00554435483871
+Step 40: Top-1 : 0.00114329268293 - Top-5 : 0.00466844512195
+Step 50: Top-1 : 0.00107230392157 - Top-5 : 0.0047487745098
+Step 60: Top-1 : 0.000960553278689 - Top-5 : 0.00480276639344
+Step 70: Top-1 : 0.000825264084507 - Top-5 : 0.00484154929577
+Step 80: Top-1 : 0.000868055555556 - Top-5 : 0.00491898148148
+Step 90: Top-1 : 0.000815590659341 - Top-5 : 0.00485061813187
+Step 100: Top-1 : 0.000966893564356 - Top-5 : 0.00475711633663
+Step 110: Top-1 : 0.0010205518018 - Top-5 : 0.00475084459459
+Step 120: Top-1 : 0.000968491735537 - Top-5 : 0.00468104338843
+Step 130: Top-1 : 0.000924379770992 - Top-5 : 0.00468153625954
+Step 140: Top-1 : 0.000969636524823 - Top-5 : 0.00473736702128
+Step 150: Top-1 : 0.000983029801325 - Top-5 : 0.00468232615894
+Step 160: Top-1 : 0.00094623447205 - Top-5 : 0.00468264751553
+Step 170: Top-1 : 0.000982273391813 - Top-5 : 0.0047514619883
+Step 180: Top-1 : 0.000971167127072 - Top-5 : 0.00483425414365
+Step 190: Top-1 : 0.00100212696335 - Top-5 : 0.00484702225131
+Step 200: Top-1 : 0.0010105721393 - Top-5 : 0.00493625621891
+Step 210: Top-1 : 0.00103672985782 - Top-5 : 0.00492446682464
+Step 220: Top-1 : 0.00104284502262 - Top-5 : 0.00494909502262
+Step 230: Top-1 : 0.00106534090909 - Top-5 : 0.00493777056277
+Step 240: Top-1 : 0.00102113589212 - Top-5 : 0.00487876037344
+Step 250: Top-1 : 0.00101157868526 - Top-5 : 0.00480888944223
+Step 260: Top-1 : 0.000987787356322 - Top-5 : 0.00484913793103
+Step 270: Top-1 : 0.000965751845018 - Top-5 : 0.00488641605166
+Step 280: Top-1 : 0.00095918594306 - Top-5 : 0.00485153469751
+Step 290: Top-1 : 0.00097991838488 - Top-5 : 0.00488616838488
+Step 300: Top-1 : 0.00101225083056 - Top-5 : 0.00485361295681
+Step 310: Top-1 : 0.00101738344051 - Top-5 : 0.00484827170418
+Step 320: Top-1 : 0.000985689252336 - Top-5 : 0.00484326323988
+Step 330: Top-1 : 0.000979512839879 - Top-5 : 0.0048267560423
+Step 340: Top-1 : 0.000985153958944 - Top-5 : 0.00479976173021
+Step 350: Top-1 : 0.0010016025641 - Top-5 : 0.00481882122507
+Step 360: Top-1 : 0.000995498614958 - Top-5 : 0.00480436288089
+Step 370: Top-1 : 0.000989723719677 - Top-5 : 0.00485385781671
+Step 380: Top-1 : 0.000994504593176 - Top-5 : 0.00486999671916
+Step 390: Top-1 : 0.00101902173913 - Top-5 : 0.00489530051151
+Step 400: Top-1 : 0.00102283354115 - Top-5 : 0.00492908354115
+Step 410: Top-1 : 0.00102645985401 - Top-5 : 0.00492320559611
+Step 420: Top-1 : 0.00104847090261 - Top-5 : 0.00495472090261
+Step 430: Top-1 : 0.00103320765661 - Top-5 : 0.00486695185615
+Step 440: Top-1 : 0.00101863662132 - Top-5 : 0.00487174036281
+Step 450: Top-1 : 0.00101337305987 - Top-5 : 0.00487631651885
+Step 460: Top-1 : 0.000991390997831 - Top-5 : 0.00489764099783
+Step 470: Top-1 : 0.000995222929936 - Top-5 : 0.00489317940552
+Step 480: Top-1 : 0.000982653326403 - Top-5 : 0.00489702442827
+Step 490: Top-1 : 0.00101037423625 - Top-5 : 0.00487684572301
+Top-1 : 0.010078125
+Top-5 : 0.048671875
+Evaluation time : 1270.71798515
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.1/ --num_gpus=1 --extended --alpha=0.1 --reg size --zeroing=0.0001 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.1/model.ckpt-50243')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.00390625
+Step 10: Top-1 : 0.00142045454545 - Top-5 : 0.00603693181818
+Step 20: Top-1 : 0.00111607142857 - Top-5 : 0.0053943452381
+Step 30: Top-1 : 0.00138608870968 - Top-5 : 0.00554435483871
+Step 40: Top-1 : 0.00114329268293 - Top-5 : 0.00466844512195
+Step 50: Top-1 : 0.00107230392157 - Top-5 : 0.0047487745098
+Step 60: Top-1 : 0.000960553278689 - Top-5 : 0.00480276639344
+Step 70: Top-1 : 0.000825264084507 - Top-5 : 0.00484154929577
+Step 80: Top-1 : 0.000868055555556 - Top-5 : 0.00491898148148
+Step 90: Top-1 : 0.000815590659341 - Top-5 : 0.00485061813187
+Step 100: Top-1 : 0.000966893564356 - Top-5 : 0.00475711633663
+Step 110: Top-1 : 0.0010205518018 - Top-5 : 0.00475084459459
+Step 120: Top-1 : 0.000968491735537 - Top-5 : 0.00468104338843
+Step 130: Top-1 : 0.000924379770992 - Top-5 : 0.00468153625954
+Step 140: Top-1 : 0.000969636524823 - Top-5 : 0.00473736702128
+Step 150: Top-1 : 0.000983029801325 - Top-5 : 0.00468232615894
+Step 160: Top-1 : 0.00094623447205 - Top-5 : 0.00468264751553
+Step 170: Top-1 : 0.000982273391813 - Top-5 : 0.0047514619883
+Step 180: Top-1 : 0.000971167127072 - Top-5 : 0.00483425414365
+Step 190: Top-1 : 0.00100212696335 - Top-5 : 0.00484702225131
+Step 200: Top-1 : 0.0010105721393 - Top-5 : 0.00493625621891
+Step 210: Top-1 : 0.00103672985782 - Top-5 : 0.00492446682464
+Step 220: Top-1 : 0.00104284502262 - Top-5 : 0.00494909502262
+Step 230: Top-1 : 0.00106534090909 - Top-5 : 0.00492086038961
+Step 240: Top-1 : 0.00102113589212 - Top-5 : 0.00487876037344
+Step 250: Top-1 : 0.00101157868526 - Top-5 : 0.00480888944223
+Step 260: Top-1 : 0.000987787356322 - Top-5 : 0.00484913793103
+Step 270: Top-1 : 0.000965751845018 - Top-5 : 0.00487200184502
+Step 280: Top-1 : 0.00095918594306 - Top-5 : 0.00485153469751
+Step 290: Top-1 : 0.00097991838488 - Top-5 : 0.00488616838488
+Step 300: Top-1 : 0.00101225083056 - Top-5 : 0.00485361295681
+Step 310: Top-1 : 0.00101738344051 - Top-5 : 0.00484827170418
+Step 320: Top-1 : 0.000985689252336 - Top-5 : 0.00484326323988
+Step 330: Top-1 : 0.000979512839879 - Top-5 : 0.0048267560423
+Step 340: Top-1 : 0.000985153958944 - Top-5 : 0.00479976173021
+Step 350: Top-1 : 0.0010016025641 - Top-5 : 0.00481882122507
+Step 360: Top-1 : 0.000995498614958 - Top-5 : 0.00480436288089
+Step 370: Top-1 : 0.000989723719677 - Top-5 : 0.00485385781671
+Step 380: Top-1 : 0.000994504593176 - Top-5 : 0.00486999671916
+Step 390: Top-1 : 0.00101902173913 - Top-5 : 0.00489530051151
+Step 400: Top-1 : 0.00102283354115 - Top-5 : 0.00492908354115
+Step 410: Top-1 : 0.00102645985401 - Top-5 : 0.00492320559611
+Step 420: Top-1 : 0.00104847090261 - Top-5 : 0.00495472090261
+Step 430: Top-1 : 0.00103320765661 - Top-5 : 0.00486695185615
+Step 440: Top-1 : 0.00101863662132 - Top-5 : 0.00487174036281
+Step 450: Top-1 : 0.00101337305987 - Top-5 : 0.00487631651885
+Step 460: Top-1 : 0.000991390997831 - Top-5 : 0.00489764099783
+Step 470: Top-1 : 0.000995222929936 - Top-5 : 0.00489317940552
+Step 480: Top-1 : 0.000982653326403 - Top-5 : 0.00489702442827
+Step 490: Top-1 : 0.00101037423625 - Top-5 : 0.00487684572301
+Top-1 : 0.010078125
+Top-5 : 0.048671875
+Evaluation time : 1272.93014002
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.1/ --num_gpus=1 --extended --alpha=0.1 --reg size --zeroing=1e-05 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.1/model.ckpt-50243')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.00390625
+Step 10: Top-1 : 0.00142045454545 - Top-5 : 0.00603693181818
+Step 20: Top-1 : 0.00111607142857 - Top-5 : 0.0053943452381
+Step 30: Top-1 : 0.00138608870968 - Top-5 : 0.00554435483871
+Step 40: Top-1 : 0.00114329268293 - Top-5 : 0.00466844512195
+Step 50: Top-1 : 0.00107230392157 - Top-5 : 0.0047487745098
+Step 60: Top-1 : 0.000960553278689 - Top-5 : 0.00480276639344
+Step 70: Top-1 : 0.000825264084507 - Top-5 : 0.00484154929577
+Step 80: Top-1 : 0.000868055555556 - Top-5 : 0.00491898148148
+Step 90: Top-1 : 0.000815590659341 - Top-5 : 0.00485061813187
+Step 100: Top-1 : 0.000966893564356 - Top-5 : 0.00475711633663
+Step 110: Top-1 : 0.0010205518018 - Top-5 : 0.00475084459459
+Step 120: Top-1 : 0.000968491735537 - Top-5 : 0.00468104338843
+Step 130: Top-1 : 0.000924379770992 - Top-5 : 0.00468153625954
+Step 140: Top-1 : 0.000969636524823 - Top-5 : 0.00473736702128
+Step 150: Top-1 : 0.000983029801325 - Top-5 : 0.00468232615894
+Step 160: Top-1 : 0.00094623447205 - Top-5 : 0.00468264751553
+Step 170: Top-1 : 0.000982273391813 - Top-5 : 0.0047514619883
+Step 180: Top-1 : 0.000971167127072 - Top-5 : 0.00483425414365
+Step 190: Top-1 : 0.00100212696335 - Top-5 : 0.00484702225131
+Step 200: Top-1 : 0.0010105721393 - Top-5 : 0.00493625621891
+Step 210: Top-1 : 0.00103672985782 - Top-5 : 0.00492446682464
+Step 220: Top-1 : 0.00104284502262 - Top-5 : 0.00494909502262
+Step 230: Top-1 : 0.00106534090909 - Top-5 : 0.00493777056277
+Step 240: Top-1 : 0.00102113589212 - Top-5 : 0.00487876037344
+Step 250: Top-1 : 0.00101157868526 - Top-5 : 0.00480888944223
+Step 260: Top-1 : 0.000987787356322 - Top-5 : 0.00484913793103
+Step 270: Top-1 : 0.000965751845018 - Top-5 : 0.00487200184502
+Step 280: Top-1 : 0.00095918594306 - Top-5 : 0.00485153469751
+Step 290: Top-1 : 0.00097991838488 - Top-5 : 0.00488616838488
+Step 300: Top-1 : 0.00101225083056 - Top-5 : 0.00485361295681
+Step 310: Top-1 : 0.00101738344051 - Top-5 : 0.00484827170418
+Step 320: Top-1 : 0.000985689252336 - Top-5 : 0.00484326323988
+Step 330: Top-1 : 0.000979512839879 - Top-5 : 0.0048267560423
+Step 340: Top-1 : 0.000985153958944 - Top-5 : 0.00479976173021
+Step 350: Top-1 : 0.0010016025641 - Top-5 : 0.00481882122507
+Step 360: Top-1 : 0.000995498614958 - Top-5 : 0.00480436288089
+Step 370: Top-1 : 0.000989723719677 - Top-5 : 0.00485385781671
+Step 380: Top-1 : 0.000994504593176 - Top-5 : 0.00486999671916
+Step 390: Top-1 : 0.00101902173913 - Top-5 : 0.00489530051151
+Step 400: Top-1 : 0.00102283354115 - Top-5 : 0.00492908354115
+Step 410: Top-1 : 0.00102645985401 - Top-5 : 0.00492320559611
+Step 420: Top-1 : 0.00104847090261 - Top-5 : 0.00495472090261
+Step 430: Top-1 : 0.00103320765661 - Top-5 : 0.00486695185615
+Step 440: Top-1 : 0.00101863662132 - Top-5 : 0.00487174036281
+Step 450: Top-1 : 0.00101337305987 - Top-5 : 0.00487631651885
+Step 460: Top-1 : 0.000991390997831 - Top-5 : 0.00489764099783
+Step 470: Top-1 : 0.000995222929936 - Top-5 : 0.00489317940552
+Step 480: Top-1 : 0.000982653326403 - Top-5 : 0.00489702442827
+Step 490: Top-1 : 0.00101037423625 - Top-5 : 0.00487684572301
+Top-1 : 0.010078125
+Top-5 : 0.048671875
+Evaluation time : 1277.93092513
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.01/ --num_gpus=1 --extended --alpha=0.01 --reg size --zeroing=0.1 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.01/model.ckpt-49992')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.00390625
+Step 10: Top-1 : 0.000355113636364 - Top-5 : 0.00319602272727
+Step 20: Top-1 : 0.000186011904762 - Top-5 : 0.00353422619048
+Step 30: Top-1 : 0.000252016129032 - Top-5 : 0.0046622983871
+Step 40: Top-1 : 0.000285823170732 - Top-5 : 0.00533536585366
+Step 50: Top-1 : 0.000382965686275 - Top-5 : 0.00559129901961
+Step 60: Top-1 : 0.000640368852459 - Top-5 : 0.00563524590164
+Step 70: Top-1 : 0.000605193661972 - Top-5 : 0.00555677816901
+Step 80: Top-1 : 0.000771604938272 - Top-5 : 0.00564236111111
+Step 90: Top-1 : 0.000772664835165 - Top-5 : 0.00562328296703
+Step 100: Top-1 : 0.000812190594059 - Top-5 : 0.00556930693069
+Step 110: Top-1 : 0.000809403153153 - Top-5 : 0.0057713963964
+Step 120: Top-1 : 0.000807076446281 - Top-5 : 0.00558496900826
+Step 130: Top-1 : 0.000834923664122 - Top-5 : 0.00545682251908
+Step 140: Top-1 : 0.000831117021277 - Top-5 : 0.00534685283688
+Step 150: Top-1 : 0.000957160596026 - Top-5 : 0.00538079470199
+Step 160: Top-1 : 0.00101902173913 - Top-5 : 0.00538625776398
+Step 170: Top-1 : 0.00102796052632 - Top-5 : 0.00543676900585
+Step 180: Top-1 : 0.00103591160221 - Top-5 : 0.00537379143646
+Step 190: Top-1 : 0.00098167539267 - Top-5 : 0.00523560209424
+Step 200: Top-1 : 0.000932835820896 - Top-5 : 0.00516946517413
+Step 210: Top-1 : 0.000907138625592 - Top-5 : 0.00505405805687
+Step 220: Top-1 : 0.000883766968326 - Top-5 : 0.00509049773756
+Step 230: Top-1 : 0.000845508658009 - Top-5 : 0.00517451298701
+Step 240: Top-1 : 0.000826633817427 - Top-5 : 0.00521913900415
+Step 250: Top-1 : 0.000887076693227 - Top-5 : 0.00533802290837
+Step 260: Top-1 : 0.000883022030651 - Top-5 : 0.0053280651341
+Step 270: Top-1 : 0.000864852398524 - Top-5 : 0.00531884225092
+Step 280: Top-1 : 0.000903580960854 - Top-5 : 0.00533807829181
+Step 290: Top-1 : 0.000912800687285 - Top-5 : 0.00534256872852
+Step 300: Top-1 : 0.000908430232558 - Top-5 : 0.00534676079734
+Step 310: Top-1 : 0.000904340836013 - Top-5 : 0.0054009244373
+Step 320: Top-1 : 0.000912675233645 - Top-5 : 0.00535436137072
+Step 330: Top-1 : 0.000908704682779 - Top-5 : 0.00527520770393
+Step 340: Top-1 : 0.000927877565982 - Top-5 : 0.00528088343109
+Step 350: Top-1 : 0.000968215811966 - Top-5 : 0.00529736467236
+Step 360: Top-1 : 0.000995498614958 - Top-5 : 0.00533457409972
+Step 370: Top-1 : 0.000989723719677 - Top-5 : 0.00531713274933
+Step 380: Top-1 : 0.000984251968504 - Top-5 : 0.00526984908136
+Step 390: Top-1 : 0.000959079283887 - Top-5 : 0.00521499360614
+Step 400: Top-1 : 0.000944903366584 - Top-5 : 0.00517261533666
+Step 410: Top-1 : 0.000921913017032 - Top-5 : 0.00512279501217
+Step 420: Top-1 : 0.000909293349169 - Top-5 : 0.00518668349169
+Step 430: Top-1 : 0.000888196055684 - Top-5 : 0.00522041763341
+Step 440: Top-1 : 0.000885770975057 - Top-5 : 0.00526147959184
+Step 450: Top-1 : 0.000918098669623 - Top-5 : 0.00528339800443
+Step 460: Top-1 : 0.000906656724512 - Top-5 : 0.00527047180043
+Step 470: Top-1 : 0.000920581210191 - Top-5 : 0.00528297505308
+Step 480: Top-1 : 0.000925805613306 - Top-5 : 0.00529495841996
+Step 490: Top-1 : 0.000930817209776 - Top-5 : 0.00529849796334
+Top-1 : 0.009296875
+Top-5 : 0.0534375
+Evaluation time : 1242.51796603
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.01/ --num_gpus=1 --extended --alpha=0.01 --reg size --zeroing=0.01 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.01/model.ckpt-49992')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.01171875
+Step 10: Top-1 : 0.00142045454545 - Top-5 : 0.00497159090909
+Step 20: Top-1 : 0.00167410714286 - Top-5 : 0.00483630952381
+Step 30: Top-1 : 0.00151209677419 - Top-5 : 0.0046622983871
+Step 40: Top-1 : 0.00123856707317 - Top-5 : 0.0047637195122
+Step 50: Top-1 : 0.00122549019608 - Top-5 : 0.00482536764706
+Step 60: Top-1 : 0.00108862704918 - Top-5 : 0.00480276639344
+Step 70: Top-1 : 0.00110035211268 - Top-5 : 0.00467649647887
+Step 80: Top-1 : 0.00106095679012 - Top-5 : 0.00467785493827
+Step 90: Top-1 : 0.00103021978022 - Top-5 : 0.00489354395604
+Step 100: Top-1 : 0.00100556930693 - Top-5 : 0.0049504950495
+Step 110: Top-1 : 0.00105574324324 - Top-5 : 0.00513795045045
+Step 120: Top-1 : 0.00103305785124 - Top-5 : 0.00513300619835
+Step 130: Top-1 : 0.000984017175573 - Top-5 : 0.00515863549618
+Step 140: Top-1 : 0.000997340425532 - Top-5 : 0.00526374113475
+Step 150: Top-1 : 0.000931291390728 - Top-5 : 0.00530318708609
+Step 160: Top-1 : 0.00101902173913 - Top-5 : 0.00524068322981
+Step 170: Top-1 : 0.00105080409357 - Top-5 : 0.00527686403509
+Step 180: Top-1 : 0.00103591160221 - Top-5 : 0.00515797651934
+Step 190: Top-1 : 0.00100212696335 - Top-5 : 0.00509244109948
+Step 200: Top-1 : 0.0010105721393 - Top-5 : 0.00515003109453
+Step 210: Top-1 : 0.00103672985782 - Top-5 : 0.00507257109005
+Step 220: Top-1 : 0.00106052036199 - Top-5 : 0.00500212104072
+Step 230: Top-1 : 0.00106534090909 - Top-5 : 0.00507305194805
+Step 240: Top-1 : 0.00105355290456 - Top-5 : 0.00508947095436
+Step 250: Top-1 : 0.00102714143426 - Top-5 : 0.00499564243028
+Step 260: Top-1 : 0.00103268678161 - Top-5 : 0.00502873563218
+Step 270: Top-1 : 0.00102340867159 - Top-5 : 0.00501614391144
+Step 280: Top-1 : 0.00100088967972 - Top-5 : 0.00500444839858
+Step 290: Top-1 : 0.000993341924399 - Top-5 : 0.00502040378007
+Step 300: Top-1 : 0.00102522840532 - Top-5 : 0.00513911960133
+Step 310: Top-1 : 0.00101738344051 - Top-5 : 0.00509947749196
+Step 320: Top-1 : 0.000997858255452 - Top-5 : 0.00508664330218
+Step 330: Top-1 : 0.00101491691843 - Top-5 : 0.00516899546828
+Step 340: Top-1 : 0.000985153958944 - Top-5 : 0.00520069648094
+Step 350: Top-1 : 0.000979344729345 - Top-5 : 0.00518607549858
+Step 360: Top-1 : 0.000995498614958 - Top-5 : 0.00516144390582
+Step 370: Top-1 : 0.00101078167116 - Top-5 : 0.00514866913747
+Step 380: Top-1 : 0.00100475721785 - Top-5 : 0.00510580708661
+Step 390: Top-1 : 0.000999040920716 - Top-5 : 0.00511508951407
+Step 400: Top-1 : 0.00100335099751 - Top-5 : 0.00511416770574
+Step 410: Top-1 : 0.00102645985401 - Top-5 : 0.00510378649635
+Step 420: Top-1 : 0.00103919239905 - Top-5 : 0.00507534144893
+Step 430: Top-1 : 0.00102414443155 - Top-5 : 0.0050935324826
+Step 440: Top-1 : 0.00102749433107 - Top-5 : 0.00508432539683
+Step 450: Top-1 : 0.00101337305987 - Top-5 : 0.00506686529933
+Step 460: Top-1 : 0.00100833785249 - Top-5 : 0.0050501626898
+Step 470: Top-1 : 0.00101180997877 - Top-5 : 0.00505075636943
+Step 480: Top-1 : 0.00100701663202 - Top-5 : 0.00506756756757
+Step 490: Top-1 : 0.0010024185336 - Top-5 : 0.00508369399185
+Top-1 : 0.01015625
+Top-5 : 0.05125
+Evaluation time : 1243.95004082
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.01/ --num_gpus=1 --extended --alpha=0.01 --reg size --zeroing=0.001 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.01/model.ckpt-49992')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.0078125
+Step 10: Top-1 : 0.000710227272727 - Top-5 : 0.00390625
+Step 20: Top-1 : 0.00093005952381 - Top-5 : 0.00465029761905
+Step 30: Top-1 : 0.000756048387097 - Top-5 : 0.00441028225806
+Step 40: Top-1 : 0.000857469512195 - Top-5 : 0.00457317073171
+Step 50: Top-1 : 0.000919117647059 - Top-5 : 0.00505514705882
+Step 60: Top-1 : 0.000832479508197 - Top-5 : 0.00480276639344
+Step 70: Top-1 : 0.000825264084507 - Top-5 : 0.00462147887324
+Step 80: Top-1 : 0.000868055555556 - Top-5 : 0.00453317901235
+Step 90: Top-1 : 0.000944368131868 - Top-5 : 0.00467891483516
+Step 100: Top-1 : 0.0010442450495 - Top-5 : 0.00479579207921
+Step 110: Top-1 : 0.00109093468468 - Top-5 : 0.00485641891892
+Step 120: Top-1 : 0.00106534090909 - Top-5 : 0.00500387396694
+Step 130: Top-1 : 0.00104365458015 - Top-5 : 0.00506917938931
+Step 140: Top-1 : 0.00110815602837 - Top-5 : 0.00504210992908
+Step 150: Top-1 : 0.00108650662252 - Top-5 : 0.00512210264901
+Step 160: Top-1 : 0.00109180900621 - Top-5 : 0.00514363354037
+Step 170: Top-1 : 0.00114217836257 - Top-5 : 0.00511695906433
+Step 180: Top-1 : 0.00114381906077 - Top-5 : 0.00502848756906
+Step 190: Top-1 : 0.00112483638743 - Top-5 : 0.00505153795812
+Step 200: Top-1 : 0.00110774253731 - Top-5 : 0.00503342661692
+Step 210: Top-1 : 0.00109226895735 - Top-5 : 0.00499851895735
+Step 220: Top-1 : 0.00107819570136 - Top-5 : 0.00494909502262
+Step 230: Top-1 : 0.00108225108225 - Top-5 : 0.00497159090909
+Step 240: Top-1 : 0.00106976141079 - Top-5 : 0.00502463692946
+Step 250: Top-1 : 0.00107382968127 - Top-5 : 0.00504233067729
+Step 260: Top-1 : 0.0010476532567 - Top-5 : 0.0049539032567
+Step 270: Top-1 : 0.00103782287823 - Top-5 : 0.0049008302583
+Step 280: Top-1 : 0.00107039590747 - Top-5 : 0.00493494217082
+Step 290: Top-1 : 0.00106045962199 - Top-5 : 0.0048995919244
+Step 300: Top-1 : 0.00110309385382 - Top-5 : 0.00497041112957
+Step 310: Top-1 : 0.00110530546624 - Top-5 : 0.00498643488746
+Step 320: Top-1 : 0.00109521028037 - Top-5 : 0.00501362928349
+Step 330: Top-1 : 0.00110932779456 - Top-5 : 0.0050391805136
+Step 340: Top-1 : 0.00111116202346 - Top-5 : 0.00509759897361
+Step 350: Top-1 : 0.00110176282051 - Top-5 : 0.00504139957265
+Step 360: Top-1 : 0.00110370498615 - Top-5 : 0.00506405817175
+Step 370: Top-1 : 0.00111607142857 - Top-5 : 0.00504337938005
+Step 380: Top-1 : 0.00112778871391 - Top-5 : 0.00505454396325
+Step 390: Top-1 : 0.0011189258312 - Top-5 : 0.00504515664962
+Step 400: Top-1 : 0.00111050498753 - Top-5 : 0.00501675498753
+Step 410: Top-1 : 0.00110249391727 - Top-5 : 0.00501824817518
+Step 420: Top-1 : 0.00109486342043 - Top-5 : 0.00500111342043
+Step 430: Top-1 : 0.00109665023202 - Top-5 : 0.00499383700696
+Step 440: Top-1 : 0.00109835600907 - Top-5 : 0.00503117913832
+Step 450: Top-1 : 0.0010826635255 - Top-5 : 0.00501489745011
+Step 460: Top-1 : 0.00107612527115 - Top-5 : 0.00496542841649
+Step 470: Top-1 : 0.0010781581741 - Top-5 : 0.00495952760085
+Step 480: Top-1 : 0.00108010654886 - Top-5 : 0.00497011434511
+Step 490: Top-1 : 0.00109788696538 - Top-5 : 0.00498822556008
+Top-1 : 0.011171875
+Top-5 : 0.050078125
+Evaluation time : 1242.37225604
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.01/ --num_gpus=1 --extended --alpha=0.01 --reg size --zeroing=0.0001 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.01/model.ckpt-49992')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.0078125
+Step 10: Top-1 : 0.000710227272727 - Top-5 : 0.00390625
+Step 20: Top-1 : 0.00093005952381 - Top-5 : 0.00465029761905
+Step 30: Top-1 : 0.000756048387097 - Top-5 : 0.00441028225806
+Step 40: Top-1 : 0.000762195121951 - Top-5 : 0.00457317073171
+Step 50: Top-1 : 0.000842524509804 - Top-5 : 0.00505514705882
+Step 60: Top-1 : 0.000768442622951 - Top-5 : 0.00480276639344
+Step 70: Top-1 : 0.000770246478873 - Top-5 : 0.00462147887324
+Step 80: Top-1 : 0.000868055555556 - Top-5 : 0.00453317901235
+Step 90: Top-1 : 0.000944368131868 - Top-5 : 0.00467891483516
+Step 100: Top-1 : 0.0010442450495 - Top-5 : 0.00483446782178
+Step 110: Top-1 : 0.00105574324324 - Top-5 : 0.0049268018018
+Step 120: Top-1 : 0.00103305785124 - Top-5 : 0.00506844008264
+Step 130: Top-1 : 0.00101383587786 - Top-5 : 0.0050989980916
+Step 140: Top-1 : 0.00108045212766 - Top-5 : 0.00506981382979
+Step 150: Top-1 : 0.00106063741722 - Top-5 : 0.0051479718543
+Step 160: Top-1 : 0.00106754658385 - Top-5 : 0.00516789596273
+Step 170: Top-1 : 0.00111933479532 - Top-5 : 0.00513980263158
+Step 180: Top-1 : 0.00112223756906 - Top-5 : 0.00505006906077
+Step 190: Top-1 : 0.00110438481675 - Top-5 : 0.0050719895288
+Step 200: Top-1 : 0.00108830845771 - Top-5 : 0.00505286069652
+Step 210: Top-1 : 0.00107375592417 - Top-5 : 0.00501703199052
+Step 220: Top-1 : 0.00106052036199 - Top-5 : 0.00496677036199
+Step 230: Top-1 : 0.00106534090909 - Top-5 : 0.00498850108225
+Step 240: Top-1 : 0.00103734439834 - Top-5 : 0.00504084543568
+Step 250: Top-1 : 0.00104270418327 - Top-5 : 0.00505789342629
+Step 260: Top-1 : 0.00101772030651 - Top-5 : 0.0049688697318
+Step 270: Top-1 : 0.00100899446494 - Top-5 : 0.00491524446494
+Step 280: Top-1 : 0.00105649466192 - Top-5 : 0.00494884341637
+Step 290: Top-1 : 0.00104703608247 - Top-5 : 0.00491301546392
+Step 300: Top-1 : 0.00109011627907 - Top-5 : 0.00498338870432
+Step 310: Top-1 : 0.00108018488746 - Top-5 : 0.00502411575563
+Step 320: Top-1 : 0.00107087227414 - Top-5 : 0.00505013629283
+Step 330: Top-1 : 0.00108572507553 - Top-5 : 0.00507458459215
+Step 340: Top-1 : 0.00108825146628 - Top-5 : 0.00512050953079
+Step 350: Top-1 : 0.00107950498575 - Top-5 : 0.00506365740741
+Step 360: Top-1 : 0.00108206371191 - Top-5 : 0.00508569944598
+Step 370: Top-1 : 0.00109501347709 - Top-5 : 0.00506443733154
+Step 380: Top-1 : 0.00110728346457 - Top-5 : 0.0050750492126
+Step 390: Top-1 : 0.00109894501279 - Top-5 : 0.00506513746803
+Step 400: Top-1 : 0.00109102244389 - Top-5 : 0.00503623753117
+Step 410: Top-1 : 0.00108348540146 - Top-5 : 0.005037256691
+Step 420: Top-1 : 0.0010763064133 - Top-5 : 0.00501967042755
+Step 430: Top-1 : 0.00106946055684 - Top-5 : 0.00501196345708
+Step 440: Top-1 : 0.00107178287982 - Top-5 : 0.00504889455782
+Step 450: Top-1 : 0.00105667960089 - Top-5 : 0.00503222006652
+Step 460: Top-1 : 0.00105070498915 - Top-5 : 0.00498237527115
+Step 470: Top-1 : 0.00106157112527 - Top-5 : 0.00497611464968
+Step 480: Top-1 : 0.00106386434511 - Top-5 : 0.00498635654886
+Step 490: Top-1 : 0.00108197556008 - Top-5 : 0.00500413696538
+Top-1 : 0.00109375
+Top-5 : 0.0050390625
+Evaluation time : 1237.91171312
+python resnet/resnet_main.py --mode=eval --eval_data_path=/mnt/nfs/datasets/imagenet/images/ --eval_once --log_root=/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.01/ --num_gpus=1 --extended --alpha=0.01 --reg size --zeroing=1e-05 --model_type=resnet8-7
+	 [STATE MESSAGE]  Start Evaluation
+	 [STATE MESSAGE] Dataset loaded
+Tensor("init/init_conv/Conv2D:0", shape=(256, 112, 112, 64), dtype=float32, device=/device:GPU:0)
+Tensor("init/MaxPool:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_1_0
+	Tensor("unit_1_0/sub_add/add:0", shape=(256, 56, 56, 64), dtype=float32, device=/device:GPU:0)
+unit_2_0
+	Tensor("unit_2_0/sub_add/add:0", shape=(256, 28, 28, 128), dtype=float32, device=/device:GPU:0)
+unit_3_0
+	Tensor("unit_3_0/sub_add/add:0", shape=(256, 14, 14, 256), dtype=float32, device=/device:GPU:0)
+unit_last
+	Tensor("unit_last/Mean:0", shape=(256, 256), dtype=float32, device=/device:GPU:0)
+logit
+Tensor("logit/xw_plus_b:0", shape=(256, 1001), dtype=float32, device=/device:GPU:0)
+	 [STATE MESSAGE] Model built
+('Loading checkpoint %s', u'/mnt/nfs/users/salottic/tmp/resnet8/size/residual/resnet_alpha_0.01/model.ckpt-49992')
+	 [STATE MESSAGE] Model Restored
+Step 0: Top-1 : 0.0 - Top-5 : 0.0078125
+Step 10: Top-1 : 0.000710227272727 - Top-5 : 0.00390625
+Step 20: Top-1 : 0.00093005952381 - Top-5 : 0.00465029761905
+Step 30: Top-1 : 0.000756048387097 - Top-5 : 0.00441028225806
+Step 40: Top-1 : 0.000762195121951 - Top-5 : 0.00457317073171
+Step 50: Top-1 : 0.000842524509804 - Top-5 : 0.00505514705882
+Step 60: Top-1 : 0.000768442622951 - Top-5 : 0.00480276639344
+Step 70: Top-1 : 0.000770246478873 - Top-5 : 0.00462147887324
+Step 80: Top-1 : 0.000868055555556 - Top-5 : 0.00453317901235
+Step 90: Top-1 : 0.000944368131868 - Top-5 : 0.00467891483516
+Step 100: Top-1 : 0.0010442450495 - Top-5 : 0.00483446782178
+Step 110: Top-1 : 0.00105574324324 - Top-5 : 0.0049268018018
+Step 120: Top-1 : 0.00103305785124 - Top-5 : 0.00506844008264
+Step 130: Top-1 : 0.00101383587786 - Top-5 : 0.0050989980916
+Step 140: Top-1 : 0.00108045212766 - Top-5 : 0.00506981382979
+Step 150: Top-1 : 0.00106063741722 - Top-5 : 0.0051479718543
+Step 160: Top-1 : 0.00106754658385 - Top-5 : 0.00516789596273
+Step 170: Top-1 : 0.00111933479532 - Top-5 : 0.00513980263158
+Step 180: Top-1 : 0.00112223756906 - Top-5 : 0.00505006906077
+Step 190: Top-1 : 0.00110438481675 - Top-5 : 0.0050719895288
+Step 200: Top-1 : 0.00108830845771 - Top-5 : 0.00505286069652
+Step 210: Top-1 : 0.00107375592417 - Top-5 : 0.00501703199052
+Step 220: Top-1 : 0.00106052036199 - Top-5 : 0.00496677036199
+Step 230: Top-1 : 0.00106534090909 - Top-5 : 0.00498850108225
+Step 240: Top-1 : 0.00103734439834 - Top-5 : 0.00504084543568
+Step 250: Top-1 : 0.00104270418327 - Top-5 : 0.00505789342629
+Step 260: Top-1 : 0.00101772030651 - Top-5 : 0.0049688697318
+Step 270: Top-1 : 0.00100899446494 - Top-5 : 0.00491524446494
+Step 280: Top-1 : 0.00105649466192 - Top-5 : 0.00494884341637
+Step 290: Top-1 : 0.00104703608247 - Top-5 : 0.00491301546392
+Step 300: Top-1 : 0.00109011627907 - Top-5 : 0.00498338870432
+Step 310: Top-1 : 0.00108018488746 - Top-5 : 0.00502411575563
+Step 320: Top-1 : 0.00122906931464 - Top-5 : 0.00546388239875
+Step 330: Top-1 : 0.00139256042296 - Top-5 : 0.00593608383686
+Step 340: Top-1 : 0.00156937316716 - Top-5 : 0.00640350073314
+Step 350: Top-1 : 0.00154691951567 - Top-5 : 0.00631009615385
+Step 360: Top-1 : 0.00153653047091 - Top-5 : 0.00629761080332
+Step 370: Top-1 : 0.00153723045822 - Top-5 : 0.00624368261456
+Step 380: Top-1 : 0.00153789370079 - Top-5 : 0.00622334317585
+Step 390: Top-1 : 0.0015385230179 - Top-5 : 0.00626398657289
+Step 400: Top-1 : 0.00182161783042 - Top-5 : 0.00716957605985
+Step 410: Top-1 : 0.00221449209246 - Top-5 : 0.00814514902676
+Step 420: Top-1 : 0.00237529691211 - Top-5 : 0.00871251484561
+Step 430: Top-1 : 0.00257395591647 - Top-5 : 0.00919917343387
+Step 440: Top-1 : 0.00269274376417 - Top-5 : 0.00959289965986
+Step 450: Top-1 : 0.00272831208426 - Top-5 : 0.00982192350333

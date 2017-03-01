@@ -1,0 +1,7 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Methodology}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Kernel cardinality regularization}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Kernel size regularization }{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Kernel shape regularization}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Kernel input feature map activations regularization}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{Implementations details}{section.2}% 7
